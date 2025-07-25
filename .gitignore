@@ -1,0 +1,36 @@
+# Xcode
+.DS_Store
+
+##Firebase
+GoogleService-Info.plist
+
+## Various settings
+xcuserdata/
+
+## Build generated
+build/
+DerivedData/
+
+## Other 
+*.moved-aside   
+*.xccheckout
+*.xcscmblueprint
+
+## Obj-C/Swift specific
+*.hmap
+*.ipa
+*.dSYM.zip 
+*.dSYM
+
+## Playgrounds  
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+#
+# Add this line if you want to avoid checking in source code from Swift Package$
+# Packages/
+# Package.pins
+# Package.resolved
+.build/
+

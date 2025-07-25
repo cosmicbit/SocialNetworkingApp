@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Bold.ttf">
+            <string>Poppins-Bold</string>
+        </array>
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="LoginViewController" id="Y6W-OH-hqX" customClass="LoginViewController" customModule="SocialNetworkingApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hashtag-people" translatesAutoresizingMaskIntoConstraints="NO" id="MVg-M4-jZD">
+                                <rect key="frame" x="0.0" y="118" width="393" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="MVg-M4-jZD" secondAttribute="height" multiplier="393:350" id="QOc-gr-AWR"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Social App" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5m-nD-O9y">
+                                <rect key="frame" x="25" y="493" width="343" height="31"/>
+                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to get started" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iuf-nY-Stl">
+                                <rect key="frame" x="20" y="534" width="353" height="21"/>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBG-jY-w5b">
+                                <rect key="frame" x="30" y="605" width="333" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="7Ro-WY-qBb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Login with Google" image="google-logo">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <buttonConfiguration key="configuration" style="plain" image="google-logo" title="Login with Google" imagePadding="11">
+                                    <fontDescription key="titleFontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="loginWithGoogleButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="qWm-XJ-lQV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="MVg-M4-jZD" secondAttribute="trailing" id="6ZO-td-45H"/>
+                            <constraint firstItem="Iuf-nY-Stl" firstAttribute="top" secondItem="y5m-nD-O9y" secondAttribute="bottom" constant="10" id="BWC-dp-31I"/>
+                            <constraint firstItem="bBG-jY-w5b" firstAttribute="top" secondItem="Iuf-nY-Stl" secondAttribute="bottom" constant="50" id="Coy-Z1-il0"/>
+                            <constraint firstItem="bBG-jY-w5b" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="30" id="GbW-Gr-8yy"/>
+                            <constraint firstItem="Iuf-nY-Stl" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="Hmu-Qq-JU5"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="y5m-nD-O9y" secondAttribute="trailing" constant="25" id="OWc-S7-OZo"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="bBG-jY-w5b" secondAttribute="trailing" constant="30" id="TBa-gM-sig"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Iuf-nY-Stl" secondAttribute="trailing" constant="20" id="XtP-W4-jm5"/>
+                            <constraint firstItem="y5m-nD-O9y" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="25" id="pyV-pC-Y1F"/>
+                            <constraint firstItem="MVg-M4-jZD" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="reL-3G-h0L"/>
+                            <constraint firstItem="MVg-M4-jZD" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="uD7-GV-CPT"/>
+                            <constraint firstItem="y5m-nD-O9y" firstAttribute="top" secondItem="MVg-M4-jZD" secondAttribute="bottom" constant="25" id="yIK-g3-TQm"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-466" y="-12"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="google-logo" width="20" height="20"/>
+        <image name="hashtag-people" width="500" height="500"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

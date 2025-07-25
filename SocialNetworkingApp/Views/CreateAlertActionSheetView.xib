@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreateAlertActionSheetView" customModule="SocialNetworkingApp" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="aHu-tT-n2B"/>
+                <outlet property="dragView" destination="wtL-ni-mDl" id="7PB-ud-pDs"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="405" height="486"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wtL-ni-mDl">
+                    <rect key="frame" x="182.66666666666666" y="10" width="40" height="2.6666666666666661"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="2.5" id="VmS-fX-6Sy"/>
+                        <constraint firstAttribute="width" constant="40" id="sTO-6i-q9n"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Create" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cld-iX-kql">
+                    <rect key="frame" x="171.66666666666666" y="32.666666666666664" width="61.666666666666657" height="24"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5X5-G7-1Na">
+                    <rect key="frame" x="0.0" y="66.666666666666671" width="405" height="0.3333333333333286"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="3H2-sG-ZYA"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nRi-15-1IF" customClass="CreateAlertActionSheetButtton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="67" width="405" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="i2o-eR-rq9"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="play.rectangle" catalog="system" title="Reel" imagePadding="0.0"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R0V-V6-ewD" customClass="CreateAlertActionSheetButtton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="132" width="405" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="uQr-cC-3zi"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="squareshape.split.3x3" catalog="system" title="Post"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ChY-Ob-a8B" customClass="CreateAlertActionSheetButtton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="197" width="405" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="YJC-MM-0km"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="plus.square.dashed" catalog="system" title="Story" imagePadding="0.0"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qH1-XI-ikh" customClass="CreateAlertActionSheetButtton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="262" width="405" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="0aa-Ur-T2v"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="heart.circle" catalog="system" title="Story highlight"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DRf-bK-HKK" customClass="CreateAlertActionSheetButtton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="327" width="405" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="Ghq-bh-SjE"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="dot.radiowaves.left.and.right" catalog="system" title="Live"/>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="thZ-Ql-hiH" customClass="CreateAlertActionSheetButtton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="392" width="405" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="8ka-g6-sZ2"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="circle.grid.2x2" catalog="system" title="AI"/>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="ChY-Ob-a8B" firstAttribute="top" secondItem="R0V-V6-ewD" secondAttribute="bottom" constant="5" id="4Wk-NM-IWv"/>
+                <constraint firstItem="wtL-ni-mDl" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="4xK-QS-7oG"/>
+                <constraint firstAttribute="trailing" secondItem="thZ-Ql-hiH" secondAttribute="trailing" id="5Jq-BH-Nwe"/>
+                <constraint firstItem="R0V-V6-ewD" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="C4g-Ea-4io"/>
+                <constraint firstItem="qH1-XI-ikh" firstAttribute="top" secondItem="ChY-Ob-a8B" secondAttribute="bottom" constant="5" id="CK1-cm-srN"/>
+                <constraint firstItem="R0V-V6-ewD" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="E8V-D9-iDU"/>
+                <constraint firstItem="5X5-G7-1Na" firstAttribute="top" secondItem="cld-iX-kql" secondAttribute="bottom" constant="10" id="Ed3-bJ-MJh"/>
+                <constraint firstItem="qH1-XI-ikh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="GoJ-Yb-ys6"/>
+                <constraint firstItem="thZ-Ql-hiH" firstAttribute="top" secondItem="DRf-bK-HKK" secondAttribute="bottom" constant="5" id="INg-ag-jsR"/>
+                <constraint firstItem="thZ-Ql-hiH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="OST-se-xQ4"/>
+                <constraint firstItem="wtL-ni-mDl" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="10" id="QnC-hB-ooY"/>
+                <constraint firstItem="DRf-bK-HKK" firstAttribute="top" secondItem="qH1-XI-ikh" secondAttribute="bottom" constant="5" id="Tvn-7T-zbZ"/>
+                <constraint firstItem="qH1-XI-ikh" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Uba-Cf-6cb"/>
+                <constraint firstItem="cld-iX-kql" firstAttribute="top" secondItem="wtL-ni-mDl" secondAttribute="bottom" constant="20" id="V4D-Cs-Ot2"/>
+                <constraint firstItem="nRi-15-1IF" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="W56-ot-hyH"/>
+                <constraint firstItem="DRf-bK-HKK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="ZvR-LC-PYd"/>
+                <constraint firstItem="nRi-15-1IF" firstAttribute="top" secondItem="5X5-G7-1Na" secondAttribute="bottom" id="aaC-sS-1OE"/>
+                <constraint firstItem="R0V-V6-ewD" firstAttribute="top" secondItem="nRi-15-1IF" secondAttribute="bottom" constant="5" id="blm-JK-cTU"/>
+                <constraint firstItem="cld-iX-kql" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="fZw-2e-L3r"/>
+                <constraint firstAttribute="trailing" secondItem="5X5-G7-1Na" secondAttribute="trailing" id="hoe-KZ-yFs"/>
+                <constraint firstItem="nRi-15-1IF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="jJP-Se-v0p"/>
+                <constraint firstItem="DRf-bK-HKK" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="nny-Cd-JwF"/>
+                <constraint firstItem="5X5-G7-1Na" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="rbW-Qj-ZFu"/>
+                <constraint firstItem="ChY-Ob-a8B" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="sfV-QR-TVF"/>
+                <constraint firstItem="ChY-Ob-a8B" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="xpL-Rn-Pjv"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-187" y="-13"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="circle.grid.2x2" catalog="system" width="128" height="111"/>
+        <image name="dot.radiowaves.left.and.right" catalog="system" width="128" height="91"/>
+        <image name="heart.circle" catalog="system" width="128" height="123"/>
+        <image name="play.rectangle" catalog="system" width="128" height="93"/>
+        <image name="plus.square.dashed" catalog="system" width="128" height="114"/>
+        <image name="squareshape.split.3x3" catalog="system" width="128" height="114"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
