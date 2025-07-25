@@ -59,7 +59,6 @@ class HomeViewController: UIViewController {
     func setupPostTable(){
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         postTableView.register(nib, forCellReuseIdentifier: PostTableViewCell.identifier)
-        postTableView.delegate = self
         postTableView.dataSource = self
         postTableView.estimatedRowHeight = 400
         postTableView.rowHeight = UITableView.automaticDimension
@@ -132,12 +131,14 @@ class HomeViewController: UIViewController {
         
     }
     func goToMessagesViewController() {
-        let homeSB = UIStoryboard(name: "Home", bundle: nil)
-        let messagesVC = homeSB.instantiateViewController(withIdentifier: "MessagesViewController")
+        let chatSB = UIStoryboard(name: "Chat", bundle: nil)
+        let chatsListVC = chatSB.instantiateViewController(withIdentifier: "ChatsListViewController")
+        let chatNC = UINavigationController(rootViewController: chatsListVC)
         pushTransitionDelegate = PushTransitionDelegate(withDirection: .fromRight)
-        messagesVC.transitioningDelegate = pushTransitionDelegate
-        messagesVC.modalPresentationStyle = .custom
-        present(messagesVC, animated: true)
+        chatNC.transitioningDelegate = pushTransitionDelegate
+        chatNC.modalPresentationStyle = .custom
+        chatNC.navigationBar.isHidden = true
+        present(chatNC, animated: true)
     }
     
     @IBAction func notificationButtonTapped(_ sender: Any) {
@@ -146,7 +147,6 @@ class HomeViewController: UIViewController {
     
     @IBAction func chatButtonTapped(_ sender: Any) {
         goToMessagesViewController()
-                
     }
 }
 
@@ -165,9 +165,6 @@ extension HomeViewController: UITableViewDataSource{
     
 }
 
-extension HomeViewController: UITableViewDelegate{
-    
-}
 
 extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

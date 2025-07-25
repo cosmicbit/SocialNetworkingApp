@@ -76,7 +76,6 @@
                         <outlet property="notificationButton" destination="Cfy-Qp-zYO" id="LUy-Ml-WVa"/>
                         <outlet property="postTableView" destination="dgA-xt-Xdl" id="6Hi-ft-Way"/>
                         <segue destination="vLS-Ci-owg" kind="show" identifier="NotificationsSegue" id="Qmh-42-pJo"/>
-                        <segue destination="ANV-Ao-HnE" kind="presentation" identifier="MessagesSegue" modalPresentationStyle="overFullScreen" id="QPs-4c-Aaj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -139,17 +138,17 @@
         <!--Chats List View Controller-->
         <scene sceneID="MSp-vy-xGn">
             <objects>
-                <viewController storyboardIdentifier="MessagesViewController" id="ANV-Ao-HnE" customClass="ChatsListViewController" customModule="SocialNetworkingApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatsListViewController" id="ANV-Ao-HnE" customClass="ChatsListViewController" customModule="SocialNetworkingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q5o-TI-RXx">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="z5o-M3-ZSr">
-                                <rect key="frame" x="0.0" y="104" width="393" height="714"/>
+                                <rect key="frame" x="0.0" y="163" width="393" height="621"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IAh-Vy-Lun" customClass="BackButton" customModule="SocialNetworkingApp" customModuleProvider="target">
-                                <rect key="frame" x="10" y="59" width="45" height="45"/>
+                                <rect key="frame" x="10" y="118" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="IAh-Vy-Lun" secondAttribute="height" multiplier="1:1" id="a6u-6R-mre"/>
                                     <constraint firstAttribute="height" constant="45" id="yPq-GO-2Ub"/>
@@ -159,12 +158,11 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="backButtonTapped:" destination="vLS-Ci-owg" eventType="touchUpInside" id="Pdq-A6-qCB"/>
                                     <action selector="backButtonTapped:" destination="ANV-Ao-HnE" eventType="touchUpInside" id="Xml-fw-VZT"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dkg-w0-eZY">
-                                <rect key="frame" x="64.999999999999986" y="64.333333333333329" width="130.66666666666663" height="34.333333333333329"/>
+                                <rect key="frame" x="64.999999999999986" y="123.33333333333333" width="130.66666666666663" height="34.333333333333329"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Username" imagePadding="10" titleAlignment="automatic">
@@ -176,7 +174,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GfF-xI-JZi">
-                                <rect key="frame" x="338" y="59" width="45" height="45"/>
+                                <rect key="frame" x="338" y="118" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="Kzv-Zi-1j3"/>
                                     <constraint firstAttribute="width" secondItem="GfF-xI-JZi" secondAttribute="height" multiplier="1:1" id="RF3-Do-BjP"/>
@@ -189,7 +187,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9yM-aZ-eYh">
-                                <rect key="frame" x="293" y="59" width="45" height="45"/>
+                                <rect key="frame" x="293" y="118" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="9yM-aZ-eYh" secondAttribute="height" multiplier="1:1" id="Bk4-nR-8fU"/>
                                     <constraint firstAttribute="height" constant="45" id="gPk-Ly-R7J"/>
@@ -222,22 +220,23 @@
                     <navigationItem key="navigationItem" id="LYd-Mt-BQR"/>
                     <connections>
                         <outlet property="messagesTableView" destination="z5o-M3-ZSr" id="8NV-TS-rHm"/>
+                        <segue destination="66B-6c-jD6" kind="show" identifier="ChatDetailSegue" id="nbq-ww-4cy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WDb-ty-Dor" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="834" y="608"/>
+            <point key="canvasLocation" x="834" y="572"/>
         </scene>
         <!--Chat Detail View Controller-->
         <scene sceneID="TCK-rS-C3h">
             <objects>
                 <viewController id="66B-6c-jD6" customClass="ChatDetailViewController" customModule="SocialNetworkingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jht-cE-NWH">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2cs-dt-z3E" customClass="BackButton" customModule="SocialNetworkingApp" customModuleProvider="target">
-                                <rect key="frame" x="10" y="118" width="45" height="45"/>
+                                <rect key="frame" x="10" y="59" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="ApZ-CY-WG9"/>
                                     <constraint firstAttribute="width" secondItem="2cs-dt-z3E" secondAttribute="height" multiplier="1:1" id="hIs-Xw-ZyW"/>
@@ -247,12 +246,11 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
                                 </buttonConfiguration>
                                 <connections>
-                                    <action selector="backButtonTapped:" destination="vLS-Ci-owg" eventType="touchUpInside" id="UHv-h7-UVP"/>
-                                    <action selector="backButtonTapped:" destination="ANV-Ao-HnE" eventType="touchUpInside" id="xZg-Ud-VwZ"/>
+                                    <action selector="backButtonTapped:" destination="66B-6c-jD6" eventType="touchUpInside" id="k3c-VD-eOy"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="psc-vB-ok4">
-                                <rect key="frame" x="338" y="118" width="45" height="45"/>
+                                <rect key="frame" x="338" y="59" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="psc-vB-ok4" secondAttribute="height" multiplier="1:1" id="0DI-F1-fto"/>
                                     <constraint firstAttribute="height" constant="45" id="z4c-2R-LDi"/>
@@ -265,7 +263,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VmS-5q-Ilu">
-                                <rect key="frame" x="293" y="118" width="45" height="45"/>
+                                <rect key="frame" x="293" y="59" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="VmS-5q-Ilu" secondAttribute="height" multiplier="1:1" id="F0p-xy-jOa"/>
                                     <constraint firstAttribute="height" constant="45" id="uiU-cR-Stq"/>
@@ -278,8 +276,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfA-XJ-MhM">
-                                <rect key="frame" x="248" y="118" width="45" height="45"/>
+                                <rect key="frame" x="248" y="59" width="45" height="45"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" secondItem="vfA-XJ-MhM" secondAttribute="height" multiplier="1:1" id="pUY-Aq-N6A"/>
                                     <constraint firstAttribute="height" constant="45" id="zIJ-Vd-wKA"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -290,7 +289,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="80f-j6-6hx">
-                                <rect key="frame" x="55" y="118" width="45" height="45"/>
+                                <rect key="frame" x="55" y="59" width="45" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="5Tv-p0-D3U"/>
                                     <constraint firstAttribute="width" secondItem="80f-j6-6hx" secondAttribute="height" id="9D3-bp-5ha"/>
@@ -299,7 +298,7 @@
                                 <buttonConfiguration key="configuration" style="plain" image="person.fill" catalog="system" title=""/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rhd-0y-PXZ">
-                                <rect key="frame" x="100" y="118" width="148" height="45"/>
+                                <rect key="frame" x="100" y="59" width="148" height="45"/>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Name" subtitle="Username" titleAlignment="automatic">
@@ -315,26 +314,26 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Rhd-0y-PXZ" firstAttribute="leading" secondItem="80f-j6-6hx" secondAttribute="trailing" id="9Y1-5c-3nX"/>
-                            <constraint firstItem="psc-vB-ok4" firstAttribute="top" secondItem="jht-cE-NWH" secondAttribute="topMargin" id="ArQ-zh-pJq"/>
+                            <constraint firstItem="psc-vB-ok4" firstAttribute="top" secondItem="LJe-eM-moU" secondAttribute="top" id="ArQ-zh-pJq"/>
                             <constraint firstItem="80f-j6-6hx" firstAttribute="top" secondItem="LJe-eM-moU" secondAttribute="top" id="BLU-pf-EZj"/>
                             <constraint firstItem="vfA-XJ-MhM" firstAttribute="leading" secondItem="Rhd-0y-PXZ" secondAttribute="trailing" id="ET7-IX-urA"/>
-                            <constraint firstItem="VmS-5q-Ilu" firstAttribute="top" secondItem="jht-cE-NWH" secondAttribute="topMargin" id="GxC-NE-fOS"/>
+                            <constraint firstItem="VmS-5q-Ilu" firstAttribute="top" secondItem="LJe-eM-moU" secondAttribute="top" id="GxC-NE-fOS"/>
                             <constraint firstItem="LJe-eM-moU" firstAttribute="trailing" secondItem="psc-vB-ok4" secondAttribute="trailing" constant="10" id="HSw-wN-cRf"/>
-                            <constraint firstItem="2cs-dt-z3E" firstAttribute="top" secondItem="jht-cE-NWH" secondAttribute="topMargin" id="Lup-XN-YMM"/>
+                            <constraint firstItem="2cs-dt-z3E" firstAttribute="top" secondItem="LJe-eM-moU" secondAttribute="top" id="Lup-XN-YMM"/>
                             <constraint firstItem="VmS-5q-Ilu" firstAttribute="leading" secondItem="vfA-XJ-MhM" secondAttribute="trailing" id="OGO-R6-WBg"/>
                             <constraint firstItem="80f-j6-6hx" firstAttribute="leading" secondItem="2cs-dt-z3E" secondAttribute="trailing" id="Qz3-TD-4t8"/>
                             <constraint firstItem="Rhd-0y-PXZ" firstAttribute="top" secondItem="LJe-eM-moU" secondAttribute="top" id="SwX-PU-tTo"/>
                             <constraint firstItem="psc-vB-ok4" firstAttribute="leading" secondItem="VmS-5q-Ilu" secondAttribute="trailing" id="duP-sc-p7K"/>
                             <constraint firstItem="2cs-dt-z3E" firstAttribute="leading" secondItem="LJe-eM-moU" secondAttribute="leading" constant="10" id="hWK-Jz-gwV"/>
-                            <constraint firstItem="vfA-XJ-MhM" firstAttribute="width" secondItem="vfA-XJ-MhM" secondAttribute="height" multiplier="1:1" id="pUY-Aq-N6A"/>
                             <constraint firstItem="vfA-XJ-MhM" firstAttribute="top" secondItem="LJe-eM-moU" secondAttribute="top" id="pen-E6-S8t"/>
                             <constraint firstItem="Rhd-0y-PXZ" firstAttribute="centerY" secondItem="2cs-dt-z3E" secondAttribute="centerY" id="pfS-s0-uzv"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="uGU-7v-gbU"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D84-9k-bph" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1685" y="608"/>
+            <point key="canvasLocation" x="1686" y="572"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="w2Q-S4-oi5">

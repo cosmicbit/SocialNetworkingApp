@@ -9,6 +9,7 @@ import UIKit
 
 class ChatDetailViewController: UIViewController {
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -16,4 +17,7 @@ class ChatDetailViewController: UIViewController {
     }
     
 
+    @IBAction func backButtonTapped(_ sender: Any){
+        dismiss(animated: true)//navigationController?.popViewController(animated: true)
+    }
 }
