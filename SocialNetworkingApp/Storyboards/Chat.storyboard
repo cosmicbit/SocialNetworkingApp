@@ -102,6 +102,83 @@
             </objects>
             <point key="canvasLocation" x="1759.5419847328244" y="571.83098591549299"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="d8F-W9-vI8">
+            <objects>
+                <viewController id="CPW-8f-Bp0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="w0B-3O-xIu">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="86Q-Xw-atL" customClass="BackButton" customModule="SocialNetworkingApp" customModuleProvider="target">
+                                <rect key="frame" x="10" y="118" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Jap-9L-pTf"/>
+                                    <constraint firstAttribute="width" secondItem="86Q-Xw-atL" secondAttribute="height" multiplier="1:1" id="s28-z0-DcL"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="arrow.left" catalog="system" title="">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="backButtonTapped:" destination="zGW-hb-Blm" eventType="touchUpInside" id="7kW-az-ix4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfI-R7-WV3">
+                                <rect key="frame" x="65" y="118" width="136" height="45"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="New message" titleAlignment="automatic">
+                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="usernameButtonTapped:" destination="zGW-hb-Blm" eventType="touchUpInside" id="SrT-5O-fx7"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgn-pg-BzE">
+                                <rect key="frame" x="20" y="193" width="23" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UBV-M6-UzJ">
+                                <rect key="frame" x="63" y="186.66666666666666" width="320" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUk-DF-xYn">
+                                <rect key="frame" x="10" y="250.66666666666663" width="373" height="35"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="person.3" catalog="system" title="Create group chat">
+                                    <color key="baseForegroundColor" systemColor="labelColor"/>
+                                </buttonConfiguration>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cjU-kt-kvM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="UBV-M6-UzJ" firstAttribute="leading" secondItem="kgn-pg-BzE" secondAttribute="trailing" constant="20" id="73E-jt-Zgp"/>
+                            <constraint firstItem="cjU-kt-kvM" firstAttribute="trailing" secondItem="UBV-M6-UzJ" secondAttribute="trailing" constant="10" id="Ftl-nj-Xbq"/>
+                            <constraint firstItem="cjU-kt-kvM" firstAttribute="trailing" secondItem="kUk-DF-xYn" secondAttribute="trailing" constant="10" id="GiB-3z-hup"/>
+                            <constraint firstItem="hfI-R7-WV3" firstAttribute="leading" secondItem="86Q-Xw-atL" secondAttribute="trailing" constant="10" id="LtM-Sq-AVI"/>
+                            <constraint firstItem="kUk-DF-xYn" firstAttribute="top" secondItem="UBV-M6-UzJ" secondAttribute="bottom" constant="30" id="NfX-0H-B4W"/>
+                            <constraint firstItem="kgn-pg-BzE" firstAttribute="centerY" secondItem="UBV-M6-UzJ" secondAttribute="centerY" id="Rpk-F5-7ov"/>
+                            <constraint firstItem="hfI-R7-WV3" firstAttribute="leading" secondItem="86Q-Xw-atL" secondAttribute="trailing" constant="10" id="Snk-gU-Bdn"/>
+                            <constraint firstItem="kgn-pg-BzE" firstAttribute="top" secondItem="cjU-kt-kvM" secondAttribute="top" constant="75" id="XxY-OA-gwa"/>
+                            <constraint firstItem="86Q-Xw-atL" firstAttribute="top" secondItem="cjU-kt-kvM" secondAttribute="top" id="hAE-2Y-TQW"/>
+                            <constraint firstItem="kgn-pg-BzE" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" constant="20" id="imn-YN-lno"/>
+                            <constraint firstItem="hfI-R7-WV3" firstAttribute="top" secondItem="cjU-kt-kvM" secondAttribute="top" id="nh6-nf-iLR"/>
+                            <constraint firstItem="kUk-DF-xYn" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" constant="10" id="o0L-RW-58y"/>
+                            <constraint firstItem="hfI-R7-WV3" firstAttribute="centerY" secondItem="86Q-Xw-atL" secondAttribute="centerY" id="wfl-Ym-hok"/>
+                            <constraint firstItem="86Q-Xw-atL" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" constant="10" id="xBy-Ho-f8b"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gVe-7A-mpt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2633" y="572"/>
+        </scene>
         <!--Chat Detail View Controller-->
         <scene sceneID="ftz-wG-nc5">
             <objects>
@@ -208,7 +285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SL7-Af-dvd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2611.450381679389" y="571.83098591549299"/>
+            <point key="canvasLocation" x="1760" y="1329"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Qmx-Qj-t71">
@@ -232,10 +309,14 @@
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="face.smiling" catalog="system" width="128" height="123"/>
+        <image name="person.3" catalog="system" width="128" height="66"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone" catalog="system" width="128" height="115"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <image name="video" catalog="system" width="128" height="82"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
