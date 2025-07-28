@@ -40,7 +40,9 @@ class ChatDetailViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         messageBar = MessageBarView()
+        messageBar.cameraButton.backgroundColor = .purple
         messageBar.translatesAutoresizingMaskIntoConstraints = false
+        messageBar.messageTextField.delegate = self
         view.addSubview(messageBar)
         messageBarBottomConstraint = messageBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         NSLayoutConstraint.activate([
@@ -104,7 +106,7 @@ class ChatDetailViewController: UIViewController {
 
         let safeAreaBottomInset = view.safeAreaInsets.bottom // Account for safe area
         let keyboardHeight = keyboardFrame.height
-        
+        //messageBar.cameraButton.backgroundColor = .blue.withAlphaComponent(1.0)
         messageBarBottomConstraint.constant = -(keyboardHeight - safeAreaBottomInset)
         UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
             self.view.layoutIfNeeded() // Animate the layout change
@@ -128,5 +130,30 @@ class ChatDetailViewController: UIViewController {
 
     @IBAction func backButtonTapped(_ sender: Any){
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension ChatDetailViewController: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        messageBar.cameraButton.backgroundColor = .blue.withAlphaComponent(1.0)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        messageBar.cameraButton.backgroundColor = .blue.withAlphaComponent(0.5)
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField.hasText{
+            messageBar.micButton.isHidden = true
+            messageBar.pictureButton.isHidden = true
+            messageBar.stickerButton.isHidden = true
+            messageBar.moreButton.isHidden = true
+        }
+        else{
+            messageBar.micButton.isHidden = false
+            messageBar.pictureButton.isHidden = false
+            messageBar.stickerButton.isHidden = false
+            messageBar.moreButton.isHidden = false
+        }
     }
 }
