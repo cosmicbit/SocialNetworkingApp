@@ -192,10 +192,10 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
         }
 
         // Initialize and push the ChatViewController
-        let chatVC = ChatDetailViewController()
-        //chatVC.otherUserId = otherUserId
-        //chatVC.currentUserId = currentUser
-        navigationController?.pushViewController(chatVC, animated: true)
+        let chatDetailVC = ChatDetailViewController()
+        //chatDetailVC.otherUserId = otherUserId
+        //chatDetailVC.currentUserId = currentUser
+        navigationController?.pushViewController(chatDetailVC, animated: true)
     }
 }
 

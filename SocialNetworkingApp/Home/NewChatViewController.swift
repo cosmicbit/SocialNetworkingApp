@@ -22,6 +22,12 @@ class NewChatViewController: UIViewController {
     
     private var userProfileManager = UserProfileManager()
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ChatDetailSegue"{
+            let destinationVC = segue.destination as! ChatDetailViewController
+            destinationVC.otherUserProfile = sender as? UserProfile
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -82,20 +88,10 @@ class NewChatViewController: UIViewController {
     // MARK: - Navigation
 
     private func startChat(with selectedUser: UserProfile) {
-        guard let currentUserId = self.currentUserId else {
-            print("Current user ID is missing.")
-            return
-        }
-        //performSegue(withIdentifier: "ChatDetailSegue", sender: nil)
-        // Initialize and push the ChatViewController
-        let chatSB = UIStoryboard(name: "Chat", bundle: nil)
-        let chatVC = chatSB.instantiateViewController(withIdentifier: "ChatDetailViewController")
-        //chatVC.currentUserId = currentUserId
-        //chatVC.otherUserId = selectedUser.id // Pass the selected user's ID
-        
-
-        navigationController?.pushViewController(chatVC, animated: true)
+        performSegue(withIdentifier: "ChatDetailSegue", sender: selectedUser)
     }
+    
+    
     
     @IBAction func backButtonTapped(_ sender: Any){
         navigationController?.popViewController(animated: true)
