@@ -122,6 +122,7 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
                                 </buttonConfiguration>
                                 <connections>
+                                    <action selector="backButtonTapped:" destination="CPW-8f-Bp0" eventType="touchUpInside" id="7K1-t5-21z"/>
                                     <action selector="backButtonTapped:" destination="zGW-hb-Blm" eventType="touchUpInside" id="7kW-az-ix4"/>
                                 </connections>
                             </button>
@@ -285,10 +286,13 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7fE-md-ZAG"/>
+                    <connections>
+                        <outlet property="backButton" destination="e60-vh-4Zr" id="0Gd-f3-SSE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SL7-Af-dvd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1760" y="1329"/>
+            <point key="canvasLocation" x="1759.5419847328244" y="1328.8732394366198"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Qmx-Qj-t71">

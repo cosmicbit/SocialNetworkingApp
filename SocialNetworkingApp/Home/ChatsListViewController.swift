@@ -32,14 +32,11 @@ class ChatsListViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // It's good practice to start listening when the view appears
-        // This ensures data is fresh when returning from a chat
         if let userId = Auth.auth().currentUser?.uid {
             currentUserId = userId
             chatManager.listenForUserChats(userId: userId)
         } else {
             print("User not logged in. Cannot listen for chats.")
-            // Handle scenario where user is not logged in (e.g., redirect to login screen)
         }
     }
     
@@ -56,7 +53,6 @@ class ChatsListViewController: UIViewController {
     func setupChatsListTableView(){
         messagesTableView.dataSource = self
         messagesTableView.delegate = self
-        messagesTableView.autoresizingMask = [.flexibleWidth, .flexibleHeight] // Auto-resizing for orientation changes
         messagesTableView.delegate = self
         messagesTableView.dataSource = self
         messagesTableView.register(ChatListCell.self, forCellReuseIdentifier: "ChatListCell") // Register custom cell
@@ -65,20 +61,10 @@ class ChatsListViewController: UIViewController {
             
     }
     func setupMessagesTableHeader() {
-        let messagesTableHeaderView = ChatsTableHeaderView(frame: CGRect(x: 0, y: 0, width: messagesTableView.bounds.width, height: 0))
-        
-        messagesTableHeaderView.translatesAutoresizingMaskIntoConstraints = false
+        let messagesTableHeaderView = ChatsTableHeaderView()
         let headerHeight = messagesTableHeaderView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-
-        messagesTableView.tableHeaderView = messagesTableHeaderView
-        NSLayoutConstraint.activate([
-            messagesTableHeaderView.heightAnchor.constraint(equalToConstant: headerHeight),
-            messagesTableHeaderView.leadingAnchor.constraint(equalTo: messagesTableView.leadingAnchor),
-            messagesTableHeaderView.trailingAnchor.constraint(equalTo: messagesTableView.trailingAnchor),
-            messagesTableHeaderView.widthAnchor.constraint(equalTo: messagesTableView.widthAnchor, multiplier: 1)
-        ])
-        
         messagesTableHeaderView.frame = CGRect(x: 0, y: 0, width: messagesTableView.bounds.width, height: headerHeight)
+        messagesTableView.tableHeaderView = messagesTableHeaderView
     }
     
     func addRightSwipeToView(){

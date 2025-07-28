@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MessageBarView" customModule="SocialNetworkingApp" customModuleProvider="target">
+            <connections>
+                <outlet property="cameraButton" destination="fw7-hU-3zu" id="1EA-Qk-fzt"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="bLh-Ck-HuK"/>
+                <outlet property="messageBarStackView" destination="9pr-FB-fZb" id="QGP-Ba-zld"/>
+                <outlet property="messageTextField" destination="fK5-11-FyU" id="z9D-3i-jg4"/>
+                <outlet property="micButton" destination="ZOt-qs-0zG" id="a82-1n-p5r"/>
+                <outlet property="moreButton" destination="TKW-gC-CRv" id="to9-Cv-NN0"/>
+                <outlet property="pictureButton" destination="xuO-EU-SDo" id="ovC-Jv-9y2"/>
+                <outlet property="stickerButton" destination="QlO-D1-o4Z" id="sGu-Tg-q4P"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="683" height="85"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fw7-hU-3zu">
+                    <rect key="frame" x="5" y="5" width="75" height="75"/>
+                    <color key="backgroundColor" systemColor="linkColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="fw7-hU-3zu" secondAttribute="height" id="WEg-sm-gZs"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="Button"/>
+                    <buttonConfiguration key="configuration" style="plain" image="camera.fill" catalog="system" title=""/>
+                </button>
+                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pr-FB-fZb">
+                    <rect key="frame" x="85" y="-5" width="593" height="90"/>
+                    <subviews>
+                        <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Message" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-11-FyU">
+                            <rect key="frame" x="0.0" y="0.0" width="233" height="90"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOt-qs-0zG">
+                            <rect key="frame" x="233" y="0.0" width="90" height="90"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ZOt-qs-0zG" secondAttribute="height" id="gxU-od-Ptr"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="microphone" catalog="system" title=""/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuO-EU-SDo">
+                            <rect key="frame" x="323" y="0.0" width="90" height="90"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="xuO-EU-SDo" secondAttribute="height" id="D0l-a3-hgC"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="photo" catalog="system" title=""/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QlO-D1-o4Z">
+                            <rect key="frame" x="413" y="0.0" width="90" height="90"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="QlO-D1-o4Z" secondAttribute="height" id="Yqf-Ed-pOm"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="face.smiling" catalog="system" title=""/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKW-gC-CRv">
+                            <rect key="frame" x="503" y="0.0" width="90" height="90"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="TKW-gC-CRv" secondAttribute="height" id="dZg-1c-pgb"/>
+                            </constraints>
+                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="plus.circle" catalog="system"/>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="secondarySystemBackgroundColor"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="9pr-FB-fZb" secondAttribute="bottom" id="7XX-F1-xqx"/>
+                <constraint firstItem="fw7-hU-3zu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="9Ae-Er-3qM"/>
+                <constraint firstAttribute="top" secondItem="9pr-FB-fZb" secondAttribute="top" constant="5" id="JMe-1F-6ZG"/>
+                <constraint firstAttribute="bottom" secondItem="fw7-hU-3zu" secondAttribute="bottom" constant="5" id="bip-Jq-WIV"/>
+                <constraint firstItem="9pr-FB-fZb" firstAttribute="leading" secondItem="fw7-hU-3zu" secondAttribute="trailing" constant="5" id="nI2-rI-QIe"/>
+                <constraint firstAttribute="trailing" secondItem="9pr-FB-fZb" secondAttribute="trailing" constant="5" id="uaY-LK-Vy0"/>
+                <constraint firstItem="fw7-hU-3zu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="wHN-5n-49h"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="-131" y="92"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="camera.fill" catalog="system" width="128" height="93"/>
+        <image name="face.smiling" catalog="system" width="128" height="123"/>
+        <image name="microphone" catalog="system" width="110" height="128"/>
+        <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="plus.circle" catalog="system" width="128" height="123"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="secondarySystemBackgroundColor">
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>

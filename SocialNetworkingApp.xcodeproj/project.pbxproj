@@ -37,6 +37,9 @@
 		5059EBA62E33590C00AFC960 /* ChatDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5059EBA52E33590C00AFC960 /* ChatDetailViewController.swift */; };
 		506A46362E3730230073FF87 /* NewMessageTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A46352E3730230073FF87 /* NewMessageTableHeaderView.xib */; };
 		506A46382E3738EB0073FF87 /* NewMessageTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A46372E3738EB0073FF87 /* NewMessageTableHeaderView.swift */; };
+		506A463B2E3758230073FF87 /* NewMessageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A463A2E3758230073FF87 /* NewMessageTableViewCell.xib */; };
+		506A463C2E3758230073FF87 /* NewMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A46392E3758230073FF87 /* NewMessageTableViewCell.swift */; };
+		506A463E2E376F490073FF87 /* MessageBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A463D2E376F490073FF87 /* MessageBarView.xib */; };
 		508524ED2E30A18E002B9E5C /* ChatsTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */; };
 		508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */; };
 		508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */; };
@@ -63,6 +66,7 @@
 		50BAB6322E309165006F3AE5 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAB6312E309165006F3AE5 /* BackButton.swift */; };
 		50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */; };
 		50BF0F992E25213E00906BBA /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF0F982E25213E00906BBA /* Animations.swift */; };
+		50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE41642E3777DB004AA246 /* MessageBarView.swift */; };
 		50DB56E62E2F43C3008236AE /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */; };
 		50DB56E82E2F8909008236AE /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E72E2F8904008236AE /* Story.swift */; };
 		50DB56EA2E2F8C5D008236AE /* StoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E92E2F8C57008236AE /* StoryManager.swift */; };
@@ -128,6 +132,9 @@
 		5059EBA52E33590C00AFC960 /* ChatDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewController.swift; sourceTree = "<group>"; };
 		506A46352E3730230073FF87 /* NewMessageTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageTableHeaderView.xib; sourceTree = "<group>"; };
 		506A46372E3738EB0073FF87 /* NewMessageTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableHeaderView.swift; sourceTree = "<group>"; };
+		506A46392E3758230073FF87 /* NewMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableViewCell.swift; sourceTree = "<group>"; };
+		506A463A2E3758230073FF87 /* NewMessageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageTableViewCell.xib; sourceTree = "<group>"; };
+		506A463D2E376F490073FF87 /* MessageBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBarView.xib; sourceTree = "<group>"; };
 		508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsTableHeaderView.xib; sourceTree = "<group>"; };
 		508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableHeaderView.swift; sourceTree = "<group>"; };
 		508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +159,7 @@
 		50BAB6312E309165006F3AE5 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetButtton.swift; sourceTree = "<group>"; };
 		50BF0F982E25213E00906BBA /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
+		50CE41642E3777DB004AA246 /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
 		50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		50DB56E72E2F8904008236AE /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		50DB56E92E2F8C57008236AE /* StoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryManager.swift; sourceTree = "<group>"; };
@@ -269,6 +277,10 @@
 				508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */,
 				506A46352E3730230073FF87 /* NewMessageTableHeaderView.xib */,
 				506A46372E3738EB0073FF87 /* NewMessageTableHeaderView.swift */,
+				506A46392E3758230073FF87 /* NewMessageTableViewCell.swift */,
+				506A463A2E3758230073FF87 /* NewMessageTableViewCell.xib */,
+				506A463D2E376F490073FF87 /* MessageBarView.xib */,
+				50CE41642E3777DB004AA246 /* MessageBarView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -499,6 +511,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506A463E2E376F490073FF87 /* MessageBarView.xib in Resources */,
 				509977F62E33892600F82E3E /* Chat.storyboard in Resources */,
 				E1A3673229F922E200A1B03E /* Auth.storyboard in Resources */,
 				5002B5CF2E2A696500F36A80 /* PostTableViewCell.xib in Resources */,
@@ -507,6 +520,7 @@
 				E1FDD9162A0A50D4006AD0DF /* Colors.xcassets in Resources */,
 				50E9C2822E2A46B900DE5544 /* Home.storyboard in Resources */,
 				506A46362E3730230073FF87 /* NewMessageTableHeaderView.xib in Resources */,
+				506A463B2E3758230073FF87 /* NewMessageTableViewCell.xib in Resources */,
 				5054FECE2E1BA88C004395DF /* Post.storyboard in Resources */,
 				E19709B62A84D72100A76B19 /* Poppins-Bold.ttf in Resources */,
 				E19709B22A84D71100A76B19 /* Poppins-Regular.ttf in Resources */,
@@ -534,6 +548,7 @@
 				50F4068A2E1B869000A23A2C /* LoginViewController.swift in Sources */,
 				50A016E32E1BD17A00594A7C /* UploadImageAndPostViewController.swift in Sources */,
 				50A0169D2E1BB3FE00594A7C /* TabBarController.swift in Sources */,
+				506A463C2E3758230073FF87 /* NewMessageTableViewCell.swift in Sources */,
 				E154F21A2AB1C809000BC44C /* Typography.swift in Sources */,
 				5059EBA62E33590C00AFC960 /* ChatDetailViewController.swift in Sources */,
 				508759F62E1CF40800ABAEC6 /* OnboardingViewController.swift in Sources */,
@@ -578,6 +593,7 @@
 				50FEA7602E1D251F0041C7BF /* UserProfileToUpload.swift in Sources */,
 				50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */,
 				50324E832E26643A00B703C2 /* Like.swift in Sources */,
+				50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */,
 				509977F42E33885700F82E3E /* SlideTransitionDelegate.swift in Sources */,
 				508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */,
 				50BAB62E2E3090BE006F3AE5 /* NotificationsViewController.swift in Sources */,

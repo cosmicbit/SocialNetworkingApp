@@ -7,13 +7,14 @@
 import FirebaseFirestore
 
 class UserProfileManager{
+    //private let db = Firestore.firestore()
+    private let collectionRef = Firestore.firestore().collection("users")
     
     func getUserProfilesByUsernameOrName(username: String, name: String, completion: @escaping (Result<[UserProfile], Error>) -> Void ){
-        let db = Firestore.firestore()
         var prefix = username
         var endPrefix = prefix + "\u{f8ff}"
 
-        db.collection("users")
+        collectionRef
             .whereField("username", isGreaterThanOrEqualTo: prefix)
             .whereField("username", isLessThan: endPrefix)
             .limit(to: 5)
@@ -35,7 +36,7 @@ class UserProfileManager{
                 prefix = name
                 endPrefix = prefix + "\u{f8ff}"
                 
-                db.collection("users")
+                self.collectionRef
                     .whereField("name", isGreaterThanOrEqualTo: prefix)
                     .whereField("name", isLessThan: endPrefix)
                     .limit(to: 5)
@@ -64,9 +65,8 @@ class UserProfileManager{
     }
     
     func getUserProfileByUserID(userId:String, completion: @escaping (Result<UserProfile, Error>) -> Void ){
-        let db = Firestore.firestore()
 
-        db.collection("users").document(userId).getDocument(){ (snapshot, error) in
+        collectionRef.document(userId).getDocument(){ (snapshot, error) in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -79,6 +79,21 @@ class UserProfileManager{
                 return
             }
             completion(.success(userProfile))
+        }
+    }
+    
+    func getAllUsers(completion: @escaping (Result<[UserProfile], Error>) -> Void){
+        collectionRef.getDocuments { querySnapshot, error in
+
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let documents = querySnapshot?.documents else {
+                return
+            }
+            let userProfiles = documents.compactMap { UserProfile(snapshot: $0) }
+            completion(.success(userProfiles))
         }
     }
 }

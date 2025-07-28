@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol SearchResultProfileTableViewCellDelegate: AnyObject{
     
@@ -21,11 +22,13 @@ class SearchResultProfileTableViewCell: UITableViewCell {
     
     
     private weak var delegate: SearchResultProfileTableViewCellDelegate?
-    private var task: UserProfile!
+    private var userProfile: UserProfile!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
+        usernameLabel.text = userProfile.username
+        nameLabel.text = userProfile.name
     }
     
     override func layoutSubviews() {
@@ -42,9 +45,7 @@ class SearchResultProfileTableViewCell: UITableViewCell {
     }
 
     func configure(userProfile: UserProfile, delegate: SearchResultProfileTableViewCellDelegate){
-        avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
-        usernameLabel.text = userProfile.username
-        nameLabel.text = userProfile.name
+        self.userProfile = userProfile
         self.delegate = delegate
     }
 }

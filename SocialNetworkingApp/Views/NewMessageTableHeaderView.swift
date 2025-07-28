@@ -39,7 +39,8 @@ class NewMessageTableHeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        createGroupChatView.layer.cornerRadius = createGroupChatView.frame.width / 2
+        createGroupChatImageView.layer.cornerRadius = createGroupChatImageView.frame.width / 2
         aiChatsImageView.layer.cornerRadius = aiChatsImageView.frame.width / 2
     }
+    
 }
