@@ -35,6 +35,8 @@
 		5054FED02E1BA897004395DF /* Account.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5054FECF2E1BA897004395DF /* Account.storyboard */; };
 		5059EBA42E3347B400AFC960 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5059EBA32E3347A100AFC960 /* ChatManager.swift */; };
 		5059EBA62E33590C00AFC960 /* ChatDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5059EBA52E33590C00AFC960 /* ChatDetailViewController.swift */; };
+		506A46362E3730230073FF87 /* NewMessageTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A46352E3730230073FF87 /* NewMessageTableHeaderView.xib */; };
+		506A46382E3738EB0073FF87 /* NewMessageTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A46372E3738EB0073FF87 /* NewMessageTableHeaderView.swift */; };
 		508524ED2E30A18E002B9E5C /* ChatsTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */; };
 		508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */; };
 		508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */; };
@@ -124,6 +126,8 @@
 		5054FECF2E1BA897004395DF /* Account.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Account.storyboard; sourceTree = "<group>"; };
 		5059EBA32E3347A100AFC960 /* ChatManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		5059EBA52E33590C00AFC960 /* ChatDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailViewController.swift; sourceTree = "<group>"; };
+		506A46352E3730230073FF87 /* NewMessageTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewMessageTableHeaderView.xib; sourceTree = "<group>"; };
+		506A46372E3738EB0073FF87 /* NewMessageTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageTableHeaderView.swift; sourceTree = "<group>"; };
 		508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsTableHeaderView.xib; sourceTree = "<group>"; };
 		508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableHeaderView.swift; sourceTree = "<group>"; };
 		508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListViewController.swift; sourceTree = "<group>"; };
@@ -263,6 +267,8 @@
 				50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */,
 				508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */,
 				508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */,
+				506A46352E3730230073FF87 /* NewMessageTableHeaderView.xib */,
+				506A46372E3738EB0073FF87 /* NewMessageTableHeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -500,6 +506,7 @@
 				E1A3672729F9226300A1B03E /* Assets.xcassets in Resources */,
 				E1FDD9162A0A50D4006AD0DF /* Colors.xcassets in Resources */,
 				50E9C2822E2A46B900DE5544 /* Home.storyboard in Resources */,
+				506A46362E3730230073FF87 /* NewMessageTableHeaderView.xib in Resources */,
 				5054FECE2E1BA88C004395DF /* Post.storyboard in Resources */,
 				E19709B62A84D72100A76B19 /* Poppins-Bold.ttf in Resources */,
 				E19709B22A84D71100A76B19 /* Poppins-Regular.ttf in Resources */,
@@ -539,6 +546,7 @@
 				E1FDD9142A0A4FB7006AD0DF /* PrimaryButton.swift in Sources */,
 				501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */,
 				50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */,
+				506A46382E3738EB0073FF87 /* NewMessageTableHeaderView.swift in Sources */,
 				504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */,
 				E1A3672229F9226100A1B03E /* ExploreViewController.swift in Sources */,
 				509977F82E33972600F82E3E /* Message.swift in Sources */,

@@ -127,8 +127,7 @@ class ChatsListViewController: UIViewController {
     @IBAction func aiStudioButtonTapped(_ sender: Any) {
     }
     @IBAction func newMessageButtonTapped(_ sender: Any) {
-        let newChatVC = NewChatViewController()
-        navigationController?.pushViewController(newChatVC, animated: true)
+        performSegue(withIdentifier: "NewChatSegue", sender: nil)
     }
 }
 

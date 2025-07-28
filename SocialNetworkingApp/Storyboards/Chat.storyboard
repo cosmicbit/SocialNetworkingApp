@@ -96,16 +96,17 @@
                     <connections>
                         <outlet property="messagesTableView" destination="jer-ji-ih7" id="Ojq-3j-tDu"/>
                         <segue destination="vg0-YX-HAa" kind="show" identifier="ChatDetailSegue" id="K6K-Ga-1Zk"/>
+                        <segue destination="CPW-8f-Bp0" kind="show" identifier="NewChatSegue" id="jWC-gf-oqs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7un-iL-96u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1759.5419847328244" y="571.83098591549299"/>
         </scene>
-        <!--View Controller-->
+        <!--New Chat View Controller-->
         <scene sceneID="d8F-W9-vI8">
             <objects>
-                <viewController id="CPW-8f-Bp0" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewChatViewController" id="CPW-8f-Bp0" customClass="NewChatViewController" customModule="SocialNetworkingApp" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="w0B-3O-xIu">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,48 +137,50 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="To:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kgn-pg-BzE">
-                                <rect key="frame" x="20" y="193" width="23" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="20" y="193" width="21.333333333333329" height="18"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UBV-M6-UzJ">
-                                <rect key="frame" x="63" y="186.66666666666666" width="320" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UBV-M6-UzJ">
+                                <rect key="frame" x="61.333333333333343" y="192.66666666666666" width="321.66666666666663" height="18.666666666666657"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kUk-DF-xYn">
-                                <rect key="frame" x="10" y="250.66666666666663" width="373" height="35"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="person.3" catalog="system" title="Create group chat">
-                                    <color key="baseForegroundColor" systemColor="labelColor"/>
-                                </buttonConfiguration>
-                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tcg-gf-dej">
+                                <rect key="frame" x="0.0" y="221" width="393" height="563"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="cjU-kt-kvM"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="UBV-M6-UzJ" firstAttribute="leading" secondItem="kgn-pg-BzE" secondAttribute="trailing" constant="20" id="73E-jt-Zgp"/>
+                            <constraint firstItem="tcg-gf-dej" firstAttribute="top" secondItem="kgn-pg-BzE" secondAttribute="bottom" constant="10" id="B9o-i2-YkI"/>
                             <constraint firstItem="cjU-kt-kvM" firstAttribute="trailing" secondItem="UBV-M6-UzJ" secondAttribute="trailing" constant="10" id="Ftl-nj-Xbq"/>
-                            <constraint firstItem="cjU-kt-kvM" firstAttribute="trailing" secondItem="kUk-DF-xYn" secondAttribute="trailing" constant="10" id="GiB-3z-hup"/>
                             <constraint firstItem="hfI-R7-WV3" firstAttribute="leading" secondItem="86Q-Xw-atL" secondAttribute="trailing" constant="10" id="LtM-Sq-AVI"/>
-                            <constraint firstItem="kUk-DF-xYn" firstAttribute="top" secondItem="UBV-M6-UzJ" secondAttribute="bottom" constant="30" id="NfX-0H-B4W"/>
+                            <constraint firstItem="cjU-kt-kvM" firstAttribute="trailing" secondItem="tcg-gf-dej" secondAttribute="trailing" id="Osg-No-gov"/>
+                            <constraint firstItem="cjU-kt-kvM" firstAttribute="bottom" secondItem="tcg-gf-dej" secondAttribute="bottom" id="QmP-zU-XRm"/>
                             <constraint firstItem="kgn-pg-BzE" firstAttribute="centerY" secondItem="UBV-M6-UzJ" secondAttribute="centerY" id="Rpk-F5-7ov"/>
                             <constraint firstItem="hfI-R7-WV3" firstAttribute="leading" secondItem="86Q-Xw-atL" secondAttribute="trailing" constant="10" id="Snk-gU-Bdn"/>
                             <constraint firstItem="kgn-pg-BzE" firstAttribute="top" secondItem="cjU-kt-kvM" secondAttribute="top" constant="75" id="XxY-OA-gwa"/>
                             <constraint firstItem="86Q-Xw-atL" firstAttribute="top" secondItem="cjU-kt-kvM" secondAttribute="top" id="hAE-2Y-TQW"/>
                             <constraint firstItem="kgn-pg-BzE" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" constant="20" id="imn-YN-lno"/>
                             <constraint firstItem="hfI-R7-WV3" firstAttribute="top" secondItem="cjU-kt-kvM" secondAttribute="top" id="nh6-nf-iLR"/>
-                            <constraint firstItem="kUk-DF-xYn" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" constant="10" id="o0L-RW-58y"/>
+                            <constraint firstItem="tcg-gf-dej" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" id="pIA-rd-PUw"/>
                             <constraint firstItem="hfI-R7-WV3" firstAttribute="centerY" secondItem="86Q-Xw-atL" secondAttribute="centerY" id="wfl-Ym-hok"/>
                             <constraint firstItem="86Q-Xw-atL" firstAttribute="leading" secondItem="cjU-kt-kvM" secondAttribute="leading" constant="10" id="xBy-Ho-f8b"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="Lrz-GI-Ezz"/>
+                    <connections>
+                        <outlet property="newMessageTableView" destination="tcg-gf-dej" id="Ncf-BU-RZf"/>
+                        <outlet property="searchTextField" destination="UBV-M6-UzJ" id="hsi-og-AdF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gVe-7A-mpt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2633" y="572"/>
+            <point key="canvasLocation" x="2632.8244274809158" y="571.83098591549299"/>
         </scene>
         <!--Chat Detail View Controller-->
         <scene sceneID="ftz-wG-nc5">
@@ -309,16 +312,15 @@
         <image name="arrow.left" catalog="system" width="128" height="95"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="face.smiling" catalog="system" width="128" height="123"/>
-        <image name="person.3" catalog="system" width="128" height="66"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="phone" catalog="system" width="128" height="115"/>
         <image name="square.and.pencil" catalog="system" width="128" height="121"/>
         <image name="video" catalog="system" width="128" height="82"/>
-        <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

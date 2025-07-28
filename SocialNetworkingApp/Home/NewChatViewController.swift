@@ -11,10 +11,13 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class NewChatViewController: UIViewController {
+    
+    
+    @IBOutlet weak var searchTextField: UITextField!
+    @IBOutlet weak var newMessageTableView: UITableView!
 
     private var users: [AppUser] = [] // Assuming you have an AppUser struct for displaying users
     private var filteredUsers: [AppUser] = []
-    private var tableView: UITableView!
     private let searchController = UISearchController(searchResultsController: nil)
 
     private var currentUserId: String?
@@ -22,7 +25,6 @@ class NewChatViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        title = "New Message"
 
         currentUserId = Auth.auth().currentUser?.uid
         if currentUserId == nil {
@@ -36,28 +38,27 @@ class NewChatViewController: UIViewController {
             return
         }
 
-        setupSearchController()
+        //setupSearchController()
         setupTableView()
+        setupTableHeader()
         fetchUsers() // Fetch all users to display
     }
 
     // MARK: - UI Setup
 
-    private func setupSearchController() {
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search for users"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true // Ensure search bar stays when VC is presented
-    }
 
     private func setupTableView() {
-        tableView = UITableView(frame: view.bounds, style: .plain)
-        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UserCell") // Simple cell for now
-        view.addSubview(tableView)
+        newMessageTableView.delegate = self
+        newMessageTableView.dataSource = self
+        newMessageTableView.register(UITableViewCell.self, forCellReuseIdentifier: "UserCell") // Simple cell for now
+        view.addSubview(newMessageTableView)
+    }
+    
+    func setupTableHeader() {
+        let newMessageTableHeaderView = NewMessageTableHeaderView()
+        let headerHeight = newMessageTableHeaderView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        newMessageTableHeaderView.frame = CGRect(x: 0, y: 0, width: newMessageTableView.bounds.width, height: headerHeight)
+        newMessageTableView.tableHeaderView = newMessageTableHeaderView
     }
 
     // MARK: - Data Fetching
@@ -92,7 +93,7 @@ class NewChatViewController: UIViewController {
             self.users.sort { $0.username.lowercased() < $1.username.lowercased() }
 
             self.filteredUsers = self.users // Initially show all users
-            self.tableView.reloadData()
+            self.newMessageTableView.reloadData()
         }
     }
 
@@ -110,8 +111,6 @@ class NewChatViewController: UIViewController {
         //chatVC.currentUserId = currentUserId
         //chatVC.otherUserId = selectedUser.id // Pass the selected user's ID
         
-        // Optionally, update the title of ChatVC immediately with username
-        //chatVC.title = "Chat with \(selectedUser.username)"
 
         navigationController?.pushViewController(chatVC, animated: true)
     }
@@ -128,7 +127,7 @@ extension NewChatViewController: UISearchResultsUpdating {
         } else {
             filteredUsers = users.filter { $0.username.lowercased().contains(searchText) }
         }
-        tableView.reloadData()
+        newMessageTableView.reloadData()
     }
 }
 
