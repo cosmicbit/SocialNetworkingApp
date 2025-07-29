@@ -27,7 +27,8 @@ class LoginViewController: UIViewController {
         // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-
+        print(config)
+        
         if GIDSignIn.sharedInstance.hasPreviousSignIn(){
             GIDSignIn.sharedInstance.restorePreviousSignIn { [weak self] user, error in
                 guard let strongSelf = self else {return}
@@ -44,7 +45,7 @@ class LoginViewController: UIViewController {
             }
         }
         else{
-            
+          
             GIDSignIn.sharedInstance.signIn(withPresenting: self) { [weak self] result, error in
                 
                 guard let strongSelf = self else {return}

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol MessageBarDelegate{
+    func sendTextMessage(content: String)
+}
+
 class MessageBarView: UIView {
 
     @IBOutlet weak var contentView: UIView!
@@ -19,6 +23,10 @@ class MessageBarView: UIView {
     @IBOutlet weak var moreButton: UIButton!
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var messageBarStackView: UIStackView!
+    
+    private let chatManager = ChatManager()
+    
+    var delegate: MessageBarDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,4 +59,11 @@ class MessageBarView: UIView {
         searchButton.layer.cornerRadius = searchButton.frame.width / 2
         sendButton.layer.cornerRadius = sendButton.frame.height / 2
     }
+    
+    @IBAction func sendButtonTapped(_ sender: Any){
+        guard let text = messageTextField.text else { return }
+        delegate?.sendTextMessage(content: text)
+        messageTextField.text?.removeAll()
+    }
 }
+

@@ -14,12 +14,32 @@ class ChatsListViewController: UIViewController {
     
     @IBOutlet weak var messagesTableView: UITableView!
     
+    private var userProfileManager = UserProfileManager()
     private var chatManager = ChatManager()
     private var chats: [Chat] = [] // Stores the list of Chat objects
     var currentUserId: String?
     
     // A dictionary to cache participant usernames, to avoid repeated Firestore lookups
     private var participantUsernameCache: [String: String] = [:]
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ChatDetailSegue"{
+            let destinationVC = segue.destination as! ChatDetailViewController
+            guard let userId = sender as? String else {
+                presentError(title: "Chat Error", message: "Unable to get other User")
+                return
+            }
+            userProfileManager.getUserProfileByUserID(userId: userId) { result in
+                switch result {
+                case .success(let userProfile):
+                    print("fetch profile successful")
+                    destinationVC.otherUserProfile = userProfile
+                case .failure(_):
+                    print("failed to fetch profile")
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +72,6 @@ class ChatsListViewController: UIViewController {
     }
     func setupChatsListTableView(){
         messagesTableView.dataSource = self
-        messagesTableView.delegate = self
         messagesTableView.delegate = self
         messagesTableView.dataSource = self
         messagesTableView.register(ChatListCell.self, forCellReuseIdentifier: "ChatListCell") // Register custom cell
@@ -190,12 +209,7 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
             // Show alert or handle error
             return
         }
-
-        // Initialize and push the ChatViewController
-        let chatDetailVC = ChatDetailViewController()
-        //chatDetailVC.otherUserId = otherUserId
-        //chatDetailVC.currentUserId = currentUser
-        navigationController?.pushViewController(chatDetailVC, animated: true)
+        performSegue(withIdentifier: "ChatDetailSegue", sender: otherUserId)
     }
 }
 

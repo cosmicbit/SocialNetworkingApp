@@ -50,12 +50,12 @@
                     <rect key="frame" x="72" y="5" width="564" height="57"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Message..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fK5-11-FyU">
-                            <rect key="frame" x="0.0" y="0.0" width="264.66666666666669" height="57"/>
+                            <rect key="frame" x="0.0" y="0.0" width="250.66666666666666" height="57"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZOt-qs-0zG">
-                            <rect key="frame" x="264.66666666666669" y="0.0" width="57" height="57"/>
+                            <rect key="frame" x="250.66666666666669" y="0.0" width="57" height="57"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="ZOt-qs-0zG" secondAttribute="height" id="gxU-od-Ptr"/>
                             </constraints>
@@ -64,7 +64,7 @@
                             <buttonConfiguration key="configuration" style="plain" image="microphone" catalog="system" title=""/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuO-EU-SDo">
-                            <rect key="frame" x="321.66666666666669" y="0.0" width="57" height="57"/>
+                            <rect key="frame" x="307.66666666666669" y="0.0" width="57" height="57"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="xuO-EU-SDo" secondAttribute="height" id="D0l-a3-hgC"/>
                             </constraints>
@@ -73,7 +73,7 @@
                             <buttonConfiguration key="configuration" style="plain" image="photo" catalog="system" title=""/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QlO-D1-o4Z">
-                            <rect key="frame" x="378.66666666666669" y="0.0" width="57" height="57"/>
+                            <rect key="frame" x="364.66666666666669" y="0.0" width="57" height="57"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="QlO-D1-o4Z" secondAttribute="height" id="Yqf-Ed-pOm"/>
                             </constraints>
@@ -82,7 +82,7 @@
                             <buttonConfiguration key="configuration" style="plain" image="face.smiling" catalog="system" title=""/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TKW-gC-CRv">
-                            <rect key="frame" x="435.66666666666669" y="0.0" width="57" height="57"/>
+                            <rect key="frame" x="421.66666666666669" y="0.0" width="57" height="57"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="TKW-gC-CRv" secondAttribute="height" id="dZg-1c-pgb"/>
@@ -92,14 +92,17 @@
                             <buttonConfiguration key="configuration" style="plain" image="plus.circle" catalog="system"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bd6-Ex-QPn">
-                            <rect key="frame" x="492.66666666666657" y="0.0" width="71.333333333333314" height="57"/>
+                            <rect key="frame" x="478.66666666666657" y="0.0" width="85.333333333333314" height="57"/>
                             <color key="backgroundColor" systemColor="linkColor"/>
                             <constraints>
-                                <constraint firstAttribute="width" secondItem="Bd6-Ex-QPn" secondAttribute="height" multiplier="1.25:1" id="f1o-uM-YNl"/>
+                                <constraint firstAttribute="width" secondItem="Bd6-Ex-QPn" secondAttribute="height" multiplier="1.5:1" id="f1o-uM-YNl"/>
                             </constraints>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="plain" image="paperplane.fill" catalog="system" title=""/>
+                            <connections>
+                                <action selector="sendButtonTapped:" destination="-1" eventType="touchUpInside" id="pS8-Ax-5NK"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>

@@ -34,12 +34,6 @@ class ChatsTableHeaderView: UIView {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-//        translatesAutoresizingMaskIntoConstraints = false
-//        contentView.translatesAutoresizingMaskIntoConstraints = false
-//        searchContainerView.translatesAutoresizingMaskIntoConstraints = false
-//        metaButton.translatesAutoresizingMaskIntoConstraints = false
-//        searchLabel.translatesAutoresizingMaskIntoConstraints = false
-//        notesCollectionView.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override func layoutSubviews() {

@@ -10,7 +10,7 @@ import FirebaseAuth
 
 
 class ChatDetailViewController: UIViewController {
-
+    
     //MARK: - IBOutlets
     @IBOutlet weak var backButton: BackButton!
     @IBOutlet weak var otherUserAvatarView: AvatarCircleView!
@@ -23,6 +23,7 @@ class ChatDetailViewController: UIViewController {
     private var currentUserId: String?
     private var chatManager = ChatManager()
     private var userProfileManager = UserProfileManager()
+    private var messages: [Message] = []
     
     // MARK: - Public variables
     var otherUserProfile: UserProfile!
@@ -33,23 +34,22 @@ class ChatDetailViewController: UIViewController {
         fetchCurrentUserId()
         setupView()
         setupKeyboardObservers()
+        startListening()
+        chatManager.delegate = self
+        
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         removeKeyboardObservers()
+        chatManager.detachListeners()
+        
     }
     
     // MARK: - init functions
     func setupView(){
         setupTopBar()
-        tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
-        messageBar = MessageBarView()
-        messageBar.cameraButton.backgroundColor = .purple
-        messageBar.translatesAutoresizingMaskIntoConstraints = false
-        messageBar.messageTextField.delegate = self
-        view.addSubview(messageBar)
+        setupTableView()
+        setupMessageBar()
         messageBarBottomConstraint = messageBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10)
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: backButton.bottomAnchor),
@@ -79,6 +79,26 @@ class ChatDetailViewController: UIViewController {
         otherUserNameButton.configuration = config
     }
     
+    func setupTableView(){
+        tableView = UITableView()
+        tableView.register(ChatDetailTableViewCell.self, forCellReuseIdentifier: ChatDetailTableViewCell.identifier)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        //tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 50
+        tableView.separatorStyle = .none
+        view.addSubview(tableView)
+    }
+    
+    func setupMessageBar(){
+        messageBar = MessageBarView()
+        messageBar.cameraButton.backgroundColor = .purple
+        messageBar.translatesAutoresizingMaskIntoConstraints = false
+        messageBar.messageTextField.delegate = self
+        messageBar.delegate = self
+        view.addSubview(messageBar)
+    }
     func setupKeyboardObservers() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(keyboardWillShow),
@@ -97,6 +117,11 @@ class ChatDetailViewController: UIViewController {
             return
         }
         self.currentUserId = userId
+    }
+    
+    // MARK: - Chat functions
+    func startListening(){
+        chatManager.listenForChatMessages(user1Id: currentUserId!, user2Id: otherUserProfile.id, limit: 50)
     }
 
     
@@ -173,6 +198,56 @@ extension ChatDetailViewController: UITextFieldDelegate{
             messageBar.stickerButton.isHidden = false
             messageBar.moreButton.isHidden = false
             messageBar.sendButton.isHidden = true
+        }
+    }
+}
+
+extension ChatDetailViewController: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        messages.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let message = messages[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: ChatDetailTableViewCell.identifier, for: indexPath) as! ChatDetailTableViewCell
+        cell.configure(message: message, currentUserId: self.currentUserId!, otherUserId: otherUserProfile.id)
+        return cell
+    }
+}
+
+extension ChatDetailViewController: ChatManagerDelegate{
+    func didUpdateChatMessages(_ messages: [Message]) {
+        self.messages = messages
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
+    func didUpdateUserChats(_ chats: [Chat]) {
+        // No need to implement, this was to update all user chats
+    }
+    
+    func chatManagerDidEncounterError(_ error: any Error) {
+        
+    }
+}
+
+extension ChatDetailViewController: MessageBarDelegate{
+    func sendTextMessage(content: String) {
+        guard let currentUserId = currentUserId else { return }
+        Task {
+            do {
+                try await chatManager.sendMessage(
+                    senderId: currentUserId,
+                    recipientId: otherUserProfile.id,
+                    content: content,
+                    type: "text"
+                )
+                // Message sent successfully. UI will update via the listener.
+                print("Text message send initiated.")
+            } catch {
+                print("Error sending message: \(error.localizedDescription)")
+            }
         }
     }
 }
