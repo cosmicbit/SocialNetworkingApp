@@ -16,7 +16,7 @@ class ChatsListViewController: UIViewController {
     
     private var chatManager = ChatManager()
     private var chats: [Chat] = [] // Stores the list of Chat objects
-    private var currentUserId: String?
+    var currentUserId: String?
     
     // A dictionary to cache participant usernames, to avoid repeated Firestore lookups
     private var participantUsernameCache: [String: String] = [:]

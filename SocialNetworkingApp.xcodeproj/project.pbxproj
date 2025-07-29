@@ -364,9 +364,9 @@
 		E19709AE2A84D6F300A76B19 /* Design */ = {
 			isa = PBXGroup;
 			children = (
+				E154F2172AB121DF000BC44C /* Components */,
 				509977F32E33884D00F82E3E /* SlideTransitionDelegate.swift */,
 				508525002E310C7D002B9E5C /* PushTransitionDelegate.swift */,
-				E154F2172AB121DF000BC44C /* Components */,
 				E154F2192AB1C809000BC44C /* Typography.swift */,
 				50BF0F982E25213E00906BBA /* Animations.swift */,
 			);
