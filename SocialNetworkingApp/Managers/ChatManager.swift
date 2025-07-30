@@ -192,6 +192,12 @@ class ChatManager {
 
             // 2. Add the new message to the messages subcollection.
             _ = try messagesCollectionRef.addDocument(from: newMessage)
+            let encodedMessage = try Firestore.Encoder().encode(newMessage)
+            let updateChat: [String : Any] = [
+                "lastMessage": encodedMessage,
+                "updatedAt": FieldValue.serverTimestamp()
+            ]
+            try await chatDocRef.updateData(updateChat)
             print("Message sent successfully to chat: \(chatId)")
 
         } catch {

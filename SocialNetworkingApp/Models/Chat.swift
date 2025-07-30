@@ -47,6 +47,8 @@ struct Chat: Identifiable, Codable {
         self.lastMessage = nil
     }
     
+    
+    
 //    init?(snapshot: DocumentSnapshot){
 //        guard let data = snapshot.data() else {
 //            return nil

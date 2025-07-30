@@ -24,20 +24,9 @@ class ChatsListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ChatDetailSegue"{
+            print("preparing...")
             let destinationVC = segue.destination as! ChatDetailViewController
-            guard let userId = sender as? String else {
-                presentError(title: "Chat Error", message: "Unable to get other User")
-                return
-            }
-            userProfileManager.getUserProfileByUserID(userId: userId) { result in
-                switch result {
-                case .success(let userProfile):
-                    print("fetch profile successful")
-                    destinationVC.otherUserProfile = userProfile
-                case .failure(_):
-                    print("failed to fetch profile")
-                }
-            }
+            destinationVC.otherUserProfile = sender as? UserProfile
         }
     }
     
@@ -120,6 +109,19 @@ class ChatsListViewController: UIViewController {
             } catch {
                 print("Error fetching username for \(userId): \(error.localizedDescription)")
                 participantUsernameCache[userId] = "Error User" // Indicate an issue
+            }
+        }
+    }
+    
+    // MARK: - Chat functions
+    func startChat(with otherUserId: String){
+        userProfileManager.getUserProfileByUserID(userId: otherUserId) { result in
+            switch result {
+            case .success(let userProfile):
+                print("fetch profile successful")
+                self.performSegue(withIdentifier: "ChatDetailSegue", sender: userProfile)
+            case .failure(_):
+                print("failed to fetch profile")
             }
         }
     }
@@ -209,7 +211,7 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
             // Show alert or handle error
             return
         }
-        performSegue(withIdentifier: "ChatDetailSegue", sender: otherUserId)
+        startChat(with: otherUserId)
     }
 }
 

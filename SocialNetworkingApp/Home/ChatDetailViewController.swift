@@ -26,15 +26,16 @@ class ChatDetailViewController: UIViewController {
     private var messages: [Message] = []
     
     // MARK: - Public variables
+    var otherUserId: String!
     var otherUserProfile: UserProfile!
     
     //MARK: - Overloaded functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchCurrentUserId()
         setupView()
-        setupKeyboardObservers()
+        fetchCurrentUserId()
         startListening()
+        setupKeyboardObservers()
         chatManager.delegate = self
         
     }
@@ -119,9 +120,12 @@ class ChatDetailViewController: UIViewController {
         self.currentUserId = userId
     }
     
+    
     // MARK: - Chat functions
     func startListening(){
-        chatManager.listenForChatMessages(user1Id: currentUserId!, user2Id: otherUserProfile.id, limit: 50)
+        if let currentUserId = currentUserId {
+            chatManager.listenForChatMessages(user1Id: currentUserId, user2Id: otherUserProfile.id, limit: 50)
+        }
     }
 
     
@@ -210,7 +214,9 @@ extension ChatDetailViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatDetailTableViewCell.identifier, for: indexPath) as! ChatDetailTableViewCell
-        cell.configure(message: message, currentUserId: self.currentUserId!, otherUserId: otherUserProfile.id)
+        if let currentUserId = currentUserId {
+            cell.configure(message: message, currentUserId: currentUserId, otherUserId: otherUserProfile.id)
+        }
         return cell
     }
 }
@@ -220,6 +226,11 @@ extension ChatDetailViewController: ChatManagerDelegate{
         self.messages = messages
         DispatchQueue.main.async {
             self.tableView.reloadData()
+            // If you want to scroll to the bottom after reloading all data:
+            if !messages.isEmpty {
+                let lastIndexPath = IndexPath(row: messages.count - 1, section: 0)
+                self.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false) // Or true for animation
+            }
         }
     }
     

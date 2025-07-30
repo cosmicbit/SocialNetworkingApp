@@ -1,5 +1,5 @@
 //
-//  NewMessageTableViewCell.swift
+//  NewChatTableViewCell.swift
 //  SocialNetworkingApp
 //
 //  Created by Philips on 28/07/25.
@@ -7,9 +7,9 @@
 
 import UIKit
 
-class NewMessageTableViewCell: UITableViewCell {
+class NewChatTableViewCell: UITableViewCell {
 
-    static let identifier = "NewMessageTableViewCell"
+    static let identifier = "NewChatTableViewCell"
     
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!

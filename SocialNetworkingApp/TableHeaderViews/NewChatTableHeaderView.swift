@@ -1,5 +1,5 @@
 //
-//  NewMessageTableHeaderView.swift
+//  NewChatTableHeaderView.swift
 //  SocialNetworkingApp
 //
 //  Created by Philips on 28/07/25.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewMessageTableHeaderView: UIView {
+class NewChatTableHeaderView: UIView {
 
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var createGroupChatView: UIView!

@@ -56,14 +56,14 @@ class NewChatViewController: UIViewController {
     private func setupTableView() {
         newMessageTableView.delegate = self
         newMessageTableView.dataSource = self
-        let nib = UINib(nibName: NewMessageTableViewCell.identifier, bundle: nil)
-        newMessageTableView.register(nib, forCellReuseIdentifier: NewMessageTableViewCell.identifier) // Simple cell for now
+        let nib = UINib(nibName: NewChatTableViewCell.identifier, bundle: nil)
+        newMessageTableView.register(nib, forCellReuseIdentifier: NewChatTableViewCell.identifier) // Simple cell for now
         newMessageTableView.rowHeight = 60
         view.addSubview(newMessageTableView)
     }
     
     func setupTableHeader() {
-        let newMessageTableHeaderView = NewMessageTableHeaderView()
+        let newMessageTableHeaderView = NewChatTableHeaderView()
         let headerHeight = newMessageTableHeaderView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         newMessageTableHeaderView.frame = CGRect(x: 0, y: 0, width: newMessageTableView.bounds.width, height: headerHeight)
         newMessageTableView.tableHeaderView = newMessageTableHeaderView
@@ -121,7 +121,7 @@ extension NewChatViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewMessageTableViewCell.identifier, for: indexPath) as! NewMessageTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewChatTableViewCell.identifier, for: indexPath) as! NewChatTableViewCell
         let user = filteredUsers[indexPath.row]
         cell.configure(userProfile: user)
         return cell
