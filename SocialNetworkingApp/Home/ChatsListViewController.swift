@@ -21,6 +21,14 @@ class ChatsListViewController: UIViewController {
     
     // A dictionary to cache participant usernames, to avoid repeated Firestore lookups
     private var participantUsernameCache: [String: String] = [:]
+    private var participantAvatarImageURLCache: [String: URL] = [:]
+    
+    private let chatsListTableViewCellHeightRatio = 0.125 * 0.70
+    
+    private let activityIndicatorView: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView()
+        return view
+    }()
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ChatDetailSegue"{
@@ -63,8 +71,8 @@ class ChatsListViewController: UIViewController {
         messagesTableView.dataSource = self
         messagesTableView.delegate = self
         messagesTableView.dataSource = self
-        messagesTableView.register(ChatListCell.self, forCellReuseIdentifier: "ChatListCell") // Register custom cell
-        messagesTableView.rowHeight = UITableView.automaticDimension // Allow self-sizing cells
+        messagesTableView.register(ChatsListTableViewCell.self, forCellReuseIdentifier: "ChatsListTableViewCell") // Register custom cell
+        messagesTableView.rowHeight = chatsListTableViewCellHeightRatio * view.frame.height
         messagesTableView.estimatedRowHeight = 80 // Estimate for performance
             
     }
@@ -82,7 +90,7 @@ class ChatsListViewController: UIViewController {
     }
     
     // MARK: - Username Fetching (New)
-    private func prefetchParticipantUsernames() async {
+    private func prefetchParticipantUserNames() async {
         guard let currentUserId = self.currentUserId else { return }
 
         var idsToFetch: Set<String> = []
@@ -109,6 +117,38 @@ class ChatsListViewController: UIViewController {
             } catch {
                 print("Error fetching username for \(userId): \(error.localizedDescription)")
                 participantUsernameCache[userId] = "Error User" // Indicate an issue
+            }
+        }
+    }
+    
+    // MARK: - Avatar Fetching (New)
+    private func prefetchParticipantAvatars() async {
+        guard let currentUserId = self.currentUserId else { return }
+
+        var idsToFetch: Set<String> = []
+        for chat in chats {
+            for participantId in chat.participants {
+                if participantId != currentUserId && participantAvatarImageURLCache[participantId] == nil {
+                    idsToFetch.insert(participantId)
+                }
+            }
+        }
+
+        if idsToFetch.isEmpty { return }
+
+        // Fetch user data from Firestore for all unknown participants
+        // This can be optimized with batched reads if you have many users
+        for userId in idsToFetch {
+            do {
+                let userDoc = try await Firestore.firestore().collection("users").document(userId).getDocument()
+                if let avatarImageURL = userDoc.data()?["avatarImageURL"] as? String {
+                    participantAvatarImageURLCache[userId] = URL(string: avatarImageURL)
+                } else {
+                    participantAvatarImageURLCache[userId] = nil // Fallback
+                }
+            } catch {
+                print("Error fetching avatar for \(userId): \(error.localizedDescription)")
+                participantAvatarImageURLCache[userId] = nil // Indicate an issue
             }
         }
     }
@@ -143,13 +183,22 @@ class ChatsListViewController: UIViewController {
 extension ChatsListViewController: ChatManagerDelegate{
     func didUpdateUserChats(_ chats: [Chat]) {
         self.chats = chats // Update the data source
-        
-        // Pre-fetch participant usernames to avoid blocking UI in cellForRowAt
+        self.view.addSubview(activityIndicatorView)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: messagesTableView.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: messagesTableView.centerYAnchor)
+        ])
+        activityIndicatorView.startAnimating()
+        // Pre-fetch participant usernames and to avoid blocking UI in cellForRowAt
         Task {
-            await prefetchParticipantUsernames()
+            await prefetchParticipantUserNames()
+            await prefetchParticipantAvatars()
             DispatchQueue.main.async {
                 self.messagesTableView.reloadData() // Reload table view on the main thread
                 print("UI updated with \(chats.count) user chats.")
+                self.activityIndicatorView.stopAnimating()
+                self.activityIndicatorView.removeFromSuperview()
             }
         }
     }
@@ -177,7 +226,7 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatListCell", for: indexPath) as! ChatListCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatsListTableViewCell", for: indexPath) as! ChatsListTableViewCell
         let chat = chats[indexPath.row]
 
         // Determine the other participant's ID
@@ -185,9 +234,7 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
 
         // Get display name from cache or use ID as fallback
         let otherParticipantDisplayName = participantUsernameCache[otherParticipantId] ?? otherParticipantId
-
-        // Get last message content
-        let lastMessageContent = chat.lastMessage?.content ?? "No messages yet."
+        let otherParticipantAvatarImageURL = participantAvatarImageURLCache[otherParticipantId] ?? nil
 
         // Format timestamp
         let dateFormatter = DateFormatter()
@@ -196,7 +243,7 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
         let lastMessageTime = chat.lastMessage?.timestamp.dateValue() ?? chat.updatedAt.dateValue()
         let timeString = dateFormatter.string(from: lastMessageTime)
 
-        cell.configure(with: otherParticipantDisplayName, lastMessage: lastMessageContent, time: timeString)
+        cell.configure(with: otherParticipantDisplayName, imageURL: otherParticipantAvatarImageURL, time: timeString)
         return cell
     }
 
@@ -216,61 +263,4 @@ extension ChatsListViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 
-// MARK: - Custom UITableViewCell for Chat List
 
-class ChatListCell: UITableViewCell {
-    let nameLabel = UILabel()
-    let lastMessageLabel = UILabel()
-    let timeLabel = UILabel()
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupViews()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    private func setupViews() {
-        // Labels configuration
-        nameLabel.font = UIFont.boldSystemFont(ofSize: 17)
-        lastMessageLabel.font = UIFont.systemFont(ofSize: 15)
-        lastMessageLabel.textColor = .gray
-        timeLabel.font = UIFont.systemFont(ofSize: 13)
-        timeLabel.textColor = .lightGray
-        timeLabel.textAlignment = .right
-
-        // Add labels to content view
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(lastMessageLabel)
-        contentView.addSubview(timeLabel)
-
-        // Disable autoresizing masks for Auto Layout
-        nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        lastMessageLabel.translatesAutoresizingMaskIntoConstraints = false
-        timeLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        // Set up constraints
-        NSLayoutConstraint.activate([
-            nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            nameLabel.trailingAnchor.constraint(equalTo: timeLabel.leadingAnchor, constant: -10), // Push nameLabel away from time
-
-            timeLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
-            timeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            timeLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 80), // Max width for time label
-
-            lastMessageLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
-            lastMessageLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
-            lastMessageLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15),
-            lastMessageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10) // Pin to bottom
-        ])
-    }
-
-    func configure(with name: String, lastMessage: String, time: String) {
-        nameLabel.text = name
-        lastMessageLabel.text = lastMessage
-        timeLabel.text = time
-    }
-}

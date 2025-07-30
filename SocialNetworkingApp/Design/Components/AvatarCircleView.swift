@@ -58,6 +58,11 @@ class AvatarCircleView: UIView {
     }
 
     func configure(imageURL: URL?){
-        imageView.sd_setImage(with: imageURL)
+        if let imageURL = imageURL {
+            imageView.sd_setImage(with: imageURL)
+            
+        }else{
+            imageView.image = UIImage(systemName: "person.fill")
+        }
     }
 }
