@@ -86,7 +86,7 @@ extension ExploreViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let post = posts[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-        cell.postImageView.sd_setImage(with: post.imageURL)
+        cell.postImageView.sd_setImage(with: post.contentURL)
         return cell
     }
     

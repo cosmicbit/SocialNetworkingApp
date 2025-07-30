@@ -13,16 +13,18 @@ struct Post {
     let userId: String
     let createdDate: Date
     let description: String
-    let imageURL: URL
+    let type: Post.ContentType
+    let contentURL: URL
     let likeCount: Int
     
-    init(id: String, userId: String, createdDate: Date, description: String, imageURL: URL, likeCount: Int) {
+    init(id: String, userId: String, createdDate: Date, description: String, type: Post.ContentType, contentURL: URL, likeCount: Int) {
         self.id = id
         self.userId = userId
         self.createdDate = createdDate
         self.description = description
-        self.imageURL = imageURL
+        self.contentURL = contentURL
         self.likeCount = likeCount
+        self.type = type
     }
     
     
@@ -32,8 +34,8 @@ struct Post {
         guard let userId = data["userId"] as? String else {
             return nil
         }
-        guard let firebaseImageURL = data["imageURL"] as? String,
-              let imageURL = URL(string:firebaseImageURL) else {
+        guard let firebaseImageURL = data["contentURL"] as? String,
+              let contentURL = URL(string:firebaseImageURL) else {
             return nil
         }
         guard let description = data["description"] as? String else {
@@ -46,14 +48,18 @@ struct Post {
         guard let likeCount = data["likeCount"] as? Int else {
             return nil
         }
+        guard let firebaseType = data["type"] as? String,
+              let type = Post.ContentType(rawValue: firebaseType) else {
+            return nil
+        }
         let createdDate = Date(timeIntervalSince1970: timeInterval)
         self.id = postId
         self.userId = userId
         self.createdDate = createdDate
         self.description = description
-        self.imageURL = imageURL
+        self.contentURL = contentURL
         self.likeCount = likeCount
-        
+        self.type = type
     }
     
     init?(snapshot: DocumentSnapshot) {
@@ -64,8 +70,8 @@ struct Post {
         guard let userId = data["userId"] as? String else {
             return nil
         }
-        guard let firebaseImageURL = data["imageURL"] as? String,
-              let imageURL = URL(string:firebaseImageURL) else {
+        guard let firebaseImageURL = data["contentURL"] as? String,
+              let contentURL = URL(string:firebaseImageURL) else {
             return nil
         }
         guard let description = data["description"] as? String else {
@@ -78,13 +84,21 @@ struct Post {
         guard let likeCount = data["likeCount"] as? Int else {
             return nil
         }
+        guard let firebaseType = data["type"] as? String,
+              let type = Post.ContentType(rawValue: firebaseType) else {
+            return nil
+        }
         let createdDate = Date(timeIntervalSince1970: timeInterval)
         self.id = postId
         self.userId = userId
         self.createdDate = createdDate
         self.description = description
-        self.imageURL = imageURL
+        self.contentURL = contentURL
         self.likeCount = likeCount
-        
+        self.type = type
+    }
+    
+    enum ContentType: String {
+        case image, video, audio
     }
 }
