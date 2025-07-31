@@ -10,8 +10,8 @@ import FirebaseFirestore
 
 // MARK: - Chat Model
 
-struct Chat: Identifiable, Codable {
-    var id: String?
+struct Chat: Codable {
+    @DocumentID var id: String?
     let participants: [String]
     var participantNames: [String]?
     var lastMessage: LastMessage?

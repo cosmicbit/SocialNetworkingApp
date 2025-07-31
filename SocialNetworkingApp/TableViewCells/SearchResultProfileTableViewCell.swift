@@ -20,7 +20,6 @@ class SearchResultProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var usernameLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     
-    
     private weak var delegate: SearchResultProfileTableViewCellDelegate?
     private var userProfile: UserProfile!
     

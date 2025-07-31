@@ -11,7 +11,7 @@ import FirebaseFirestore
 // MARK: - Message Model
 
 struct Message: Identifiable, Codable {
-    var id: String?
+    @DocumentID var id: String?
     let senderId: String
     let content: String
     let timestamp: Timestamp

@@ -164,7 +164,7 @@ class PostTableViewCell: UITableViewCell {
     func setupPost(){
         self.getPostUserProfile()
         self.avatarImageView.contentMode = .scaleAspectFill
-        self.timeElapsedLabel.text = DateFormatter.localizedString(from: self.post.createdDate, dateStyle: .full, timeStyle: .none)
+        self.timeElapsedLabel.text = DateFormatter.localizedString(from: self.post.createdDate.dateValue(), dateStyle: .full, timeStyle: .none)
         self.displayMedia(type: post.type, mediaURL: post.contentURL)
         self.likeCountLabel.text = "\(self.likeCountLocally)"
         self.descriptionLabel.text = self.post.description
@@ -215,7 +215,9 @@ class PostTableViewCell: UITableViewCell {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
-        let postId = post.id
+        guard let postId = post.id else {
+            return
+        }
         likeManager.getLikeOfUserOnPost(postId: postId, userId: userId) { result in
             switch result {
             case .success(let like):
@@ -264,12 +266,15 @@ class PostTableViewCell: UITableViewCell {
             completion(false)
             return
         }
-        let postId = post.id
+        guard let postId = post.id else {
+            completion(false)
+            return
+        }
         likeManager.postLikeOfUserOnPost(userId: userId, postId: postId, likeOrNot: self.isLikedLocally)
     }
     
     func startListeningForLikeCount() {
-        likeCountListener = postManager.listenForLikeCount(forPostId: post.id) { [weak self] result in
+        likeCountListener = postManager.listenForLikeCount(forPost: post) { [weak self] result in
             guard let self = self else {
                 return
             }

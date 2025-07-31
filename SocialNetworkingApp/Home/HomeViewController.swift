@@ -202,7 +202,6 @@ extension HomeViewController: UITableViewDelegate{
     }
 }
 
-
 extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = stories.count
@@ -220,29 +219,22 @@ extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
-    
-    
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Ensure this method is called and returns the desired size
-        // It's crucial that this returns the size you want for your cells
         let desiredSize = CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
         return desiredSize
     }
 
-    // If you need minimum line spacing (between horizontal cells)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10.0 // Matches your flowLayout.minimumLineSpacing = 10.0
     }
 
-    // If you need minimum interitem spacing (between vertical rows if scroll direction was vertical)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0 // Default or adjust as needed
     }
 
-    // If you need section insets
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2) // Default or adjust as needed
     }

@@ -224,6 +224,4 @@ extension PostViewController: PostViewControllerDelegate {
     func dismissPostView() {
         dismiss(animated: true)
     }
-    
-    
 }

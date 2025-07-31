@@ -8,17 +8,29 @@
 import Foundation
 import FirebaseFirestore
 
-struct Post {
-    let id: String
+struct Post: Codable {
+    
+    @DocumentID var id: String?
     let userId: String
-    let createdDate: Date
-    let description: String
+    let createdDate: Timestamp
+    var description: String
     let type: Post.ContentType
     let contentURL: URL
-    let likeCount: Int
+    var likeCount: Int
     let size: Post.Size
     
-    init(id: String, userId: String, createdDate: Date, description: String, type: Post.ContentType, contentURL: URL, likeCount: Int, size: Post.Size) {
+    enum CodingKeys: String, CodingKey{
+        case id
+        case userId
+        case createdDate
+        case description
+        case type
+        case contentURL
+        case likeCount
+        case size
+    }
+    
+    init(id: String, userId: String, createdDate: Timestamp, description: String, type: Post.ContentType, contentURL: URL, likeCount: Int, size: Post.Size) {
         self.id = id
         self.userId = userId
         self.createdDate = createdDate
@@ -28,8 +40,7 @@ struct Post {
         self.type = type
         self.size = size
     }
-    
-    
+    /*
     init?(snapshot: QueryDocumentSnapshot) {
         let data = snapshot.data()
         let postId = snapshot.documentID
@@ -109,12 +120,13 @@ struct Post {
         self.type = type
         self.size = size
     }
+     */
     
-    enum ContentType: String {
+    enum ContentType: String, Codable {
         case image, video, audio
     }
     
-    enum Size: String {
+    enum Size: String, Codable {
         case square
         case landscape
         case portrait

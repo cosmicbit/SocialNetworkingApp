@@ -72,7 +72,19 @@ class ExploreViewController: UIViewController {
                 return
             }
             strongSelf.posts.removeAll()
-            strongSelf.posts = documents.compactMap({ Post(snapshot: $0) })
+            strongSelf.posts = documents.compactMap{ document in
+                do{
+                    print(document.data())
+                    let post = try document.data(as: Post.self)
+                    return post
+                }catch let decodingError as DecodingError {
+                    print("Error decoding document \(document.documentID): \(decodingError.localizedDescription)")
+                    return nil
+                } catch {
+                    print("Unknown error decoding document \(document.documentID): \(error.localizedDescription)")
+                    return nil
+                }
+            }
             strongSelf.collectionView.reloadData()
         }
     }
