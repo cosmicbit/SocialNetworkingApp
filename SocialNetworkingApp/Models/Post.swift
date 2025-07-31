@@ -16,8 +16,9 @@ struct Post {
     let type: Post.ContentType
     let contentURL: URL
     let likeCount: Int
+    let size: Post.Size
     
-    init(id: String, userId: String, createdDate: Date, description: String, type: Post.ContentType, contentURL: URL, likeCount: Int) {
+    init(id: String, userId: String, createdDate: Date, description: String, type: Post.ContentType, contentURL: URL, likeCount: Int, size: Post.Size) {
         self.id = id
         self.userId = userId
         self.createdDate = createdDate
@@ -25,6 +26,7 @@ struct Post {
         self.contentURL = contentURL
         self.likeCount = likeCount
         self.type = type
+        self.size = size
     }
     
     
@@ -52,6 +54,10 @@ struct Post {
               let type = Post.ContentType(rawValue: firebaseType) else {
             return nil
         }
+        guard let firebaseSize = data["size"] as? String,
+              let size = Post.Size(rawValue: firebaseSize) else {
+            return nil
+        }
         let createdDate = Date(timeIntervalSince1970: timeInterval)
         self.id = postId
         self.userId = userId
@@ -60,6 +66,7 @@ struct Post {
         self.contentURL = contentURL
         self.likeCount = likeCount
         self.type = type
+        self.size = size
     }
     
     init?(snapshot: DocumentSnapshot) {
@@ -88,6 +95,10 @@ struct Post {
               let type = Post.ContentType(rawValue: firebaseType) else {
             return nil
         }
+        guard let firebaseSize = data["size"] as? String,
+              let size = Post.Size(rawValue: firebaseSize) else {
+            return nil
+        }
         let createdDate = Date(timeIntervalSince1970: timeInterval)
         self.id = postId
         self.userId = userId
@@ -96,9 +107,30 @@ struct Post {
         self.contentURL = contentURL
         self.likeCount = likeCount
         self.type = type
+        self.size = size
     }
     
     enum ContentType: String {
         case image, video, audio
+    }
+    
+    enum Size: String {
+        case square
+        case landscape
+        case portrait
+        case reel
+        
+        var ratio: CGFloat {
+            switch self {
+            case .square:
+                return 1
+            case .landscape:
+                return 1.91
+            case .portrait:
+                return 0.8 // Example value, choose what's appropriate
+            case .reel:
+                return 0.5625 // Example value (9:16 aspect ratio)
+            }
+        }
     }
 }

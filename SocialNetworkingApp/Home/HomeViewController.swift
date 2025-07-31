@@ -48,6 +48,26 @@ class HomeViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let cells = postTableView.visibleCells
+        for cell in cells {
+            if let cell = cell as? PostTableViewCell {
+                cell.player?.play()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let cells = postTableView.visibleCells
+        for cell in cells {
+            if let cell = cell as? PostTableViewCell {
+                cell.player?.pause()
+            }
+        }
+    }
+    
     @objc func callGoToMessagesViewController(){
         goToMessagesViewController()
     }
@@ -62,6 +82,9 @@ class HomeViewController: UIViewController {
         postTableView.dataSource = self
         postTableView.estimatedRowHeight = 400
         postTableView.rowHeight = UITableView.automaticDimension
+        postTableView.separatorStyle = .none
+        postTableView.allowsSelection = false
+        postTableView.delegate = self
     }
     
     func addLeftSwipeToView(){
@@ -165,6 +188,20 @@ extension HomeViewController: UITableViewDataSource{
     
 }
 
+extension HomeViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PostTableViewCell {
+            cell.player?.pause()
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PostTableViewCell{
+            cell.player?.play()
+        }
+    }
+}
+
 
 extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -210,5 +247,3 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
         return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2) // Default or adjust as needed
     }
 }
-
-

@@ -26,6 +26,26 @@ class ExplorePostViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let cells = explorePostTableView.visibleCells
+        for cell in cells {
+            if let cell = cell as? PostTableViewCell {
+                cell.player?.play()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let cells = explorePostTableView.visibleCells
+        for cell in cells {
+            if let cell = cell as? PostTableViewCell {
+                cell.player?.pause()
+            }
+        }
+    }
+    
     func getOtherPosts(){
         postManager.observePosts { result in
             switch result {
@@ -66,5 +86,15 @@ extension ExplorePostViewController: UITableViewDataSource{
     
 }
 extension ExplorePostViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PostTableViewCell {
+            cell.player?.pause()
+        }
+    }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PostTableViewCell{
+            cell.player?.play()
+        }
+    }
 }

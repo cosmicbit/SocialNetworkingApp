@@ -1,5 +1,5 @@
 //
-//  ExplorePostTableViewCell.swift
+//  PostTableViewCell.swift
 //  SocialNetworkingApp
 //
 //  Created by Philips on 18/07/25.
@@ -11,6 +11,10 @@ import FirebaseAuth
 import SDWebImage
 import AVFoundation
 
+protocol PostTableViewCellDelegate: AnyObject {
+    func postTableViewCell(_ cell: PostTableViewCell, didUpdateMediaHeightForPost postId: String)
+}
+
 class PostTableViewCell: UITableViewCell {
     
     static let identifier = "PostTableViewCell"
@@ -21,7 +25,6 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var optionsButton: UIButton!
     @IBOutlet weak var mediaDisplayView: UIView!
     @IBOutlet weak var imageContainerHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var heartImageView: UIImageView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeCountLabel: UILabel!
@@ -44,13 +47,10 @@ class PostTableViewCell: UITableViewCell {
         didSet{
             updateLikeButton()
             likeCountLabel.text = "\(likeCountLocally)"
-            
         }
     }
-    
     var likeCountListener: ListenerRegistration?
     let postManager = PostManager()
-    
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
@@ -63,23 +63,15 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-
-        // --- Video Cleanup ---
         player?.pause() // Stop any current playback
         playerLayer?.removeFromSuperlayer() // Remove the layer from the view hierarchy
         player = nil // Release the AVPlayer instance
         playerLayer = nil // Release the AVPlayerLayer instance
         removePlayerObservers() // Crucial: Remove KVO and NotificationCenter observers
-
-        // --- Image Cleanup ---
         postImageView.sd_cancelCurrentImageLoad() // Cancel image download for SDWebImage
         postImageView.image = nil // Clear the displayed image
-
-        // --- Hide both views to ensure only the correct one appears on reuse ---
         postImageView.isHidden = true
         postVideoView.isHidden = true
-
-        // --- Other UI Cleanup ---
         avatarImageView.sd_cancelCurrentImageLoad()
         avatarImageView.image = nil
         usernameLabel.text = nil
@@ -92,52 +84,58 @@ class PostTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        addDoubleTapGestureToPost()
+        
+        addTapGesturesToPost()
         heartImageView.transform = CGAffineTransform(scaleX: 0, y: 0)
         optionsButton.transform = CGAffineTransform(rotationAngle: .pi / 2)
-        
         mediaDisplayView.insertSubview(postImageView, at: 0)
         mediaDisplayView.insertSubview(postVideoView, at: 0)
-        
         postImageView.translatesAutoresizingMaskIntoConstraints = false
         postVideoView.translatesAutoresizingMaskIntoConstraints = false
-        
         NSLayoutConstraint.activate([
-            // Constraints for postImageView
             postImageView.topAnchor.constraint(equalTo: mediaDisplayView.topAnchor),
             postImageView.bottomAnchor.constraint(equalTo: mediaDisplayView.bottomAnchor),
             postImageView.leadingAnchor.constraint(equalTo: mediaDisplayView.leadingAnchor),
             postImageView.trailingAnchor.constraint(equalTo: mediaDisplayView.trailingAnchor),
-
-            // Constraints for postVideoView
             postVideoView.topAnchor.constraint(equalTo: mediaDisplayView.topAnchor),
             postVideoView.bottomAnchor.constraint(equalTo: mediaDisplayView.bottomAnchor),
             postVideoView.leadingAnchor.constraint(equalTo: mediaDisplayView.leadingAnchor),
             postVideoView.trailingAnchor.constraint(equalTo: mediaDisplayView.trailingAnchor)
         ])
-
-        // Initial hidden state
-        //postImageView.isHidden = true
-        //postVideoView.isHidden = true
+        postImageView.isHidden = true
+        postVideoView.isHidden = true
     }
 
     override func layoutSubviews() {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
         playerLayer?.frame = postVideoView.bounds
-
     }
     
     deinit {
-        // Stop playback and clean up observers when the view controller is deallocated
         player?.pause()
         player = nil
         playerLayer?.removeFromSuperlayer()
         playerLayer = nil
-        // If you added observers, make sure to invalidate them
         removePlayerObservers()
     }
     
+    @objc func postSingleTapped(_ sender: UITapGestureRecognizer){
+        if sender.state == .ended {
+            switch player?.timeControlStatus {
+            case .paused:
+                player?.play()
+            case .waitingToPlayAtSpecifiedRate:
+                player?.play()
+            case .playing:
+                player?.pause()
+            case nil:
+                player?.play()
+            case .some(_):
+                player?.play()
+            }
+        }
+    }
     
     @objc func postDoubleTapped(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended { // Ensure the gesture has completed
@@ -145,23 +143,20 @@ class PostTableViewCell: UITableViewCell {
             updateLikeButton()
             if !isLikedLocally{
                 isLikedLocally = true
-                self.updateLikesCollection { result in
-                    if result {
-                        print("Success")
-                    }
-                    else{
-                        print("Failed")
-                    }
-                }
+                self.updateLikesCollection { _ in }
             }
         }
     }
     
-    func addDoubleTapGestureToPost(){
+    func addTapGesturesToPost(){
         mediaDisplayView?.isUserInteractionEnabled = true
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(postDoubleTapped(_: )))
         doubleTapGesture.numberOfTapsRequired = 2
         mediaDisplayView?.addGestureRecognizer(doubleTapGesture)
+        
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(postSingleTapped(_: )))
+        singleTapGesture.numberOfTapsRequired = 1
+        mediaDisplayView.addGestureRecognizer(singleTapGesture)
     }
     
     func setupPost(){
@@ -184,14 +179,20 @@ class PostTableViewCell: UITableViewCell {
         // --- Hide both media views initially ---
         postVideoView.isHidden = true
         postImageView.isHidden = true
-
+        
+            
+        if let existingConstraint = self.imageContainerHeightConstraint {
+            existingConstraint.isActive = false
+        }
+        self.imageContainerHeightConstraint = self.mediaDisplayView.heightAnchor.constraint(equalTo: self.mediaDisplayView.widthAnchor, multiplier: 1 / self.post.size.ratio)
+        self.imageContainerHeightConstraint.isActive = true
+        self.setNeedsLayout()
+        self.layoutIfNeeded() // Apply placeholder height
         guard let url = mediaURL else {
             print("Error: Media type selected but no URL provided. Displaying placeholder.")
             postImageView.isHidden = false
             postImageView.image = UIImage(systemName: "photo.fill.on.rectangle.fill")
             postImageView.contentMode = .scaleAspectFit
-            imageContainerHeightConstraint.constant = 200.0 // Default height for placeholder
-            self.layoutIfNeeded() // Apply placeholder height
             return
         }
 
@@ -211,11 +212,8 @@ class PostTableViewCell: UITableViewCell {
         case .audio:
             print("🔊 Audio content handling is TBD. Displaying audio placeholder.")
             postImageView.isHidden = false
-            postVideoView.isHidden = true
             postImageView.image = UIImage(systemName: "waveform")
             postImageView.contentMode = .scaleAspectFit
-            imageContainerHeightConstraint.constant = 100.0 // A reasonable height for an audio UI element
-            self.layoutIfNeeded()
         }
     }
     
@@ -236,7 +234,7 @@ class PostTableViewCell: UITableViewCell {
         }
         playerLayer?.frame = videoContainerView.bounds
         addPlayerObservers()
-       // player?.play()
+        player?.play()
     }
     
     // MARK: - Player Observers (Recommended for Robustness)
@@ -246,16 +244,12 @@ class PostTableViewCell: UITableViewCell {
 
     func addPlayerObservers() {
         guard let player = player else { return }
-
-        // Observe AVPlayerItem's status to know when it's ready to play or if an error occurred.
         playerItemStatusObservation = player.currentItem?.observe(\.status, options: [.new, .old], changeHandler: { (playerItem, change) in
             switch playerItem.status {
             case .readyToPlay:
                 print("✅ PlayerItem is ready to play.")
-                // You can safely start playing here, or update UI (e.g., enable play button)
             case .failed:
                 print("❌ PlayerItem failed to load: \(playerItem.error?.localizedDescription ?? "Unknown error")")
-                // Handle error (e.g., show an alert to the user)
             case .unknown:
                 print("❔ PlayerItem status is unknown.")
                 break
@@ -264,10 +258,8 @@ class PostTableViewCell: UITableViewCell {
             }
         })
 
-        // Observe when the video finishes playing
         playerDidEndObservation = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
             print("🔄 Video finished playing. Looping...")
-            // Loop the video: seek back to the beginning
             self?.player?.seek(to: .zero)
             self?.player?.play()
         }
@@ -344,16 +336,13 @@ class PostTableViewCell: UITableViewCell {
                 return
             }
             if let _ = error {
-//                strongSelf.presentError(title: "Profile Error", message: "Cannot retrieve profile at the moment. Please try again later.")
                 return
             }
             guard let document = document, document.exists  else{
-                //strongSelf.presentError(title: "Profile Error", message: "Cannot retrieve profile at the moment. Please try again later.")
                 print("Document does not exist or error fetching document: \(error?.localizedDescription ?? "No error description")")
                 return
             }
             guard let userProfile = UserProfile(snapshot: document) else {
-                //strongSelf.presentError(title: "Profile Error", message: "Cannot retrieve profile at the moment. Please try again later.")
                 return
             }
             if let imageURL = userProfile.avatarImageURL {
