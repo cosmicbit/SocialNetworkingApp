@@ -34,6 +34,8 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var post: Post!
+    private var postUserProfile: UserProfile?
+    
     var postImageView: UIImageView = {
         let view = UIImageView()
         return view
@@ -51,6 +53,8 @@ class PostTableViewCell: UITableViewCell {
     }
     var likeCountListener: ListenerRegistration?
     let postManager = PostManager()
+    let likeManager = LikeManager()
+    let userProfileManager = UserProfileManager()
     
     func configure(post: Post){
         self.post = post
@@ -161,24 +165,19 @@ class PostTableViewCell: UITableViewCell {
         self.getPostUserProfile()
         self.avatarImageView.contentMode = .scaleAspectFill
         self.timeElapsedLabel.text = DateFormatter.localizedString(from: self.post.createdDate, dateStyle: .full, timeStyle: .none)
-        displayMedia(type: post.type, mediaURL: post.contentURL)
+        self.displayMedia(type: post.type, mediaURL: post.contentURL)
         self.likeCountLabel.text = "\(self.likeCountLocally)"
         self.descriptionLabel.text = self.post.description
     }
     
     func displayMedia(type: Post.ContentType, mediaURL: URL?) {
-        // --- Pre-display cleanup for safety and visual correctness ---
         postVideoView.player?.pause()
         postVideoView.playerLayer?.removeFromSuperlayer()
         postVideoView.playerLayer = nil
         postVideoView.removePlayerObservers() // Remove observers from previous player/item
         postImageView.sd_cancelCurrentImageLoad() // Cancel any ongoing image downloads
-
-        // --- Hide both media views initially ---
         postVideoView.isHidden = true
         postImageView.isHidden = true
-        
-            
         if let existingConstraint = self.imageContainerHeightConstraint {
             existingConstraint.isActive = false
         }
@@ -193,12 +192,10 @@ class PostTableViewCell: UITableViewCell {
             postImageView.contentMode = .scaleAspectFit
             return
         }
-
         switch type {
         case .video:
             postVideoView.isHidden = false
             postVideoView.setupVideoPlayer(with: url)
-
         case .image:
             DispatchQueue.main.async {
                 self.postImageView.sd_setImage(with: url)
@@ -206,7 +203,6 @@ class PostTableViewCell: UITableViewCell {
                 self.postImageView.translatesAutoresizingMaskIntoConstraints = false
             }
             postImageView.isHidden = false
-
         case .audio:
             print("🔊 Audio content handling is TBD. Displaying audio placeholder.")
             postImageView.isHidden = false
@@ -220,48 +216,24 @@ class PostTableViewCell: UITableViewCell {
             return
         }
         let postId = post.id
-        Firestore.firestore().collection("likes").whereField("userId", isEqualTo: userId)
-            .whereField("postId",isEqualTo: postId)
-            .getDocuments(){ [weak self] querySnapshot, error in
-                guard let self = self else { return }
-                
-                if let error = error {
-                    print("Error checking for existing reaction: \(error.localizedDescription)")
-                    return
+        likeManager.getLikeOfUserOnPost(postId: postId, userId: userId) { result in
+            switch result {
+            case .success(let like):
+                if self.isLikedLocally != like.isLiked{
+                    self.isLikedLocally = like.isLiked
                 }
-                
-                guard let documents = querySnapshot?.documents else {
-                    print("QuerySnapshot documents were nil unexpectedly.")
-                    return
-                }
-                
-                if let existingDocument = documents.first {
-                    if let likeData = Like(snapshot: existingDocument){
-                        if isLikedLocally != likeData.isLiked{
-                            isLikedLocally = likeData.isLiked
-                        }
-                    }
-                }
-                
+            case .failure(let error):
+                print(error.localizedDescription)
             }
+        }
     }
     
     func updateLikeButton() {
-        let imageName: String
-        
-        if isLikedLocally {
-            imageName = "heart.fill"
-            likeButton.tintColor = .systemRed
-        }
-        else {
-            imageName = "heart"
-            likeButton.tintColor = .black
-        }
+        let imageName: String = isLikedLocally ? "heart.fill" : "heart"
+        likeButton.tintColor = isLikedLocally ? .systemRed : .black
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 23, weight: .regular, scale: .large)
         let image = UIImage(systemName: imageName, withConfiguration: largeConfig)
         likeButton.setImage(image, for: .normal)
-        
-        // Bounce-Effect for like button
         if isLikedLocally {
             self.likeButton.bounceEffect()
         }
@@ -269,126 +241,34 @@ class PostTableViewCell: UITableViewCell {
     
     func getPostUserProfile() {
         let userId = post.userId
-        let db = Firestore.firestore()
-        let docRef = db.collection("users").document(userId)
-        docRef.getDocument { [weak self] document, error in
-            guard let strongSelf = self else {
-                return
+        userProfileManager.getUserProfileByUserID(userId: userId) { result in
+            switch result {
+            case .success(let userProfile):
+                self.setupPostUserProfile(with: userProfile)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
-            if let _ = error {
-                return
-            }
-            guard let document = document, document.exists  else{
-                print("Document does not exist or error fetching document: \(error?.localizedDescription ?? "No error description")")
-                return
-            }
-            guard let userProfile = UserProfile(snapshot: document) else {
-                return
-            }
-            if let imageURL = userProfile.avatarImageURL {
-                strongSelf.avatarImageView.sd_setImage(with: imageURL)
-            }
-            
-            strongSelf.usernameLabel.text = userProfile.username
-            
         }
     }
     
+    func setupPostUserProfile(with profile: UserProfile){
+        postUserProfile = profile
+        if let imageURL = postUserProfile?.avatarImageURL {
+            avatarImageView.sd_setImage(with: imageURL)
+        }
+        usernameLabel.text = postUserProfile?.username
+    }
+    
     func updateLikesCollection(completion: @escaping (_ result: Bool) -> Void ) {
-        
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(false)
             return
         }
         let postId = post.id
-        Firestore.firestore().collection("likes").whereField("userId", isEqualTo: userId)
-            .whereField("postId",isEqualTo: postId)
-            .getDocuments(){ [weak self] querySnapshot, error in
-                
-            guard let self = self else {
-                completion(false)
-                return
-            }
-
-            if let error = error {
-                print("Error checking for existing reaction: \(error.localizedDescription)")
-                completion(false)
-                return
-            }
-
-            guard let documents = querySnapshot?.documents else {
-                print("QuerySnapshot documents were nil unexpectedly.")
-                completion(false)
-                return
-            }
-
-            if let existingDocument = documents.first {
-                let documentRef = existingDocument.reference // Get the DocumentReference
-
-                // Create a dictionary for the update
-                let updatedData: [String: Any] = [
-                    "isLiked": self.isLikedLocally,
-                    "timestamp": Date().timeIntervalSince1970
-                ]
-                
-                updateExistingLikeRecord(updatedData: updatedData, reference: documentRef) { result in
-                    if !result{
-                        completion(false)
-                        return
-                    }
-                }
-                
-            } else {
-                let likeData: [String: Any] = [
-                    "userId": userId,
-                    "postId": postId,
-                    "isLiked": self.isLikedLocally,
-                    "timestamp": Date().timeIntervalSince1970
-                ]
-                
-                addnewLikeRecord(newData: likeData) { result in
-                    if !result {
-                        completion(false)
-                        return
-                    }
-                }
-                
-            }
-            completion(true)
-        }
-        
+        likeManager.postLikeOfUserOnPost(userId: userId, postId: postId, likeOrNot: self.isLikedLocally)
     }
-    
-    func addnewLikeRecord(newData: [String: Any], completion: @escaping (Bool) -> Void){
-        print("new record have to be added")
-        Firestore.firestore().collection("likes").document().setData(newData) { error in
-            if let error = error {
-                print("Error adding new like: \(error.localizedDescription)")
-                completion(false)
-                return
-            }
-            print("New like added successfully.")
-            
-            completion(true)
-        }
-    }
-    
-    func updateExistingLikeRecord(updatedData: [String: Any], reference documentRef: DocumentReference, completion: @escaping (_ result: Bool) -> Void){
-        print("existing record found")
-        documentRef.updateData(updatedData) { error in
-            if let error = error {
-                print("Error updating like: \(error.localizedDescription)")
-                completion(false)
-                return
-            }
-            
-            completion(true)
-        }
-    }
-    
     
     func startListeningForLikeCount() {
-
         likeCountListener = postManager.listenForLikeCount(forPostId: post.id) { [weak self] result in
             guard let self = self else {
                 return

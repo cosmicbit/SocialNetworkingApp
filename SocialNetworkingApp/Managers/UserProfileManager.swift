@@ -7,7 +7,6 @@
 import FirebaseFirestore
 
 class UserProfileManager{
-    //private let db = Firestore.firestore()
     private let collectionRef = Firestore.firestore().collection("users")
     
     func getUserProfilesByUsernameOrName(username: String, name: String, completion: @escaping (Result<[UserProfile], Error>) -> Void ){

@@ -68,6 +68,7 @@
 		50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */; };
 		50BF0F992E25213E00906BBA /* Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF0F982E25213E00906BBA /* Animations.swift */; };
 		50CC29CD2E3B677B007ED579 /* VideoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC29CC2E3B677B007ED579 /* VideoContainerView.swift */; };
+		50CC29CF2E3B727F007ED579 /* LikeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CC29CE2E3B7279007ED579 /* LikeManager.swift */; };
 		50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE41642E3777DB004AA246 /* MessageBarView.swift */; };
 		50DB56E62E2F43C3008236AE /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */; };
 		50DB56E82E2F8909008236AE /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E72E2F8904008236AE /* Story.swift */; };
@@ -165,6 +166,7 @@
 		50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetButtton.swift; sourceTree = "<group>"; };
 		50BF0F982E25213E00906BBA /* Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animations.swift; sourceTree = "<group>"; };
 		50CC29CC2E3B677B007ED579 /* VideoContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoContainerView.swift; sourceTree = "<group>"; };
+		50CC29CE2E3B7279007ED579 /* LikeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeManager.swift; sourceTree = "<group>"; };
 		50CE41642E3777DB004AA246 /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
 		50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		50DB56E72E2F8904008236AE /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		50396D3B2E27A30B000E53B7 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				50CC29CE2E3B7279007ED579 /* LikeManager.swift */,
 				5059EBA32E3347A100AFC960 /* ChatManager.swift */,
 				50DB56E92E2F8C57008236AE /* StoryManager.swift */,
 				5018042B2E28D84300BF1AEF /* UserProfileManager.swift */,
@@ -626,6 +629,7 @@
 				5054FEC12E1B9051004395DF /* Extension+UIApplication.swift in Sources */,
 				509977FA2E33974600F82E3E /* Chat.swift in Sources */,
 				50CC29CD2E3B677B007ED579 /* VideoContainerView.swift in Sources */,
+				50CC29CF2E3B727F007ED579 /* LikeManager.swift in Sources */,
 				E1A3672029F9226100A1B03E /* SceneDelegate.swift in Sources */,
 				5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */,
 				50A016E52E1BD54500594A7C /* PostToUpload.swift in Sources */,

@@ -9,13 +9,14 @@ import Foundation
 import FirebaseFirestore
 
 class PostManager{
+    
+    private let postsCollectionRef = Firestore.firestore().collection("posts")
+    private let likesCollectionRef = Firestore.firestore().collection("likes")
+    
     func listenForLikeCount(forPostId postId: String, completion: @escaping (Result<Int, Error>) -> Void) -> ListenerRegistration {
-        
-        let likesCollectionRef = Firestore.firestore().collection("likes")
         let query = likesCollectionRef
             .whereField("postId", isEqualTo: postId)
             .whereField("isLiked", isEqualTo: true)
-
 
         return query.addSnapshotListener { snapshot, error in
             if let error = error {
@@ -35,7 +36,6 @@ class PostManager{
     }
     
     private func updateLikeCount(forPostId postId: String,likeCount: Int){
-        let postsCollectionRef = Firestore.firestore().collection("posts")
         let query = postsCollectionRef.document(postId)
         let data = ["likeCount": likeCount]
         query.updateData(data) { error in
@@ -46,7 +46,7 @@ class PostManager{
     }
     
     func observePosts(completion: @escaping (Result<[Post], Error>) -> Void){
-        Firestore.firestore().collection("posts").order(by: "createdDate", descending: true).addSnapshotListener { snapshot, error in
+        postsCollectionRef.order(by: "createdDate", descending: true).addSnapshotListener { snapshot, error in
             if let error = error {
                 completion(.failure(error))
                 return
