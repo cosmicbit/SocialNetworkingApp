@@ -53,7 +53,7 @@ class HomeViewController: UIViewController {
         let cells = postTableView.visibleCells
         for cell in cells {
             if let cell = cell as? PostTableViewCell {
-                cell.player?.play()
+                cell.postVideoView.player?.play()
             }
         }
     }
@@ -63,7 +63,7 @@ class HomeViewController: UIViewController {
         let cells = postTableView.visibleCells
         for cell in cells {
             if let cell = cell as? PostTableViewCell {
-                cell.player?.pause()
+                cell.postVideoView.player?.pause()
             }
         }
     }
@@ -191,13 +191,13 @@ extension HomeViewController: UITableViewDataSource{
 extension HomeViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PostTableViewCell {
-            cell.player?.pause()
+            cell.postVideoView.player?.pause()
         }
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? PostTableViewCell{
-            cell.player?.play()
+            cell.postVideoView.player?.play()
         }
     }
 }

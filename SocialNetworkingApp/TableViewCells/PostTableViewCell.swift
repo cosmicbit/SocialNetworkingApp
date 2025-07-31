@@ -34,12 +34,12 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var post: Post!
-    private var postImageView: UIImageView = {
+    var postImageView: UIImageView = {
         let view = UIImageView()
         return view
     }()
-    private var postVideoView: UIView = {
-        let view = UIView()
+    var postVideoView: VideoContainerView = {
+        let view = VideoContainerView()
         return view
     }()
     private var likeCountLocally: Int = 0
@@ -51,8 +51,6 @@ class PostTableViewCell: UITableViewCell {
     }
     var likeCountListener: ListenerRegistration?
     let postManager = PostManager()
-    var player: AVPlayer?
-    var playerLayer: AVPlayerLayer?
     
     func configure(post: Post){
         self.post = post
@@ -63,11 +61,11 @@ class PostTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        player?.pause() // Stop any current playback
-        playerLayer?.removeFromSuperlayer() // Remove the layer from the view hierarchy
-        player = nil // Release the AVPlayer instance
-        playerLayer = nil // Release the AVPlayerLayer instance
-        removePlayerObservers() // Crucial: Remove KVO and NotificationCenter observers
+        postVideoView.player?.pause() // Stop any current playback
+        postVideoView.playerLayer?.removeFromSuperlayer() // Remove the layer from the view hierarchy
+        postVideoView.player = nil // Release the AVPlayer instance
+        postVideoView.playerLayer = nil // Release the AVPlayerLayer instance
+        postVideoView.removePlayerObservers() // Crucial: Remove KVO and NotificationCenter observers
         postImageView.sd_cancelCurrentImageLoad() // Cancel image download for SDWebImage
         postImageView.image = nil // Clear the displayed image
         postImageView.isHidden = true
@@ -109,30 +107,30 @@ class PostTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
-        playerLayer?.frame = postVideoView.bounds
+        postVideoView.playerLayer?.frame = postVideoView.bounds
     }
     
     deinit {
-        player?.pause()
-        player = nil
-        playerLayer?.removeFromSuperlayer()
-        playerLayer = nil
-        removePlayerObservers()
+        postVideoView.player?.pause()
+        postVideoView.player = nil
+        postVideoView.playerLayer?.removeFromSuperlayer()
+        postVideoView.playerLayer = nil
+        postVideoView.removePlayerObservers()
     }
     
     @objc func postSingleTapped(_ sender: UITapGestureRecognizer){
         if sender.state == .ended {
-            switch player?.timeControlStatus {
+            switch postVideoView.player?.timeControlStatus {
             case .paused:
-                player?.play()
+                postVideoView.player?.play()
             case .waitingToPlayAtSpecifiedRate:
-                player?.play()
+                postVideoView.player?.play()
             case .playing:
-                player?.pause()
+                postVideoView.player?.pause()
             case nil:
-                player?.play()
+                postVideoView.player?.play()
             case .some(_):
-                player?.play()
+                postVideoView.player?.play()
             }
         }
     }
@@ -170,10 +168,10 @@ class PostTableViewCell: UITableViewCell {
     
     func displayMedia(type: Post.ContentType, mediaURL: URL?) {
         // --- Pre-display cleanup for safety and visual correctness ---
-        player?.pause()
-        playerLayer?.removeFromSuperlayer()
-        playerLayer = nil
-        removePlayerObservers() // Remove observers from previous player/item
+        postVideoView.player?.pause()
+        postVideoView.playerLayer?.removeFromSuperlayer()
+        postVideoView.playerLayer = nil
+        postVideoView.removePlayerObservers() // Remove observers from previous player/item
         postImageView.sd_cancelCurrentImageLoad() // Cancel any ongoing image downloads
 
         // --- Hide both media views initially ---
@@ -199,7 +197,7 @@ class PostTableViewCell: UITableViewCell {
         switch type {
         case .video:
             postVideoView.isHidden = false
-            setupVideoPlayer(with: url)
+            postVideoView.setupVideoPlayer(with: url)
 
         case .image:
             DispatchQueue.main.async {
@@ -214,64 +212,6 @@ class PostTableViewCell: UITableViewCell {
             postImageView.isHidden = false
             postImageView.image = UIImage(systemName: "waveform")
             postImageView.contentMode = .scaleAspectFit
-        }
-    }
-    
-    // MARK: - Video Player Setup
-    func setupVideoPlayer(with videoURL: URL) {
-        guard let path = Bundle.main.path(forResource: "sample_video", ofType: "mp4") else {
-            print("❌ Error: Video file 'sample_video.mp4' not found in bundle.")
-            return
-        }
-        let videoContainerView = postVideoView
-        let videoURL = URL(fileURLWithPath: path)
-        let playerItem = AVPlayerItem(url: videoURL)
-        player = AVPlayer(playerItem: playerItem)
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.videoGravity = .resizeAspectFill
-        if let playerLayer = playerLayer {
-            videoContainerView.layer.addSublayer(playerLayer)
-        }
-        playerLayer?.frame = videoContainerView.bounds
-        addPlayerObservers()
-        player?.play()
-    }
-    
-    // MARK: - Player Observers (Recommended for Robustness)
-
-    var playerItemStatusObservation: NSKeyValueObservation?
-    var playerDidEndObservation: NSObjectProtocol? // For NotificationCenter
-
-    func addPlayerObservers() {
-        guard let player = player else { return }
-        playerItemStatusObservation = player.currentItem?.observe(\.status, options: [.new, .old], changeHandler: { (playerItem, change) in
-            switch playerItem.status {
-            case .readyToPlay:
-                print("✅ PlayerItem is ready to play.")
-            case .failed:
-                print("❌ PlayerItem failed to load: \(playerItem.error?.localizedDescription ?? "Unknown error")")
-            case .unknown:
-                print("❔ PlayerItem status is unknown.")
-                break
-            @unknown default:
-                fatalError("Unknown AVPlayerItem status")
-            }
-        })
-
-        playerDidEndObservation = NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
-            print("🔄 Video finished playing. Looping...")
-            self?.player?.seek(to: .zero)
-            self?.player?.play()
-        }
-    }
-
-    func removePlayerObservers() {
-        playerItemStatusObservation?.invalidate()
-        playerItemStatusObservation = nil
-
-        if let observation = playerDidEndObservation {
-            NotificationCenter.default.removeObserver(observation)
-            playerDidEndObservation = nil
         }
     }
     
@@ -466,7 +406,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     @IBAction func optionsButtonTapped(_ sender: Any) {
-        player?.play()
+        postVideoView.player?.play()
     }
     @IBAction func likeButtonTapped(_ sender: Any) {
         isLikedLocally.toggle()
@@ -481,7 +421,7 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     @IBAction func commentButtonTapped(_ sender: Any) {
-        player?.pause()
+        postVideoView.player?.pause()
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
