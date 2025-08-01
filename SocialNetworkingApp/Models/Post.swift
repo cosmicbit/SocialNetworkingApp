@@ -30,16 +30,26 @@ struct Post: Codable {
         case size
     }
     
-    init(id: String, userId: String, createdDate: Timestamp, description: String, type: Post.ContentType, contentURL: URL, likeCount: Int, size: Post.Size) {
+    init(id: String, userId: String, createdDate: Timestamp, description: String, type: Post.ContentType, contentURL: URL, size: Post.Size) {
         self.id = id
         self.userId = userId
         self.createdDate = createdDate
         self.description = description
         self.contentURL = contentURL
-        self.likeCount = likeCount
+        self.likeCount = 0
         self.type = type
         self.size = size
     }
+    init(userId: String, createdDate: Timestamp, description: String, type: Post.ContentType, contentURL: URL = URL(fileURLWithPath: ""), size: Post.Size) {
+        self.userId = userId
+        self.createdDate = createdDate
+        self.description = description
+        self.contentURL = contentURL
+        self.likeCount = 0
+        self.type = type
+        self.size = size
+    }
+    
     /*
     init?(snapshot: QueryDocumentSnapshot) {
         let data = snapshot.data()

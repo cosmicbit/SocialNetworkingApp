@@ -86,10 +86,10 @@ class PostTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        
         addTapGesturesToPost()
         heartImageView.transform = CGAffineTransform(scaleX: 0, y: 0)
         optionsButton.transform = CGAffineTransform(rotationAngle: .pi / 2)
+        mediaDisplayView.translatesAutoresizingMaskIntoConstraints = false
         mediaDisplayView.insertSubview(postImageView, at: 0)
         mediaDisplayView.insertSubview(postVideoView, at: 0)
         postImageView.translatesAutoresizingMaskIntoConstraints = false

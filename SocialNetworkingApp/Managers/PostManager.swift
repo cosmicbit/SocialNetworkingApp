@@ -20,18 +20,15 @@ class PostManager{
         let query = likesCollectionRef
             .whereField("postId", isEqualTo: postId)
             .whereField("isLiked", isEqualTo: true)
-
         let listener =  query.addSnapshotListener { snapshot, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-
             guard let snapshot = snapshot else {
                 completion(.failure(NSError(domain: "FirestoreService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Snapshot is nil."])))
                 return
             }
-
             let currentLikeCount = snapshot.count
             Task { // Use a Task to run the async update
                 do {
@@ -42,7 +39,6 @@ class PostManager{
                     completion(.failure(error)) // Or just log and complete with success if main goal is count
                 }
             }
-            
         }
         return listener
     }
@@ -57,7 +53,6 @@ class PostManager{
             throw error
         }
     }
-    
     
     func observePosts(completion: @escaping (Result<[Post], Error>) -> Void) {
         postsCollectionRef.order(by: "createdDate", descending: true).addSnapshotListener { querySnapshot, error in
@@ -83,5 +78,23 @@ class PostManager{
             }
             completion(.success(posts))
         }
+    }
+    
+    func addPost(post: Post) async throws -> String{
+        let newDocRef = try postsCollectionRef.addDocument(from: post)
+        return newDocRef.documentID
+    }
+    
+    func fetchPosts(limit: Int = 15) async throws -> [Post] {
+        let querySnapshot = try await postsCollectionRef.limit(to: limit).getDocuments()
+        let posts = querySnapshot.documents.compactMap {
+            print($0.data())
+            do{
+                return try $0.data(as: Post.self)
+            }catch{
+                return nil
+            }
+        }
+        return posts
     }
 }

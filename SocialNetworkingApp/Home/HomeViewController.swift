@@ -29,7 +29,8 @@ class HomeViewController: UIViewController {
         setupPostTable()
         setupPostTableHeaderView()
         getStories()
-        getPosts()
+        //getPosts()
+        Task { await fetchPosts() }
         addLeftSwipeToView()
 
     }
@@ -152,6 +153,18 @@ class HomeViewController: UIViewController {
             self.postTableView.reloadData()
         }
         
+    }
+    // Function to fetch and reload data
+    func fetchPosts() async {
+        do {
+            let fetchedPosts = try await postManager.fetchPosts()
+            self.posts = fetchedPosts
+            DispatchQueue.main.async {
+                self.postTableView.reloadData()
+            }
+        } catch {
+            print("Error fetching posts: \(error)")
+        }
     }
     func goToMessagesViewController() {
         let chatSB = UIStoryboard(name: "Chat", bundle: nil)
