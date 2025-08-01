@@ -29,7 +29,8 @@ class HomeViewController: UIViewController {
         setupPostTable()
         setupPostTableHeaderView()
         getStories()
-        getPosts()
+        //getPosts()
+        Task { await fetchPosts() }
         addLeftSwipeToView()
 
     }
@@ -48,6 +49,26 @@ class HomeViewController: UIViewController {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let cells = postTableView.visibleCells
+        for cell in cells {
+            if let cell = cell as? PostTableViewCell {
+                cell.postVideoView.player?.play()
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        let cells = postTableView.visibleCells
+        for cell in cells {
+            if let cell = cell as? PostTableViewCell {
+                cell.postVideoView.player?.pause()
+            }
+        }
+    }
+    
     @objc func callGoToMessagesViewController(){
         goToMessagesViewController()
     }
@@ -59,10 +80,12 @@ class HomeViewController: UIViewController {
     func setupPostTable(){
         let nib = UINib(nibName: "PostTableViewCell", bundle: nil)
         postTableView.register(nib, forCellReuseIdentifier: PostTableViewCell.identifier)
-        postTableView.delegate = self
         postTableView.dataSource = self
         postTableView.estimatedRowHeight = 400
         postTableView.rowHeight = UITableView.automaticDimension
+        postTableView.separatorStyle = .none
+        postTableView.allowsSelection = false
+        postTableView.delegate = self
     }
     
     func addLeftSwipeToView(){
@@ -131,13 +154,27 @@ class HomeViewController: UIViewController {
         }
         
     }
+    // Function to fetch and reload data
+    func fetchPosts() async {
+        do {
+            let fetchedPosts = try await postManager.fetchPosts()
+            self.posts = fetchedPosts
+            DispatchQueue.main.async {
+                self.postTableView.reloadData()
+            }
+        } catch {
+            print("Error fetching posts: \(error)")
+        }
+    }
     func goToMessagesViewController() {
-        let homeSB = UIStoryboard(name: "Home", bundle: nil)
-        let messagesVC = homeSB.instantiateViewController(withIdentifier: "MessagesViewController")
+        let chatSB = UIStoryboard(name: "Chat", bundle: nil)
+        let chatsListVC = chatSB.instantiateViewController(withIdentifier: "ChatsListViewController")
+        let chatNC = UINavigationController(rootViewController: chatsListVC)
         pushTransitionDelegate = PushTransitionDelegate(withDirection: .fromRight)
-        messagesVC.transitioningDelegate = pushTransitionDelegate
-        messagesVC.modalPresentationStyle = .custom
-        present(messagesVC, animated: true)
+        chatNC.transitioningDelegate = pushTransitionDelegate
+        chatNC.modalPresentationStyle = .custom
+        chatNC.navigationBar.isHidden = true
+        present(chatNC, animated: true)
     }
     
     @IBAction func notificationButtonTapped(_ sender: Any) {
@@ -146,7 +183,6 @@ class HomeViewController: UIViewController {
     
     @IBAction func chatButtonTapped(_ sender: Any) {
         goToMessagesViewController()
-                
     }
 }
 
@@ -166,7 +202,17 @@ extension HomeViewController: UITableViewDataSource{
 }
 
 extension HomeViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PostTableViewCell {
+            cell.postVideoView.player?.pause()
+        }
+    }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let cell = cell as? PostTableViewCell{
+            cell.postVideoView.player?.play()
+        }
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource{
@@ -186,32 +232,23 @@ extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
     }
-    
-    
 }
 
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        // Ensure this method is called and returns the desired size
-        // It's crucial that this returns the size you want for your cells
         let desiredSize = CGSize(width: collectionView.bounds.height, height: collectionView.bounds.height)
         return desiredSize
     }
 
-    // If you need minimum line spacing (between horizontal cells)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10.0 // Matches your flowLayout.minimumLineSpacing = 10.0
     }
 
-    // If you need minimum interitem spacing (between vertical rows if scroll direction was vertical)
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0 // Default or adjust as needed
     }
 
-    // If you need section insets
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2) // Default or adjust as needed
     }
 }
-
-

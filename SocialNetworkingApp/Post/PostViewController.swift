@@ -8,6 +8,8 @@
 import UIKit
 import Photos
 import PhotosUI
+import FirebaseAuth
+import FirebaseFirestore
 
 protocol PostViewControllerDelegate: AnyObject{
     func dismissPostView()
@@ -48,12 +50,9 @@ class PostViewController: UIViewController {
         super.viewDidLoad()
 
         previewImageView.contentMode = .scaleAspectFill
-        
         setupContainerView()
         setupDescriptionTextView()
-        
         addBackGroundTap()
-        
         addLeftSwipeToView()
     }
     
@@ -131,7 +130,6 @@ class PostViewController: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { _ in
             
         }
-        
         alert.addAction(cameraAction)
         alert.addAction(libraryAction)
         alert.addAction(cancelAction)
@@ -147,8 +145,6 @@ class PostViewController: UIViewController {
             presentError(title: "Description Required", message: "Please write a valid post description.")
             return
         }
-        
-       
         guard  let postText = descriptionTextView.text,
                postText.count > 5 && postText.count < 60 else {
                    presentError(title: "Post text Error ", message: "Please ensure the number of charcters in your post test is greater than 5 and less than 60.")
@@ -171,11 +167,9 @@ extension PostViewController: PHPickerViewControllerDelegate {
                     DispatchQueue.main.async {
                         self.presentError(title: "Image error", message: "Could Not load image")
                     }
-                    
                     return
                 }
                 guard let image = reading as? UIImage else {
-                    
                     self.presentError(title: "Image error", message: "Could Not load image")
                     return
                 }
@@ -185,9 +179,6 @@ extension PostViewController: PHPickerViewControllerDelegate {
             }
         }
     }
-    
-    
-    
 }
 
 extension PostViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -224,6 +215,4 @@ extension PostViewController: PostViewControllerDelegate {
     func dismissPostView() {
         dismiss(animated: true)
     }
-    
-    
 }
