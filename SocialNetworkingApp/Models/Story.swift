@@ -8,15 +8,21 @@ import UIKit
 import Foundation
 import FirebaseFirestore
 
-struct Story  {
-    let id: String
+struct Story: Codable {
+    @DocumentID var id: String?
     let userId: String
-    let imageURL: URL
+    let contentURL: URL
+    
+    enum CodingKeys: String, CodingKey{
+        case id
+        case userId
+        case contentURL
+    }
     
     init(id: String, userId: String, imageURL: URL) {
         self.id = id
         self.userId = userId
-        self.imageURL = imageURL
+        self.contentURL = imageURL
     }
     
     init?(snapshot: QueryDocumentSnapshot) {
@@ -25,13 +31,11 @@ struct Story  {
         guard let userId = data["userId"] as? String else {
             return nil
         }
-        guard let firebaseImageURL = data["imageURL"] as? String,
-              let imageURL = URL(string:firebaseImageURL) else {
+        guard let contentURL = data["contentURL"] as? URL else {
             return nil
         }
-        
         self.id = storyId
         self.userId = userId
-        self.imageURL = imageURL
+        self.contentURL = contentURL
     }
 }

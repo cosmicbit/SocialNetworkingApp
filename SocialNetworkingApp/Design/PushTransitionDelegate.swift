@@ -10,7 +10,7 @@ import UIKit
 enum TransitionDirection {
     case fromRight, fromLeft, fromTop, fromBottom
 }
-// MARK: - CustomPushTransitioningDelegate
+// MARK: - PushTransitionDelegate
 // A dedicated class to be the transitioning delegate
 class PushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
 
@@ -36,7 +36,6 @@ class PushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return dismissAnimator
     }
-
 
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return nil // For a full-screen push, usually no custom presentation controller
@@ -97,7 +96,6 @@ class PushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
                 toViewController.view.transform = .identity//CGAffineTransform(translationX: 0, y: 0)
                 
             }) { finished in
-                
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
         }
@@ -123,13 +121,9 @@ class PushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
                   let toViewController = transitionContext.viewController(forKey: .to) else {
                 return
             }
-
             let containerView = transitionContext.containerView
             let screenWidth = containerView.bounds.width
             let screenHeight = containerView.bounds.height
-            
-            
-            //containerView.insertSubview(toViewController.view, at: 0)
             let duration = transitionDuration(using: transitionContext)
             
             // Calculate initial transform based on direction
@@ -169,13 +163,13 @@ class PushTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate {
     private static func reverse(direction: TransitionDirection) -> TransitionDirection{
         switch direction {
         case .fromRight:
-            return .fromLeft
+             .fromLeft
         case .fromLeft:
-            return .fromRight
+             .fromRight
         case .fromTop:
-            return .fromBottom
+             .fromBottom
         case .fromBottom:
-            return .fromTop
+             .fromTop
         }
     }
 }

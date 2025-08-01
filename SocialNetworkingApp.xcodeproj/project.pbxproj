@@ -41,6 +41,7 @@
 		506A463C2E3758230073FF87 /* NewChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A46392E3758230073FF87 /* NewChatTableViewCell.swift */; };
 		506A463E2E376F490073FF87 /* MessageBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A463D2E376F490073FF87 /* MessageBarView.xib */; };
 		507AE8042E3C933900B86D52 /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507AE8032E3C933900B86D52 /* StoryViewController.swift */; };
+		507AE8062E3CB00300B86D52 /* ScaleTransitionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507AE8052E3CB00300B86D52 /* ScaleTransitionDelegate.swift */; };
 		508524ED2E30A18E002B9E5C /* ChatsTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */; };
 		508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */; };
 		508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */; };
@@ -142,6 +143,7 @@
 		506A463A2E3758230073FF87 /* NewChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatTableViewCell.xib; sourceTree = "<group>"; };
 		506A463D2E376F490073FF87 /* MessageBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBarView.xib; sourceTree = "<group>"; };
 		507AE8032E3C933900B86D52 /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
+		507AE8052E3CB00300B86D52 /* ScaleTransitionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleTransitionDelegate.swift; sourceTree = "<group>"; };
 		508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsTableHeaderView.xib; sourceTree = "<group>"; };
 		508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableHeaderView.swift; sourceTree = "<group>"; };
 		508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListViewController.swift; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 				E154F2172AB121DF000BC44C /* Components */,
 				509977F32E33884D00F82E3E /* SlideTransitionDelegate.swift */,
 				508525002E310C7D002B9E5C /* PushTransitionDelegate.swift */,
+				507AE8052E3CB00300B86D52 /* ScaleTransitionDelegate.swift */,
 				E154F2192AB1C809000BC44C /* Typography.swift */,
 				50BF0F982E25213E00906BBA /* Animations.swift */,
 			);
@@ -662,6 +665,7 @@
 				508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */,
 				50BAB62E2E3090BE006F3AE5 /* NotificationsViewController.swift in Sources */,
 				E154F21C2AB1C841000BC44C /* Extension+UIColor.swift in Sources */,
+				507AE8062E3CB00300B86D52 /* ScaleTransitionDelegate.swift in Sources */,
 				5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */,
 				5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */,
 				50A0172D2E1BFD5E00594A7C /* ImageFileManager.swift in Sources */,

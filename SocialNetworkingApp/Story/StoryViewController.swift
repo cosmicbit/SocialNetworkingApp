@@ -73,7 +73,8 @@ class StoryViewController: UIViewController {
     }
     
     @objc func backButtonTapped(){
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+        //navigationController?.popViewController(animated: true)
     }
 
 }
