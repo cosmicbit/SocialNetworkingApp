@@ -29,7 +29,6 @@ class HomeViewController: UIViewController {
         setupPostTable()
         setupPostTableHeaderView()
         getStories()
-        //getPosts()
         Task { await fetchPosts() }
         addLeftSwipeToView()
 
@@ -49,7 +48,7 @@ class HomeViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let cells = postTableView.visibleCells
         for cell in cells {
@@ -230,7 +229,8 @@ extension HomeViewController: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let storyVC = StoryViewController()
+        navigationController?.pushViewController(storyVC, animated: true)
     }
 }
 

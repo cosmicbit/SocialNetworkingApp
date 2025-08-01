@@ -26,7 +26,7 @@ class ExplorePostViewController: UIViewController {
 
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         let cells = explorePostTableView.visibleCells
         for cell in cells {
@@ -58,15 +58,11 @@ class ExplorePostViewController: UIViewController {
                 return
             }
         }
-        
     }
     
-
     @IBAction func backButtonTapped(_ sender: Any) {
         navigationController?.popViewController(animated: false)
     }
-    
-
 }
 
 extension ExplorePostViewController: UITableViewDataSource{

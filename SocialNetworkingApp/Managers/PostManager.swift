@@ -88,7 +88,6 @@ class PostManager{
     func fetchPosts(limit: Int = 15) async throws -> [Post] {
         let querySnapshot = try await postsCollectionRef.limit(to: limit).getDocuments()
         let posts = querySnapshot.documents.compactMap {
-            print($0.data())
             do{
                 return try $0.data(as: Post.self)
             }catch{

@@ -40,6 +40,7 @@
 		506A463B2E3758230073FF87 /* NewChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A463A2E3758230073FF87 /* NewChatTableViewCell.xib */; };
 		506A463C2E3758230073FF87 /* NewChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506A46392E3758230073FF87 /* NewChatTableViewCell.swift */; };
 		506A463E2E376F490073FF87 /* MessageBarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 506A463D2E376F490073FF87 /* MessageBarView.xib */; };
+		507AE8042E3C933900B86D52 /* StoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507AE8032E3C933900B86D52 /* StoryViewController.swift */; };
 		508524ED2E30A18E002B9E5C /* ChatsTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */; };
 		508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */; };
 		508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */; };
@@ -140,6 +141,7 @@
 		506A46392E3758230073FF87 /* NewChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewChatTableViewCell.swift; sourceTree = "<group>"; };
 		506A463A2E3758230073FF87 /* NewChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewChatTableViewCell.xib; sourceTree = "<group>"; };
 		506A463D2E376F490073FF87 /* MessageBarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageBarView.xib; sourceTree = "<group>"; };
+		507AE8032E3C933900B86D52 /* StoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryViewController.swift; sourceTree = "<group>"; };
 		508524EC2E30A18E002B9E5C /* ChatsTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatsTableHeaderView.xib; sourceTree = "<group>"; };
 		508524EE2E30A813002B9E5C /* ChatsTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsTableHeaderView.swift; sourceTree = "<group>"; };
 		508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListViewController.swift; sourceTree = "<group>"; };
@@ -267,9 +269,6 @@
 			children = (
 				5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */,
 				50BAB62D2E3090BE006F3AE5 /* NotificationsViewController.swift */,
-				508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */,
-				5059EBA52E33590C00AFC960 /* ChatDetailViewController.swift */,
-				509977FB2E33A17400F82E3E /* NewChatViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -284,6 +283,24 @@
 				50CC29CC2E3B677B007ED579 /* VideoContainerView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		507AE8012E3C930100B86D52 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				508524F02E30AC6A002B9E5C /* ChatsListViewController.swift */,
+				5059EBA52E33590C00AFC960 /* ChatDetailViewController.swift */,
+				509977FB2E33A17400F82E3E /* NewChatViewController.swift */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		507AE8022E3C931E00B86D52 /* Story */ = {
+			isa = PBXGroup;
+			children = (
+				507AE8032E3C933900B86D52 /* StoryViewController.swift */,
+			);
+			path = Story;
 			sourceTree = "<group>";
 		};
 		50A5DEE92E388D8B001C9D6F /* TableViewCells */ = {
@@ -376,6 +393,8 @@
 		E154F2182AB12307000BC44C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				507AE8022E3C931E00B86D52 /* Story */,
+				507AE8012E3C930100B86D52 /* Chat */,
 				504028292E2E2C3100F5D4C9 /* Home */,
 				5004F8BA2E28B69800C18E31 /* Post */,
 				5004F8B92E28B68300C18E31 /* Explore */,
@@ -605,6 +624,7 @@
 				506A46382E3738EB0073FF87 /* NewChatTableHeaderView.swift in Sources */,
 				504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */,
 				E1A3672229F9226100A1B03E /* ExploreViewController.swift in Sources */,
+				507AE8042E3C933900B86D52 /* StoryViewController.swift in Sources */,
 				509977F82E33972600F82E3E /* Message.swift in Sources */,
 				5018042C2E28D84C00BF1AEF /* UserProfileManager.swift in Sources */,
 				50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */,

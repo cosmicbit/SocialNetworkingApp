@@ -29,10 +29,8 @@ class AvatarCircleView: UIView {
     }
 
     private func setupView() {
-        // Add the image view as a subview to AvatarCircleView
+        clipsToBounds = true
         addSubview(imageView)
-
-        // Set up Auto Layout constraints for the imageView to fill the AvatarCircleView
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: self.topAnchor),
             imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
@@ -40,8 +38,6 @@ class AvatarCircleView: UIView {
             imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
 
-        // Add a yellow background to AvatarCircleView itself for debugging, or as a placeholder behind the image
-        //self.backgroundColor = UIColor.yellow
     }
     override func layoutSubviews() {
         super.layoutSubviews()

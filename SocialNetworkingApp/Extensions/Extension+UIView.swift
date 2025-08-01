@@ -9,11 +9,10 @@ import Foundation
 import UIKit
 
 extension UIView {
-    func addDoubleTapGesture(){
-        isUserInteractionEnabled = true
-        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(action))
-        doubleTapGesture.numberOfTapsRequired = 2
-        addGestureRecognizer(doubleTapGesture)
-        
-    }
+//    func addDoubleTapGesture(){
+//        isUserInteractionEnabled = true
+//        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector())
+//        doubleTapGesture.numberOfTapsRequired = 2
+//        addGestureRecognizer(doubleTapGesture)
+//    }
 }
