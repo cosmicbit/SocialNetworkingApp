@@ -14,11 +14,10 @@ class LikeManager {
     private let likesCollectionRef = Firestore.firestore().collection("likes")
     
     func getLikeOfUserOnPost(postId: String, userId: String, completion: @escaping (Result<Like, Error>) -> Void){
-        Firestore.firestore().collection("likes")
+        likesCollectionRef
             .whereField("userId", isEqualTo: userId)
             .whereField("postId",isEqualTo: postId)
-            .getDocuments(){ [weak self] querySnapshot, error in
-                guard let self = self else { return }
+            .getDocuments(){ querySnapshot, error in
                 
                 if let error = error {
                     print("Error checking for existing reaction: \(error.localizedDescription)")

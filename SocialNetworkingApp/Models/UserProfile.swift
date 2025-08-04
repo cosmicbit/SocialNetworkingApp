@@ -8,17 +8,17 @@
 import Foundation
 import FirebaseFirestore
 
-struct UserProfile {
-    let id: String
-    let name: String
-    let username: String
-    let pronouns: String?
-    let bio: String?
+struct UserProfile: Codable {
+    @DocumentID var id: String?
+    var name: String
+    var username: String
+    var pronouns: String?
+    var bio: String?
     let modifiedDate: Date
     let isOnboardingComplete: Bool
-    let avatarImageURL: URL?
+    var avatarImageURL: URL?
     
-    init(id: String,name: String, username: String, modifiedDate: Date, isOnboardingComplete: Bool, avatarImageURL: URL?, pronouns: String?, bio: String?) {
+    init(id: String, name: String, username: String, modifiedDate: Date, isOnboardingComplete: Bool, avatarImageURL: URL?, pronouns: String?, bio: String?) {
         self.id = id
         self.name = name
         self.username = username
@@ -56,7 +56,6 @@ struct UserProfile {
         }
         self.pronouns = data["pronouns"] as? String
         self.bio = data["bio"] as? String
-        
         self.id = id
         self.name = name
         self.username = username

@@ -34,7 +34,6 @@ class HomeViewController: UIViewController {
             await fetchStories()
         }
         addLeftSwipeToView()
-
     }
     
     override func viewDidLayoutSubviews() {
@@ -58,7 +57,6 @@ class HomeViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("viewWillDisappear")
         postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
     }
     

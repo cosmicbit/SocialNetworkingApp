@@ -32,7 +32,6 @@ class EditProfileViewController: UIViewController {
     
     var selectedImage: UIImage? = nil {
         didSet {
-            
             if selectedImage != nil {
                 avatarImageView.image = selectedImage
             }
@@ -42,11 +41,17 @@ class EditProfileViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "BioSegue"{
+            let destinationVC = segue.destination as! BioViewController
+            destinationVC.userProfile = sender as? UserProfile
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
         setupNavigationBar()
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -106,13 +111,8 @@ class EditProfileViewController: UIViewController {
     
     func setupAvatarView() {
         avatarContainerView.translatesAutoresizingMaskIntoConstraints = false
-        
-       
         frontImageView.image = avatarImageView.image
         backImageView.image = avatarImageView.image
-        
-        
-        
         frontImageView.contentMode = .scaleAspectFill
         frontImageView.translatesAutoresizingMaskIntoConstraints = false
         frontImageView.isAccessibilityElement = true
@@ -127,8 +127,6 @@ class EditProfileViewController: UIViewController {
         ])
         
         frontImageView.layer.isDoubleSided = false
-        
-        // Configure back image
         backImageView.contentMode = .scaleAspectFill
         backImageView.translatesAutoresizingMaskIntoConstraints = false
         backImageView.isAccessibilityElement = true
@@ -144,17 +142,11 @@ class EditProfileViewController: UIViewController {
         
         backImageView.layer.isDoubleSided = false
         backImageView.isHidden = true
-        
-        // Set perspective transform
         var perspectiveTransform = CATransform3DIdentity
         perspectiveTransform.m34 = 1.0 / -500.0
         avatarContainerView.layer.transform = perspectiveTransform
-        
-        
     }
-    
-    
-    
+
     func rotateAvatar(angleInDegrees: CGFloat, duration: TimeInterval, axis: Axis){
         
         let angleInRadians: CGFloat = angleInDegrees * .pi / 180
@@ -217,9 +209,7 @@ class EditProfileViewController: UIViewController {
             self.present(phPickerViewController, animated: true)
             
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { _ in
-            
-        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
         
         alert.addAction(cameraAction)
         alert.addAction(libraryAction)
@@ -227,7 +217,9 @@ class EditProfileViewController: UIViewController {
         present(alert, animated: true)
     }
     
-    
+    @IBAction func actualBioButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "BioSegue", sender: userProfile)
+    }
 }
 
 

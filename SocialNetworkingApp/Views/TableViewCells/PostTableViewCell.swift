@@ -243,11 +243,11 @@ class PostTableViewCell: UITableViewCell {
     
     func getPostUserProfile() {
         let userId = post.userId
-        userProfileManager.getUserProfileByUserID(userId: userId) { result in
-            switch result {
-            case .success(let userProfile):
-                self.setupPostUserProfile(with: userProfile)
-            case .failure(let error):
+        Task{
+            do{
+                let userProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
+                setupPostUserProfile(with: userProfile)
+            }catch{
                 print(error.localizedDescription)
             }
         }

@@ -7,26 +7,21 @@
 
 import UIKit
 import FirebaseAuth
-import FirebaseFirestore
 import SDWebImage
 
 class AccountViewController: UIViewController {
 
-    
     @IBOutlet weak var avatarImageView: UIImageView!
-    
     @IBOutlet weak var nameLabel: UILabel!
-    
     @IBOutlet weak var postCountLabel: UILabel!
-    
     @IBOutlet weak var bioLabel: UILabel!
-    
     @IBOutlet weak var editProfileButton: UIButton!
     @IBOutlet weak var shareProfileButton: UIButton!
     @IBOutlet weak var savedPostsButton: UIButton!
     @IBOutlet weak var signOutButton: UIButton!
     
     var userProfile: UserProfile?
+    private let userProfileManager = UserProfileManager()
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -58,46 +53,24 @@ class AccountViewController: UIViewController {
     }
     
     func getUserProfile() {
-        
-        DispatchQueue.main.async{
+        Task{
             guard let userId = Auth.auth().currentUser?.uid else {
                 return
             }
-            let db = Firestore.firestore()
-            let docRef = db.collection("users").document(userId)
-            docRef.getDocument(completion: { [weak self] document, error in
-                guard let strongSelf = self else {
-                    return
-                }
-                if let _ = error {
-                    strongSelf.presentError(title: "Profile Error", message: "Cannot retrieve profile at the moment. Please try again later.")
-                    return
-                }
-                guard let document = document, document.exists  else{
-                    strongSelf.presentError(title: "Profile Error", message: "Cannot retrieve profile at the moment. Please try again later.")
-                    print("Document does not exist or error fetching document: \(error?.localizedDescription ?? "No error description")")
-                    return
-                }
-                
-                guard let userProfile = UserProfile(snapshot: document) else {
-                    print()
-                    return
-                }
-                strongSelf.userProfile = userProfile
-            })
+            do{
+                userProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
+            }catch{
+                presentError(title: "Profile Fetch Error", message: error.localizedDescription)
+            }
         }
     }
     
     func setupNavigationBar() {
         let settingsImage = UIImage(systemName: "line.3.horizontal")
         let settingsButton = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: #selector(settingsButtonTapped))
-
-        
         let postImage = UIImage(systemName: "plus.app")
         let postButton = UIBarButtonItem(image: postImage, style: .plain, target: self, action: #selector(createButtonTapped))
-        
         navigationItem.rightBarButtonItems = [settingsButton, postButton]
-        
         navigationController?.navigationBar.tintColor = .black
     }
     
@@ -111,20 +84,13 @@ class AccountViewController: UIViewController {
 
     }
     func setupViews() {
-        
         nameLabel.text?.removeAll()
         bioLabel.text?.removeAll()
         avatarImageView.contentMode = .scaleAspectFill
-        
-        if let imageURL = userProfile?.avatarImageURL {
-            print("Avatar URL Obtained")
-            avatarImageView.sd_setImage(with: imageURL)
-        }
-        if let name = userProfile?.name {
-            nameLabel.text = name
-        }
-        if let bio = userProfile?.bio {
-            bioLabel.text = bio
+        if let userProfile = userProfile{
+            avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
+            nameLabel.text = userProfile.name
+            bioLabel.text = userProfile.bio
         }
     }
     
@@ -145,5 +111,4 @@ class AccountViewController: UIViewController {
         view.window?.rootViewController = loginVC
         print("Routed back to Login View Controller")
     }
-    
 }

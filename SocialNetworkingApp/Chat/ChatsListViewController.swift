@@ -151,13 +151,12 @@ class ChatsListViewController: UIViewController {
     
     // MARK: - Chat functions
     func startChat(with otherUserId: String){
-        userProfileManager.getUserProfileByUserID(userId: otherUserId) { result in
-            switch result {
-            case .success(let userProfile):
-                print("fetch profile successful")
-                self.performSegue(withIdentifier: "ChatDetailSegue", sender: userProfile)
-            case .failure(_):
-                print("failed to fetch profile")
+        Task{
+            do{
+                let userProfile = try await userProfileManager.getUserProfileByUserID(userId: otherUserId)
+                performSegue(withIdentifier: "ChatDetailSegue", sender: userProfile)
+            }catch{
+                print(error.localizedDescription)
             }
         }
     }
