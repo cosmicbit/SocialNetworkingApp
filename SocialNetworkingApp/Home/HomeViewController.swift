@@ -219,7 +219,7 @@ extension HomeViewController: UICollectionViewDataSource{
         let cellRectInMainView = collectionView.convert(cellRect, to: self.view)
         
         let storyVC = StoryViewController()
-        scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView.origin)
+        scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
         storyVC.transitioningDelegate = scaleTransitionDelegate
         storyVC.modalPresentationStyle = .custom
         present(storyVC, animated: true)

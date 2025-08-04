@@ -17,12 +17,14 @@ class StoryViewController: UIViewController {
     
     private let usernameLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 13)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private let subtitleLabel: UILabel = {
         let label = UILabel()
+        label.font = .systemFont(ofSize: 11)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -54,8 +56,8 @@ class StoryViewController: UIViewController {
         NSLayoutConstraint.activate([
             avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             avatar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
-            avatar.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor, multiplier: 0.07),
-            avatar.widthAnchor.constraint(equalTo: avatar.heightAnchor),
+            avatar.heightAnchor.constraint(equalToConstant: 45),
+            avatar.widthAnchor.constraint(equalToConstant: 45),
             
             usernameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             usernameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 10),
@@ -65,8 +67,8 @@ class StoryViewController: UIViewController {
             subtitleLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 10),
             subtitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
             
-            backButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            backButton.centerYAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerYAnchor),
+            backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            backButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
         ])
         
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)

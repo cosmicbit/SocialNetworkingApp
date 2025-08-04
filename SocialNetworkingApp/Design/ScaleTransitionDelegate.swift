@@ -18,9 +18,9 @@ class ScaleTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate{
     private let dismissAnimator: ScaleDismissAnimator
     
     var presentationDirection: ScaleDirection
-    var parentPosition: CGPoint
+    var parentPosition: CGRect
     
-    init(withDirection direction: ScaleDirection, position: CGPoint, presentDuration: TimeInterval = 0.3, dismissDuration: TimeInterval = 0.5) {
+    init(withDirection direction: ScaleDirection, position: CGRect, presentDuration: TimeInterval = 0.1, dismissDuration: TimeInterval = 0.3) {
         self.presentationDirection = direction
         self.parentPosition = position
         let dismissDirection = ScaleTransitionDelegate.reverse(direction: direction)
@@ -44,9 +44,9 @@ class ScaleTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate{
         
         private let duration: TimeInterval
         private let direction: ScaleDirection
-        private let position: CGPoint
+        private let position: CGRect
         
-        init(direction: ScaleDirection, duration: TimeInterval, position: CGPoint) {
+        init(direction: ScaleDirection, duration: TimeInterval, position: CGRect) {
             self.duration = duration
             self.direction = direction
             self.position = position
@@ -57,21 +57,18 @@ class ScaleTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate{
         }
         
         func animateTransition(using transitionContext: any UIViewControllerContextTransitioning) {
-            guard let toViewController = transitionContext.viewController(forKey: .to) else {
+            guard let toViewController = transitionContext.viewController(forKey: .to),
+                  let toView = toViewController.view
+            else {
                 return
             }
             let containerView = transitionContext.containerView
             containerView.addSubview(toViewController.view)
             let duration = transitionDuration(using: transitionContext)
-            switch direction {
-            case .up:
-                toViewController.view.transform = CGAffineTransform(scaleX: 0, y: 0)
-            case .down:
-                toViewController.view.transform = CGAffineTransform(scaleX: 1, y: 1)
-            }
-            //toViewController.view.transform = CGAffineTransform(translationX: position.x, y: position.y)
-            UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
-                toViewController.view.transform = .identity
+            let combinedTransform = toView.getTranformToThisFrame(newFrame: position)
+            toView.transform = combinedTransform
+            UIView.animate(withDuration: duration, delay: 0, options: .curveLinear, animations: {
+                toView.transform = .identity
             }) { finished in
                 transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
@@ -81,10 +78,10 @@ class ScaleTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate{
     private class ScaleDismissAnimator: NSObject, UIViewControllerAnimatedTransitioning{
         private let duration: TimeInterval
         private let direction: ScaleDirection
-        private let position: CGPoint
+        private let position: CGRect
         
-        init(direction: ScaleDirection, duration: TimeInterval, position: CGPoint) {
-            self.duration = 3
+        init(direction: ScaleDirection, duration: TimeInterval, position: CGRect) {
+            self.duration = duration
             self.direction = direction
             self.position = position
         }
@@ -101,27 +98,12 @@ class ScaleTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate{
                 return
             }
             let duration = transitionDuration(using: transitionContext)
-            switch direction {
-            case .up:
-                fromView.transform = CGAffineTransform(scaleX: 0, y: 0)
-            case .down:
-                fromView.transform = CGAffineTransform(scaleX: 1, y: 1)
-            }
-            let targetPoint = position
-            let scaledDownTopCenter = CGPoint(x: fromView.frame.midX - ((fromView.frame.width * 0.1) / 2), y: fromView.center.y - ((fromView.frame.height * 0.1) / 2))
-            //let originalTopCenter = CGPoint(x: fromView.frame.midX, y: fromView.frame.minY)
-            print(fromView.center, " - ", fromView.frame.midX, " - ", fromView.frame.minY)
-            let offsetX = targetPoint.x - scaledDownTopCenter.x
-            let offsetY = targetPoint.y - scaledDownTopCenter.y
-            let scaleTransform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-            let translateTransform = CGAffineTransform(translationX: offsetX, y: offsetY)
+            let combinedTransform = fromView.getTranformToThisFrame(newFrame: position)
             UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
-                fromView.transform = scaleTransform.concatenating(translateTransform)
-                
+                fromView.transform = combinedTransform
             }) { finished in
-                //fromView.transform = CGAffineTransform(scaleX: 0.1, y: 0.1)
-                fromViewController.view.removeFromSuperview()
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                    fromViewController.view.removeFromSuperview()
+                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
         }
     }

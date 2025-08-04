@@ -9,10 +9,21 @@ import Foundation
 import UIKit
 
 extension UIView {
-//    func addDoubleTapGesture(){
-//        isUserInteractionEnabled = true
-//        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector())
-//        doubleTapGesture.numberOfTapsRequired = 2
-//        addGestureRecognizer(doubleTapGesture)
-//    }
+    func getTranformToThisFrame(newFrame: CGRect) -> CGAffineTransform{
+        let originalCenter = center
+        let originalSize = bounds.size
+        
+        let scaleX = newFrame.width / originalSize.width
+        let scaleY = newFrame.height / originalSize.height
+        let scaleTransform = CGAffineTransform(scaleX: scaleX, y: scaleY)
+        
+        let newCenter = CGPoint(x: newFrame.midX, y: newFrame.midY)
+        let translationX = newCenter.x - originalCenter.x
+        let translationY = newCenter.y - originalCenter.y
+        let translationTransform = CGAffineTransform(translationX: translationX, y: translationY)
+        
+        let combinedTransform = scaleTransform.concatenating(translationTransform)
+        
+        return combinedTransform
+    }
 }
