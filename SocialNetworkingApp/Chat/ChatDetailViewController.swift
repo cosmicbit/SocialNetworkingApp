@@ -123,8 +123,9 @@ class ChatDetailViewController: UIViewController {
     
     // MARK: - Chat functions
     func startListening(){
-        if let currentUserId = currentUserId {
-            chatManager.listenForChatMessages(user1Id: currentUserId, user2Id: otherUserProfile.id, limit: 50)
+        if let currentUserId = currentUserId,
+            let otherUserId = otherUserProfile.id {
+            chatManager.listenForChatMessages(user1Id: currentUserId, user2Id: otherUserId, limit: 50)
         }
     }
 
@@ -214,8 +215,9 @@ extension ChatDetailViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let message = messages[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: ChatDetailTableViewCell.identifier, for: indexPath) as! ChatDetailTableViewCell
-        if let currentUserId = currentUserId {
-            cell.configure(message: message, currentUserId: currentUserId, otherUserId: otherUserProfile.id)
+        if let currentUserId = currentUserId,
+           let otherUserId = otherUserProfile.id{
+            cell.configure(message: message, currentUserId: currentUserId, otherUserId: otherUserId)
         }
         return cell
     }
@@ -246,11 +248,12 @@ extension ChatDetailViewController: ChatManagerDelegate{
 extension ChatDetailViewController: MessageBarDelegate{
     func sendTextMessage(content: String) {
         guard let currentUserId = currentUserId else { return }
+        guard let otherUserId = otherUserProfile.id else { return }
         Task {
             do {
                 try await chatManager.sendMessage(
                     senderId: currentUserId,
-                    recipientId: otherUserProfile.id,
+                    recipientId: otherUserId,
                     content: content,
                     type: "text"
                 )

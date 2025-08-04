@@ -100,13 +100,12 @@ class StoryCollectionViewCell: UICollectionViewCell {
     // MARK: - Private Methods
     
     private func getUserProfile(userId: String){
-        userProfileManager.getUserProfileByUserID(userId: userId) { result in
-            switch result {
-            case .success(let userProfile):
-                self.userProfile = userProfile
-                self.avatarView.configure(imageURL: self.userProfile.avatarImageURL)
-            case .failure(_):
-                return
+        Task{
+            do{
+                userProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
+                avatarView.configure(imageURL: userProfile.avatarImageURL)
+            }catch{
+                print(error.localizedDescription)
             }
         }
     }

@@ -63,36 +63,43 @@ class UserProfileManager{
             }
     }
     
-    func getUserProfileByUserID(userId:String, completion: @escaping (Result<UserProfile, Error>) -> Void ){
-
-        collectionRef.document(userId).getDocument(){ (snapshot, error) in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-            guard let doc = snapshot else {
-                return
-            }
-               
-            guard let userProfile = UserProfile(snapshot: doc) else{
-                return
-            }
-            completion(.success(userProfile))
-        }
+    func getUserProfileByUserID(userId:String) async throws -> UserProfile{
+        let querySnapshot = try await collectionRef.document(userId).getDocument()
+        return try querySnapshot.data(as: UserProfile.self)
     }
     
     func getAllUsers(completion: @escaping (Result<[UserProfile], Error>) -> Void){
         collectionRef.getDocuments { querySnapshot, error in
-
             if let error = error {
                 completion(.failure(error))
                 return
             }
             guard let documents = querySnapshot?.documents else {
+                completion(.failure(NSError(domain: "FirestoreService", code: 0, userInfo: [NSLocalizedDescriptionKey: "Snapshot is nil"])))
                 return
             }
-            let userProfiles = documents.compactMap { UserProfile(snapshot: $0) }
+            let userProfiles = documents.compactMap {
+                do{
+                    return try $0.data(as: UserProfile.self)
+                }catch{
+                    return nil
+                }
+            }
             completion(.success(userProfiles))
+        }
+    }
+    
+    func updateUserProfile(userProfile: UserProfile, completion: @escaping (Bool) -> Void){
+        guard let userId = userProfile.id else {
+            completion(false)
+            return
+        }
+        do {
+            try collectionRef.document(userId).setData(from: userProfile, merge: true)
+            completion(true)
+        }catch{
+            print(error.localizedDescription)
+            completion(false)
         }
     }
 }
