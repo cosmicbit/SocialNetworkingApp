@@ -102,8 +102,8 @@ class ScaleTransitionDelegate: NSObject, UIViewControllerTransitioningDelegate{
             UIView.animate(withDuration: duration, delay: 0, options: .curveEaseOut, animations: {
                 fromView.transform = combinedTransform
             }) { finished in
-                    fromViewController.view.removeFromSuperview()
-                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+                fromViewController.view.removeFromSuperview()
+                transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             }
         }
     }

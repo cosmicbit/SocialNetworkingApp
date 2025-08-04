@@ -7,7 +7,14 @@
 
 import UIKit
 
+protocol StoryViewControllerDelegate: AnyObject{
+    func storyVCWillDismiss()
+}
+
 class StoryViewController: UIViewController {
+    
+    var originalCenterOfView: CGPoint = CGPoint()
+    weak var delegate: StoryViewControllerDelegate?
     
     private let avatar: AvatarCircleView = {
         let view = AvatarCircleView()
@@ -38,6 +45,12 @@ class StoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        addPanGesture()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        view.layer.cornerRadius = 12
     }
     
     func setupView(){
@@ -53,30 +66,51 @@ class StoryViewController: UIViewController {
         view.addSubview(subtitleLabel)
         view.addSubview(backButton)
         
+        let safeArea = view.safeAreaLayoutGuide
+        
         NSLayoutConstraint.activate([
-            avatar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            avatar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
+            avatar.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            avatar.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
             avatar.heightAnchor.constraint(equalToConstant: 45),
             avatar.widthAnchor.constraint(equalToConstant: 45),
             
-            usernameLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            usernameLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
             usernameLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 10),
-            usernameLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            usernameLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
             
             subtitleLabel.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor, constant: 10),
             subtitleLabel.leadingAnchor.constraint(equalTo: avatar.trailingAnchor, constant: 10),
-            subtitleLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -10),
+            subtitleLabel.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor, constant: -10),
             
-            backButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            backButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            backButton.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor),
+            backButton.centerYAnchor.constraint(equalTo: safeArea.centerYAnchor),
         ])
         
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        
+        originalCenterOfView = view.center
+    }
+    
+    func addPanGesture(){
+        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureOfView(_:)))
+        view.addGestureRecognizer(panGestureRecognizer)
+    }
+    
+    @objc func handlePanGestureOfView(_ sender: UIPanGestureRecognizer){
+        guard let draggedView = sender.view else { return }
+        let translation = sender.translation(in: self.view)
+        let newCenter = CGPoint(x: draggedView.center.x, y: draggedView.center.y + translation.y * 0.5)
+        if newCenter.y > originalCenterOfView.y {
+            draggedView.center = newCenter
+        }
+        sender.setTranslation(.zero, in: self.view)
+        if sender.state == .ended{
+            dismiss(animated: true)
+        }
     }
     
     @objc func backButtonTapped(){
         dismiss(animated: true)
-        //navigationController?.popViewController(animated: true)
     }
 
 }

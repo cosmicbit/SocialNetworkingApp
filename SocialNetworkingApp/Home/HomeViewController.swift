@@ -53,22 +53,13 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let cells = postTableView.visibleCells
-        for cell in cells {
-            if let cell = cell as? PostTableViewCell {
-                cell.postVideoView.player?.play()
-            }
-        }
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.play() }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let cells = postTableView.visibleCells
-        for cell in cells {
-            if let cell = cell as? PostTableViewCell {
-                cell.postVideoView.player?.pause()
-            }
-        }
+        print("viewWillDisappear")
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
     }
     
     @objc func callGoToMessagesViewController(){
@@ -222,6 +213,7 @@ extension HomeViewController: UICollectionViewDataSource{
         scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
         storyVC.transitioningDelegate = scaleTransitionDelegate
         storyVC.modalPresentationStyle = .custom
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
         present(storyVC, animated: true)
     }
 }
@@ -242,5 +234,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2) // Default or adjust as needed
+    }
+}
+
+extension HomeViewController: StoryViewControllerDelegate{
+    func storyVCWillDismiss() {
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.play() }
     }
 }

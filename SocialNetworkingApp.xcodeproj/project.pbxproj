@@ -19,7 +19,6 @@
 		501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */; };
 		50324E812E261C5200B703C2 /* Extension+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E802E261C4300B703C2 /* Extension+UIView.swift */; };
 		50324E832E26643A00B703C2 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E822E26642700B703C2 /* Like.swift */; };
-		50396D362E2775FE000E53B7 /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D352E2775FE000E53B7 /* Debouncer.swift */; };
 		50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3A2E27A30B000E53B7 /* PostManager.swift */; };
 		50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3D2E27BC16000E53B7 /* SearchViewController.swift */; };
 		504028282E2E203A00F5D4C9 /* Pacifico-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 504028272E2E203A00F5D4C9 /* Pacifico-Regular.ttf */; };
@@ -121,7 +120,6 @@
 		5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimarySegmentedControl.swift; sourceTree = "<group>"; };
 		50324E802E261C4300B703C2 /* Extension+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+UIView.swift"; sourceTree = "<group>"; };
 		50324E822E26642700B703C2 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
-		50396D352E2775FE000E53B7 /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
 		50396D3A2E27A30B000E53B7 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		50396D3D2E27BC16000E53B7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		504028272E2E203A00F5D4C9 /* Pacifico-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pacifico-Regular.ttf"; sourceTree = "<group>"; };
@@ -278,6 +276,10 @@
 		5054FEC62E1B9D99004395DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E154F2172AB121DF000BC44C /* Components */,
+				50A5DEEB2E388DE8001C9D6F /* TableHeaderViews */,
+				50A5DEEA2E388DC9001C9D6F /* CollectionViewCells */,
+				50A5DEE92E388D8B001C9D6F /* TableViewCells */,
 				50037B642E250E910027149E /* CreateAlertActionSheetView.xib */,
 				50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */,
 				506A463D2E376F490073FF87 /* MessageBarView.xib */,
@@ -392,7 +394,7 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		E154F2182AB12307000BC44C /* ViewControllers */ = {
+		E154F2182AB12307000BC44C /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				507AE8022E3C931E00B86D52 /* Story */,
@@ -406,7 +408,7 @@
 				508759F52E1CF40800ABAEC6 /* OnboardingViewController.swift */,
 				508759F72E1D0E7E00ABAEC6 /* SplashViewController.swift */,
 			);
-			name = ViewControllers;
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		E154F21D2AB1CCA0000BC44C /* Resources */ = {
@@ -418,17 +420,16 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		E19709AE2A84D6F300A76B19 /* Design */ = {
+		E19709AE2A84D6F300A76B19 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				E154F2172AB121DF000BC44C /* Components */,
 				509977F32E33884D00F82E3E /* SlideTransitionDelegate.swift */,
 				508525002E310C7D002B9E5C /* PushTransitionDelegate.swift */,
 				507AE8052E3CB00300B86D52 /* ScaleTransitionDelegate.swift */,
 				E154F2192AB1C809000BC44C /* Typography.swift */,
 				50BF0F982E25213E00906BBA /* Animations.swift */,
 			);
-			path = Design;
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		E1A3671129F9226100A1B03E = {
@@ -450,20 +451,16 @@
 		E1A3671C29F9226100A1B03E /* SocialNetworkingApp */ = {
 			isa = PBXGroup;
 			children = (
-				50A5DEEB2E388DE8001C9D6F /* TableHeaderViews */,
-				50A5DEEA2E388DC9001C9D6F /* CollectionViewCells */,
-				50A5DEE92E388D8B001C9D6F /* TableViewCells */,
+				E1A3671D29F9226100A1B03E /* AppDelegate.swift */,
+				E1A3671F29F9226100A1B03E /* SceneDelegate.swift */,
 				5054FEC62E1B9D99004395DF /* Views */,
 				E154F21D2AB1CCA0000BC44C /* Resources */,
-				E154F2182AB12307000BC44C /* ViewControllers */,
+				E154F2182AB12307000BC44C /* Controllers */,
 				E154F2162AB1219B000BC44C /* Storyboards */,
-				E19709AE2A84D6F300A76B19 /* Design */,
+				E19709AE2A84D6F300A76B19 /* Utils */,
 				50396D3B2E27A30B000E53B7 /* Managers */,
 				E11960B72A162B4A0037EA8F /* Models */,
 				E1A3674F29FAB23D00A1B03E /* Extensions */,
-				E1A3671D29F9226100A1B03E /* AppDelegate.swift */,
-				E1A3671F29F9226100A1B03E /* SceneDelegate.swift */,
-				50396D352E2775FE000E53B7 /* Debouncer.swift */,
 				50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */,
 				E1A3672629F9226300A1B03E /* Assets.xcassets */,
 				E1FDD9152A0A50D4006AD0DF /* Colors.xcassets */,
@@ -645,7 +642,6 @@
 				50DB56E62E2F43C3008236AE /* StoryCollectionViewCell.swift in Sources */,
 				50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */,
 				5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */,
-				50396D362E2775FE000E53B7 /* Debouncer.swift in Sources */,
 				501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */,
 				508525012E310C8A002B9E5C /* PushTransitionDelegate.swift in Sources */,
 				5002B5CE2E2A696500F36A80 /* PostTableViewCell.swift in Sources */,
