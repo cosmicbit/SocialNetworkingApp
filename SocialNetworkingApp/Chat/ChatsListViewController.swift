@@ -22,7 +22,6 @@ class ChatsListViewController: UIViewController {
     // A dictionary to cache participant usernames, to avoid repeated Firestore lookups
     private var participantUsernameCache: [String: String] = [:]
     private var participantAvatarImageURLCache: [String: URL] = [:]
-    
     private let chatsListTableViewCellHeightRatio = 0.125 * 0.70
     
     private let activityIndicatorView: UIActivityIndicatorView = {
@@ -40,7 +39,6 @@ class ChatsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
         setupMessagesTableHeader()
         setupChatsListTableView()
         addRightSwipeToView()
@@ -61,8 +59,6 @@ class ChatsListViewController: UIViewController {
         super.viewDidDisappear(animated)
         chatManager.detachListeners()
     }
-    
-    
     
     @objc func backToHomeVC(){
         dismiss(animated: true)

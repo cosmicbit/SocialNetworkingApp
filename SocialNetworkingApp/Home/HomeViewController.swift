@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     private var posts: [Post] = []
     private var stories: [Story] = []
     var pushTransitionDelegate: PushTransitionDelegate?
+    var scaleTransitionDelegate: ScaleTransitionDelegate?
     private let postManager = PostManager()
     private let storyManager = StoryManager()
     
@@ -28,9 +29,10 @@ class HomeViewController: UIViewController {
         setupLogoLabel()
         setupPostTable()
         setupPostTableHeaderView()
-        getStories()
-        //getPosts()
-        Task { await fetchPosts() }
+        Task {
+            await fetchPosts()
+            await fetchStories()
+        }
         addLeftSwipeToView()
 
     }
@@ -49,24 +51,15 @@ class HomeViewController: UIViewController {
         }
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let cells = postTableView.visibleCells
-        for cell in cells {
-            if let cell = cell as? PostTableViewCell {
-                cell.postVideoView.player?.play()
-            }
-        }
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.play() }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        let cells = postTableView.visibleCells
-        for cell in cells {
-            if let cell = cell as? PostTableViewCell {
-                cell.postVideoView.player?.pause()
-            }
-        }
+        print("viewWillDisappear")
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
     }
     
     @objc func callGoToMessagesViewController(){
@@ -128,33 +121,18 @@ class HomeViewController: UIViewController {
         storyHeaderView.frame = CGRect(x: 0, y: 0, width: postTableView.bounds.width, height: storiesBarHeight)
     }
     
-    func getStories(){
-        storyManager.observePosts { result in
-            switch result {
-            case .success(let stories):
-                self.stories = stories
-                print("Stories fetched successfully. Count: \(self.stories.count)")
-            case .failure(let error):
-                print("Error fetching stories: \(error.localizedDescription)")
-                return
+    func fetchStories() async {
+        do{
+            let fetchedStories = try await storyManager.fetchStories()
+            self.stories = fetchedStories
+            DispatchQueue.main.async {
+                self.storyCollectionView.reloadData()
             }
-            self.storyCollectionView.reloadData()
+        } catch {
+            print("Error fetching stories: \(error)")
         }
     }
-    
-    func getPosts(){
-        postManager.observePosts { result in
-            switch result {
-            case .success(let posts):
-                self.posts = posts
-            case .failure(_):
-                return
-            }
-            self.postTableView.reloadData()
-        }
-        
-    }
-    // Function to fetch and reload data
+
     func fetchPosts() async {
         do {
             let fetchedPosts = try await postManager.fetchPosts()
@@ -166,6 +144,7 @@ class HomeViewController: UIViewController {
             print("Error fetching posts: \(error)")
         }
     }
+    
     func goToMessagesViewController() {
         let chatSB = UIStoryboard(name: "Chat", bundle: nil)
         let chatsListVC = chatSB.instantiateViewController(withIdentifier: "ChatsListViewController")
@@ -197,8 +176,6 @@ extension HomeViewController: UITableViewDataSource{
         cell.configure(post: post)
         return cell
     }
-    
-    
 }
 
 extension HomeViewController: UITableViewDelegate{
@@ -217,12 +194,10 @@ extension HomeViewController: UITableViewDelegate{
 
 extension HomeViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = stories.count
-        return count
+        stories.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
         let story = stories[indexPath.row]
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StoryCollectionViewCell.identifier, for: indexPath) as! StoryCollectionViewCell
         cell.configure(userId: story.userId, hasNewStory: true)
@@ -230,7 +205,16 @@ extension HomeViewController: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        let cellRect = cell.frame
+        let cellRectInMainView = collectionView.convert(cellRect, to: self.view)
         
+        let storyVC = StoryViewController()
+        scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
+        storyVC.transitioningDelegate = scaleTransitionDelegate
+        storyVC.modalPresentationStyle = .custom
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
+        present(storyVC, animated: true)
     }
 }
 
@@ -250,5 +234,11 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets.init(top: 2, left: 2, bottom: 2, right: 2) // Default or adjust as needed
+    }
+}
+
+extension HomeViewController: StoryViewControllerDelegate{
+    func storyVCWillDismiss() {
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.play() }
     }
 }
