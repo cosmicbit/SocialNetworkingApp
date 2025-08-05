@@ -82,6 +82,8 @@
 		50E9C2822E2A46B900DE5544 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E9C2812E2A46B900DE5544 /* Home.storyboard */; };
 		50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */; };
 		50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50EB94842E3A3720005C1B20 /* sample_video.mp4 */; };
+		50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */; };
+		50F069A92E41D7C700B6D716 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A82E41D7C700B6D716 /* BorderView.swift */; };
 		50F4067D2E1B81CC00A23A2C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 50F4067C2E1B81CC00A23A2C /* FirebaseAuth */; };
 		50F4067F2E1B81CC00A23A2C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 50F4067E2E1B81CC00A23A2C /* FirebaseFirestore */; };
 		50F406812E1B81CC00A23A2C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 50F406802E1B81CC00A23A2C /* FirebaseStorage */; };
@@ -181,6 +183,8 @@
 		50E9C2812E2A46B900DE5544 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListTableViewCell.swift; sourceTree = "<group>"; };
 		50EB94842E3A3720005C1B20 /* sample_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_video.mp4; sourceTree = "<group>"; };
+		50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingTextView.swift; sourceTree = "<group>"; };
+		50F069A82E41D7C700B6D716 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
 		50F406872E1B83D300A23A2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50F406892E1B869000A23A2C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		50FEA75F2E1D251F0041C7BF /* UserProfileToUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileToUpload.swift; sourceTree = "<group>"; };
@@ -394,6 +398,7 @@
 		E154F2172AB121DF000BC44C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */,
 				E1FDD9132A0A4FB7006AD0DF /* PrimaryButton.swift */,
 				50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */,
 				50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */,
@@ -401,6 +406,7 @@
 				504028302E2E596900F5D4C9 /* RingView.swift */,
 				504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */,
 				50BAB6312E309165006F3AE5 /* BackButton.swift */,
+				50F069A82E41D7C700B6D716 /* BorderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -617,6 +623,7 @@
 			files = (
 				50F4068A2E1B869000A23A2C /* LoginViewController.swift in Sources */,
 				50A016E32E1BD17A00594A7C /* UploadImageAndPostViewController.swift in Sources */,
+				50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */,
 				50A0169D2E1BB3FE00594A7C /* TabBarController.swift in Sources */,
 				50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */,
 				506A463C2E3758230073FF87 /* NewChatTableViewCell.swift in Sources */,
@@ -654,6 +661,7 @@
 				50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */,
 				5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */,
 				501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */,
+				50F069A92E41D7C700B6D716 /* BorderView.swift in Sources */,
 				508525012E310C8A002B9E5C /* PushTransitionDelegate.swift in Sources */,
 				5002B5CE2E2A696500F36A80 /* PostTableViewCell.swift in Sources */,
 				5054FEC12E1B9051004395DF /* UIApplication+Extension.swift in Sources */,

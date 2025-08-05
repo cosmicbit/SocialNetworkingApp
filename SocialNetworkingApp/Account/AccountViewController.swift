@@ -38,7 +38,11 @@ class AccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupNavigationBar()
+        setupUserProfile()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUserProfileUpdate(_:)), name: NSNotification.Name("UserProfileDidUpdate"), object: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -50,6 +54,12 @@ class AccountViewController: UIViewController {
         signOutButton.layer.cornerRadius = 6
         signOutButton.layer.borderColor = UIColor.black.cgColor
         signOutButton.layer.borderWidth = 1
+    }
+    @objc func handleUserProfileUpdate(_ notification: Notification){
+        if let userProfile = notification.userInfo?["userProfile"] as? UserProfile{
+            self.userProfile = userProfile
+        }
+        setupUserProfile()
     }
     
     func getUserProfile() {
@@ -64,34 +74,28 @@ class AccountViewController: UIViewController {
             }
         }
     }
-    
-    func setupNavigationBar() {
-        let settingsImage = UIImage(systemName: "line.3.horizontal")
-        let settingsButton = UIBarButtonItem(image: settingsImage, style: .plain, target: self, action: #selector(settingsButtonTapped))
-        let postImage = UIImage(systemName: "plus.app")
-        let postButton = UIBarButtonItem(image: postImage, style: .plain, target: self, action: #selector(createButtonTapped))
-        navigationItem.rightBarButtonItems = [settingsButton, postButton]
-        navigationController?.navigationBar.tintColor = .black
-    }
-    
-    @objc func settingsButtonTapped(){
-        
-    }
-    
-    @objc func createButtonTapped() {
-        let createAlertViewController = CreateAlertViewController()
-        present(createAlertViewController, animated: true)
 
-    }
     func setupViews() {
         nameLabel.text?.removeAll()
         bioLabel.text?.removeAll()
         avatarImageView.contentMode = .scaleAspectFill
-        if let userProfile = userProfile{
-            avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
-            nameLabel.text = userProfile.name
-            bioLabel.text = userProfile.bio
+    }
+    
+    func setupUserProfile(){
+        guard let userProfile = userProfile else{
+            return
         }
+        avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
+        nameLabel.text = userProfile.name
+        bioLabel.text = userProfile.bio
+    }
+    
+    @IBAction func createButtonTapped(_ sender: Any) {
+        let createAlertViewController = CreateAlertViewController()
+        present(createAlertViewController, animated: true)
+    }
+    
+    @IBAction func settingsButtonTapped(_ sender: Any) {
     }
     
     @IBAction func editProfileButtonTapped(_ sender: Any) {

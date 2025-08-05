@@ -74,7 +74,6 @@ class ExploreViewController: UIViewController {
             strongSelf.posts.removeAll()
             strongSelf.posts = documents.compactMap{ document in
                 do{
-                    print(document.data())
                     let post = try document.data(as: Post.self)
                     return post
                 }catch let decodingError as DecodingError {
