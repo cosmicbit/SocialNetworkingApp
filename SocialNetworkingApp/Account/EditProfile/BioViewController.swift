@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class BioViewController: UIViewController {
 
     @IBOutlet weak var saveButton: UIButton!
@@ -16,11 +17,12 @@ class BioViewController: UIViewController {
     @IBOutlet weak var bioLimitLabel: UILabel!
     
     private let BIO_CHARACTER_LIMIT = 150
+    
     var userProfile: UserProfile!
     private let userProfileManager = UserProfileManager()
     var bioCharacterCount: Int = 0{
         didSet{
-            bioLimitLabel.text = "\(BIO_CHARACTER_LIMIT - bioCharacterCount)/150"
+            bioLimitLabel.text = "\(BIO_CHARACTER_LIMIT - bioCharacterCount)/\(BIO_CHARACTER_LIMIT)"
         }
     }
     
@@ -41,6 +43,8 @@ class BioViewController: UIViewController {
         bioCharacterCount = bioTextView.text.count
         bioTextView.textContainerInset = .zero
         bioTextView.textContainer.lineFragmentPadding = .zero
+        bioTextView.delegate = self
+        
         
         saveButton.tintColor = .link
         saveButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
@@ -62,17 +66,24 @@ class BioViewController: UIViewController {
         saveButton.setImage(UIImage(systemName: "circle"), for: .normal)
         userProfileManager.updateUserProfile(userProfile: userProfile) { result in
             self.saveButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-            if result{
+            if result, let userProfile = self.userProfile{
+                let userInfo: [String: Any] = ["userProfile": userProfile]
+                NotificationCenter.default.post(name: NSNotification.Name("UserProfileDidUpdate"), object: nil, userInfo: userInfo)
                 self.navigationController?.popViewController(animated: true)
             }else{
                 self.showToast(message: "Something went wrong. Try again")
             }
-            
         }
     }
 }
 extension BioViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
+        let count = textView.text.count
+        if(count > BIO_CHARACTER_LIMIT){
+            if let text = textView.text{
+                textView.text = String(text.prefix(BIO_CHARACTER_LIMIT))
+            }
+        }
         bioCharacterCount = textView.text.count
     }
 }

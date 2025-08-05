@@ -39,6 +39,7 @@ class TabBarController: UITabBarController {
         let accountStoryboard = UIStoryboard(name: "Account", bundle: nil)
         let accountVC = accountStoryboard.instantiateViewController(withIdentifier: "AccountViewController")
         let accountNavigationController = UINavigationController(rootViewController: accountVC)
+        accountNavigationController.navigationBar.isHidden = true
         accountVC.tabBarItem.image = UIImage(systemName: "person")
         accountVC.tabBarItem.title = ""
         

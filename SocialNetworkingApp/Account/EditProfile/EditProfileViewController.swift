@@ -11,14 +11,18 @@ enum Axis: String {
 class EditProfileViewController: UIViewController {
     
     @IBOutlet weak var avatarContainerView: UIView!
+    @IBOutlet weak var nameContainerView: UIView!
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var actualNameButton: ProfileDetailEntryButton!
+    @IBOutlet weak var nameTextView: HorizontalScrollingTextView!
+    @IBOutlet weak var usernameContainerView: UIView!
     @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var actualUsernameButton: ProfileDetailEntryButton!
+    @IBOutlet weak var usernameTextView: HorizontalScrollingTextView!
+    @IBOutlet weak var pronounContainerView: UIView!
     @IBOutlet weak var pronounLabel: UILabel!
-    @IBOutlet weak var actualPronounButton: ProfileDetailEntryButton!
+    @IBOutlet weak var pronounTextView: HorizontalScrollingTextView!
+    @IBOutlet weak var bioContainerView: UIView!
     @IBOutlet weak var bioLabel: UILabel!
-    @IBOutlet weak var actualBioButton: ProfileDetailEntryButton!
+    @IBOutlet weak var bioTextView: HorizontalScrollingTextView!
     
     var avatarImageView = UIImageView()
     var userProfile: UserProfile!
@@ -51,7 +55,8 @@ class EditProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        setupNavigationBar()
+        setupUserProfile()
+        addTapRecognisers()
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,82 +69,94 @@ class EditProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         rotateAvatar(angleInDegrees: 360, duration: 0.5, axis: .y)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUserProfileUpdate(_:)), name: NSNotification.Name("UserProfileDidUpdate"), object: nil)
     }
     
-    @objc private func didTapCustomBackButton() {
-        navigationController?.popViewController(animated: true)
+    @objc func handleUserProfileUpdate(_ notification: Notification){
+        if let updatedProfile = notification.userInfo?["userProfile"] as? UserProfile {
+             self.userProfile = updatedProfile
+        }
+        setupUserProfile()
     }
     
-    func setupNavigationBar(){
-        let backImage = UIImage(systemName: "arrow.left")
-        let backButton = UIBarButtonItem(image: backImage, style: .plain, target: self, action: #selector(didTapCustomBackButton))
-        backButton.tintColor = .black
-        navigationItem.leftBarButtonItem = backButton
-        navigationItem.title = "Edit Profile"
+    @objc func bioTextViewTapped(){
+        performSegue(withIdentifier: "BioSegue", sender: userProfile)
+    }
+    
+    func addTapRecognisers(){
+        let bioTap = UITapGestureRecognizer(target: self, action: #selector(bioTextViewTapped))
+        bioTextView.addGestureRecognizer(bioTap)
+        
     }
     
     func setupViews() {
+        setupAvatarView()
+        for v in [bioTextView, nameTextView, usernameTextView, pronounTextView]{
+            guard let v = v else { return }
+            v.font = .systemFont(ofSize: 16)
+            v.textContainerInset.top = 5
+            v.textContainerInset.bottom = 5
+            v.isEditable = false
+            v.backgroundColor = .white
+        }
+        for v in [bioContainerView, nameContainerView, pronounContainerView, usernameContainerView]{
+            guard let v = v else { return }
+            v.backgroundColor = .white
+            v.applyBorders(for: [.bottom], borderWidth: 0.5)
+        }
+    }
+    
+    func setupUserProfile(){
         if let imageURL = userProfile.avatarImageURL {
             avatarImageView.sd_setImage(with: imageURL)
+            frontImageView.image = avatarImageView.image
+            backImageView.image = avatarImageView.image
         }
-        setupAvatarView()
-        
-
-        actualNameButton.setTitle(userProfile.name, for: .normal)
-        actualUsernameButton.setTitle(userProfile.username, for: .normal)
-        
-        if let pronouns = userProfile.pronouns {
-            actualPronounButton.setTitle(pronouns, for: .normal)
-        }
-        else{
-            actualPronounButton.setTitle("Pronouns", for: .disabled)
-            actualPronounButton.isEnabled = false
-            
+        nameTextView.text = userProfile.name
+        usernameTextView.text = userProfile.username
+        if let pronouns = userProfile.pronouns{
+            pronounTextView.text = pronouns
+            bioTextView.textColor = .label
+        }else{
+            pronounTextView.text = "Pronoun"
+            bioTextView.textColor = .placeholderText
             pronounLabel.isHidden = true
         }
-        
         if let bio = userProfile.bio {
-            actualBioButton.setTitle(bio, for: .normal)
-        }
-        else{
-            actualBioButton.setTitle("Bio", for: .disabled)
-            actualBioButton.isEnabled = false
-            
+            bioTextView.text = bio.replacingOccurrences(of: "\n", with: " ")
+            bioTextView.textColor = .label
+        }else{
+            bioTextView.text = "Bio"
+            bioTextView.textColor = .placeholderText
             bioLabel.isHidden = true
         }
     }
     
     func setupAvatarView() {
         avatarContainerView.translatesAutoresizingMaskIntoConstraints = false
-        frontImageView.image = avatarImageView.image
-        backImageView.image = avatarImageView.image
         frontImageView.contentMode = .scaleAspectFill
         frontImageView.translatesAutoresizingMaskIntoConstraints = false
         frontImageView.isAccessibilityElement = true
         frontImageView.accessibilityLabel = "Profile avatar front"
         avatarContainerView.addSubview(frontImageView)
-        
         NSLayoutConstraint.activate([
             frontImageView.topAnchor.constraint(equalTo: avatarContainerView.topAnchor),
             frontImageView.bottomAnchor.constraint(equalTo: avatarContainerView.bottomAnchor),
             frontImageView.leadingAnchor.constraint(equalTo: avatarContainerView.leadingAnchor),
             frontImageView.trailingAnchor.constraint(equalTo: avatarContainerView.trailingAnchor)
         ])
-        
         frontImageView.layer.isDoubleSided = false
         backImageView.contentMode = .scaleAspectFill
         backImageView.translatesAutoresizingMaskIntoConstraints = false
         backImageView.isAccessibilityElement = true
         backImageView.accessibilityLabel = "Profile avatar back"
         avatarContainerView.addSubview(backImageView)
-        
         NSLayoutConstraint.activate([
             backImageView.topAnchor.constraint(equalTo: avatarContainerView.topAnchor),
             backImageView.bottomAnchor.constraint(equalTo: avatarContainerView.bottomAnchor),
             backImageView.leadingAnchor.constraint(equalTo: avatarContainerView.leadingAnchor),
             backImageView.trailingAnchor.constraint(equalTo: avatarContainerView.trailingAnchor)
         ])
-        
         backImageView.layer.isDoubleSided = false
         backImageView.isHidden = true
         var perspectiveTransform = CATransform3DIdentity
@@ -148,22 +165,15 @@ class EditProfileViewController: UIViewController {
     }
 
     func rotateAvatar(angleInDegrees: CGFloat, duration: TimeInterval, axis: Axis){
-        
         let angleInRadians: CGFloat = angleInDegrees * .pi / 180
-        
-        // Set up perspective for 3D effect
         var perspectiveTransform = CATransform3DIdentity
         perspectiveTransform.m34 = 1.0 / -500.0
         avatarContainerView.layer.transform = perspectiveTransform
-        
-        
         let rotationAnimation = CABasicAnimation(keyPath: "transform.rotation.\(axis.rawValue)")
         rotationAnimation.fromValue = 0
         rotationAnimation.toValue = angleInRadians
         rotationAnimation.duration = duration
         rotationAnimation.timingFunction = CAMediaTimingFunction(name: .linear)
-        
-        // Add the animation to the layer
         avatarContainerView.layer.add(rotationAnimation, forKey: "rotate\(axis)")
         let rightAnglesInAngle = CGFloat(angleInRadians / (.pi / 2) )
         let straightAnglesInAngle = CGFloat(angleInRadians / .pi )
@@ -178,11 +188,17 @@ class EditProfileViewController: UIViewController {
             }
             durationOffset += timeToCompleteOneStraightAngle
         }
-        
-        // Ensure the final transform is set after animation completes
         CATransaction.setCompletionBlock {
             self.avatarContainerView.layer.transform = perspectiveTransform // Reset to identity with perspective
         }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("UserProfileDidUpdate"), object: nil)
+    }
+    
+    @IBAction func backButtonTapped(_ sender: Any){
+        navigationController?.popViewController(animated: true)
     }
     
     @IBAction func changeProfileButtonTapped(_ sender: Any) {
@@ -215,10 +231,6 @@ class EditProfileViewController: UIViewController {
         alert.addAction(libraryAction)
         alert.addAction(cancelAction)
         present(alert, animated: true)
-    }
-    
-    @IBAction func actualBioButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "BioSegue", sender: userProfile)
     }
 }
 
@@ -266,3 +278,4 @@ extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigati
         
     }
 }
+
