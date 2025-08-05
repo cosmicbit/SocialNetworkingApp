@@ -40,6 +40,7 @@ class AccountViewController: UIViewController {
         setupViews()
         setupUserProfile()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(handleUserProfileUpdate(_:)), name: NSNotification.Name("UserProfileDidUpdate"), object: nil)
@@ -96,12 +97,38 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func editProfileButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "EditProfileSegue", sender: nil)
     }
     @IBAction func shareProfileButtonTapped(_ sender: Any) {
+        guard let username = userProfile?.username else { return }
+        let profileURLString = "my-app://profiles/\(username)"
+                
+        guard let profileURL = URL(string: profileURLString) else {
+            print("Error: Invalid profile URL.")
+            return
+        }
+
+        // The text we want to include in the share sheet.
+        let shareText = "Check out my profile on MyAwesomeApp!"
+        
+        // The items we want to share.
+        let items: [Any] = [shareText, profileURL]
+        
+        // Create and present the standard iOS sharing sheet.
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        // This is necessary on iPad to avoid a crash.
+        if let popoverController = activityViewController.popoverPresentationController {
+            popoverController.sourceView = self.view
+            popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            popoverController.permittedArrowDirections = []
+        }
+        
+        present(activityViewController, animated: true, completion: nil)
     }
     
     @IBAction func savedPostsButtonTapped(_ sender: Any) {

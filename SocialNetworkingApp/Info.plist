@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>SocialApp would like access to your photo library in order to create posts</string>
-	<key>NSCameraUsageDescription</key>
-	<string>SocialApp would like access to your camera in order to create posts</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -14,6 +10,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.400963089577-dte60u72fed4ua2hfa8f9bjoo6sqmh7u</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.philipsUIKitTraining.SocialNetworkingApp.profile</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>my-app://</string>
 			</array>
 		</dict>
 	</array>
