@@ -26,6 +26,7 @@
 		5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */; };
 		504028312E2E596900F5D4C9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028302E2E596900F5D4C9 /* RingView.swift */; };
 		504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */; };
+		504498272E422BAE00D97573 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504498262E422BAE00D97573 /* UIImage+Extension.swift */; };
 		5054FEC12E1B9051004395DF /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC02E1B9038004395DF /* UIApplication+Extension.swift */; };
 		5054FEC32E1B978C004395DF /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC22E1B978C004395DF /* UIViewController+Extension.swift */; };
 		5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */; };
@@ -84,6 +85,7 @@
 		50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50EB94842E3A3720005C1B20 /* sample_video.mp4 */; };
 		50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */; };
 		50F069A92E41D7C700B6D716 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A82E41D7C700B6D716 /* BorderView.swift */; };
+		50F069AB2E42128800B6D716 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069AA2E42128800B6D716 /* ShareViewController.swift */; };
 		50F4067D2E1B81CC00A23A2C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 50F4067C2E1B81CC00A23A2C /* FirebaseAuth */; };
 		50F4067F2E1B81CC00A23A2C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 50F4067E2E1B81CC00A23A2C /* FirebaseFirestore */; };
 		50F406812E1B81CC00A23A2C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 50F406802E1B81CC00A23A2C /* FirebaseStorage */; };
@@ -130,6 +132,7 @@
 		5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		504028302E2E596900F5D4C9 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
+		504498262E422BAE00D97573 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		5054FEC02E1B9038004395DF /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
 		5054FEC22E1B978C004395DF /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -185,6 +188,7 @@
 		50EB94842E3A3720005C1B20 /* sample_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_video.mp4; sourceTree = "<group>"; };
 		50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingTextView.swift; sourceTree = "<group>"; };
 		50F069A82E41D7C700B6D716 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
+		50F069AA2E42128800B6D716 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		50F406872E1B83D300A23A2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50F406892E1B869000A23A2C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		50FEA75F2E1D251F0041C7BF /* UserProfileToUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileToUpload.swift; sourceTree = "<group>"; };
@@ -242,6 +246,7 @@
 				5004A5E42E40CC3D00C4C208 /* EditProfile */,
 				5054FECB2E1BA825004395DF /* AccountViewController.swift */,
 				50037B1E2E2507DD0027149E /* CreateAlertViewController.swift */,
+				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -495,6 +500,7 @@
 				5054FEC02E1B9038004395DF /* UIApplication+Extension.swift */,
 				E154F21B2AB1C841000BC44C /* UIColor+Extension.swift */,
 				5054FEC22E1B978C004395DF /* UIViewController+Extension.swift */,
+				504498262E422BAE00D97573 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 				508759EB2E1CDD5100ABAEC6 /* Post.swift in Sources */,
 				50324E812E261C5200B703C2 /* UIView+Extension.swift in Sources */,
 				50BF0F992E25213E00906BBA /* Animations.swift in Sources */,
+				50F069AB2E42128800B6D716 /* ShareViewController.swift in Sources */,
 				50BAB6322E309165006F3AE5 /* BackButton.swift in Sources */,
 				50E9C27E2E2A258D00DE5544 /* ForYouResultsViewController.swift in Sources */,
 				5054FECC2E1BA825004395DF /* AccountViewController.swift in Sources */,
@@ -677,6 +684,7 @@
 				50324E832E26643A00B703C2 /* Like.swift in Sources */,
 				50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */,
 				509977F42E33885700F82E3E /* SlideTransitionDelegate.swift in Sources */,
+				504498272E422BAE00D97573 /* UIImage+Extension.swift in Sources */,
 				508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */,
 				50BAB62E2E3090BE006F3AE5 /* NotificationsViewController.swift in Sources */,
 				E154F21C2AB1C841000BC44C /* UIColor+Extension.swift in Sources */,
