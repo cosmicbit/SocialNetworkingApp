@@ -12,24 +12,6 @@
 				<string>com.googleusercontent.apps.400963089577-dte60u72fed4ua2hfa8f9bjoo6sqmh7u</string>
 			</array>
 		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>com.philipsUIKitTraining.SocialNetworkingApp.profile</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>my-app://</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>https://</string>
-			</array>
-		</dict>
 	</array>
 	<key>UIAppFonts</key>
 	<array>

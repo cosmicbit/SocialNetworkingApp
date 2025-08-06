@@ -14,6 +14,7 @@
 		50037B652E250E910027149E /* CreateAlertActionSheetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50037B642E250E910027149E /* CreateAlertActionSheetView.xib */; };
 		50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */; };
 		5004A5E62E40CC5800C4C208 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5004A5E52E40CC5800C4C208 /* BioViewController.swift */; };
+		500AB5F02E433A12003AC0DC /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500AB5EF2E433A12003AC0DC /* Share.storyboard */; };
 		501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501804262E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift */; };
 		5018042C2E28D84C00BF1AEF /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042B2E28D84300BF1AEF /* UserProfileManager.swift */; };
 		5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */; };
@@ -120,6 +121,7 @@
 		50037B642E250E910027149E /* CreateAlertActionSheetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAlertActionSheetView.xib; sourceTree = "<group>"; };
 		50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetView.swift; sourceTree = "<group>"; };
 		5004A5E52E40CC5800C4C208 /* BioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
+		500AB5EF2E433A12003AC0DC /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		501804262E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultProfileTableViewCell.swift; sourceTree = "<group>"; };
 		5018042B2E28D84300BF1AEF /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
@@ -255,10 +257,10 @@
 			isa = PBXGroup;
 			children = (
 				E1A3672129F9226100A1B03E /* ExploreViewController.swift */,
+				5002B5C82E2A620100F36A80 /* ExplorePostViewController.swift */,
 				50396D3D2E27BC16000E53B7 /* SearchViewController.swift */,
 				5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */,
 				50E9C27C2E2A256400DE5544 /* SearchResultsChildren */,
-				5002B5C82E2A620100F36A80 /* ExplorePostViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -396,6 +398,7 @@
 				5054FECF2E1BA897004395DF /* Account.storyboard */,
 				508759F32E1CF3B100ABAEC6 /* Onboarding.storyboard */,
 				508759F92E1D0F2700ABAEC6 /* Splash.storyboard */,
+				500AB5EF2E433A12003AC0DC /* Share.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 			files = (
 				506A463E2E376F490073FF87 /* MessageBarView.xib in Resources */,
 				509977F62E33892600F82E3E /* Chat.storyboard in Resources */,
+				500AB5F02E433A12003AC0DC /* Share.storyboard in Resources */,
 				E1A3673229F922E200A1B03E /* Auth.storyboard in Resources */,
 				5002B5CF2E2A696500F36A80 /* PostTableViewCell.xib in Resources */,
 				E1A3672A29F9226300A1B03E /* LaunchScreen.storyboard in Resources */,

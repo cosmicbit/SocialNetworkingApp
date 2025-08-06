@@ -110,8 +110,12 @@ class AccountViewController: UIViewController {
         performSegue(withIdentifier: "EditProfileSegue", sender: nil)
     }
     @IBAction func shareProfileButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "ShareSegue", sender: userProfile)
-        
+        let shareSB = UIStoryboard(name: "Share", bundle: .main)
+        let shareVC = shareSB.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
+        shareVC.userProfile = userProfile
+        let navC = UINavigationController(rootViewController: shareVC)
+        navC.modalPresentationStyle = .overFullScreen
+        present(navC, animated: true)
     }
     
     @IBAction func savedPostsButtonTapped(_ sender: Any) {

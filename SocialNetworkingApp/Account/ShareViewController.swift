@@ -8,6 +8,30 @@
 import UIKit
 import CoreImage
 
+enum ShareBackgroundState: Int, CaseIterable, CustomStringConvertible{
+    
+    case color = 0, image, emoji, selfie
+    var nextState: ShareBackgroundState {
+        guard let state = ShareBackgroundState(rawValue: (self.rawValue + 1) % ShareBackgroundState.allCases.count) else { return .color}
+        return state
+    }
+    mutating func toNextState(){
+        self = self.nextState
+    }
+    var description: String{
+        switch self {
+        case .color:
+            return "color"
+        case .image:
+            return "image"
+        case .emoji:
+            return "emoji"
+        case .selfie:
+            return "selfie"
+        }
+    }
+}
+
 class ShareViewController: UIViewController {
     
     @IBOutlet weak var backgroundButton: UIButton!
@@ -28,6 +52,24 @@ class ShareViewController: UIViewController {
     var profileURL: URL?
     var webURL: URL?
     var qrCodeImage: UIImage?
+    private var currentBackgroundState: ShareBackgroundState = .color {
+        didSet{
+            changeBackgroundButtonTitle()
+            changeBackground()
+        }
+    }
+    
+    func changeBackgroundButtonTitle(){
+        var config = backgroundButton.configuration
+        var newTitle = AttributedString(currentBackgroundState.description.uppercased())
+        newTitle.font = .boldSystemFont(ofSize: 10)
+        config?.attributedTitle = newTitle
+        backgroundButton.configuration = config
+    }
+    
+    func changeBackground(){
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,30 +81,35 @@ class ShareViewController: UIViewController {
         super.viewDidLayoutSubviews()
         qrCodeContainerView.layer.cornerRadius = 12
         functionsContainerView.layer.cornerRadius = 12
-        backgroundButton.layer.cornerRadius = 12 //backgroundButton.bounds.height / 2
+        backgroundButton.layer.cornerRadius = 12
         backgroundButton.layer.borderColor = UIColor.white.cgColor
         backgroundButton.layer.borderWidth = 1
     }
     
     func setupView(){
+        var config = UIButton.Configuration.plain()
+        backgroundButton.configuration = config
         view.backgroundColor = .blue
-        backgroundButton.titleLabel?.font = .boldSystemFont(ofSize: 10)
+        currentBackgroundState = .color
         qrCodeImageView.image = qrCodeImage
         qrCodeImageView.contentMode = .scaleAspectFill
-        var config = UIButton.Configuration.plain()
-        //config.title = "Share Profile"
-        var attributedTitle = AttributedString("Share Profile")
-        attributedTitle.font = .systemFont(ofSize: 13, weight: .regular)
-        config.attributedTitle = attributedTitle
-        if let starSymbol = UIImage(systemName: "square.and.arrow.up.circle.fill") {
-            config.image = starSymbol
-        } else {
-            print("Error: Could not find SF Symbol 'star.fill'.")
-        }
+        
+        config = UIButton.Configuration.plain()
+        let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
+        config.preferredSymbolConfigurationForImage = largeConfig
         config.imagePlacement = .top
         config.imagePadding = 8
         config.baseForegroundColor = .black
-        shareProfileButton.configuration = config
+        var attributedTitle: AttributedString
+        for (button, imageName, title) in [(shareProfileButton, "square.and.arrow.up.circle", "Share Profile"),
+                                           (copyLinkButton, "link.circle", "Copy Link"),
+                                           (downloadButton, "arrow.down.to.line","Download")]{
+            config.image = UIImage(systemName: imageName)
+            attributedTitle = AttributedString(title)
+            attributedTitle.font = .systemFont(ofSize: 10, weight: .regular)
+            config.attributedTitle = attributedTitle
+            button?.configuration = config
+        }
     }
     
     func setupUserProfile(){
@@ -94,6 +141,11 @@ class ShareViewController: UIViewController {
         dismiss(animated: true)
     }
     
+    @IBAction func backgroundButtonTapped(_ sender: Any){
+        backgroundButton.bounceEffect(withScale: 0.95, withDuration: 0.5)
+        currentBackgroundState = currentBackgroundState.nextState
+    }
+    
     @IBAction func shareProfileButtonTapped(_ sender: Any){
         guard let profileURL = profileURL,
         let webURL = webURL,
@@ -112,25 +164,6 @@ class ShareViewController: UIViewController {
     }
 }
 
-// MARK: - SVG and UIImage Conversion
-// This SVG represents three circles connected by lines in a triangle-like structure.
-let threeCirclesTriangleSVG = """
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="12" cy="5" r="3"/>
-    <circle cx="5" cy="19" r="3"/>
-    <circle cx="19" cy="19" r="3"/>
-    <line x1="12" y1="8" x2="5.5" y2="16"/>
-    <line x1="12" y1="8" x2="18.5" y2="16"/>
-    <line x1="5.5" y1="16" x2="18.5" y2="16"/>
-</svg>
-"""
-
-let filledStarSVG = """
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#FFFFFF">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 18.06l-6.18 3.26L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-</svg>
-"""
-let filledStarSVGPath = "M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 18.06l-6.18 3.26L7 14.14 2 9.27l6.91-1.01L12 2z"
 // MARK: - QR Code Generation
 extension ShareViewController{
     // A helper method to generate a QR code image from a given string.

@@ -35,6 +35,7 @@ class PostTableViewCell: UITableViewCell {
     
     private var post: Post!
     private var postUserProfile: UserProfile?
+    private var tapWorkItem: DispatchWorkItem?
     
     var postImageView: UIImageView = {
         let view = UIImageView()
@@ -44,11 +45,15 @@ class PostTableViewCell: UITableViewCell {
         let view = VideoContainerView()
         return view
     }()
-    private var likeCountLocally: Int = 0
+    private var likeCountLocally: Int = 0{
+        didSet{
+            updateLikeCountLabel()
+        }
+    }
     private var isLikedLocally: Bool = false {
         didSet{
-            updateLikeButton()
-            likeCountLabel.text = "\(likeCountLocally)"
+            //updateLikeButton()
+            //likeCountLabel.text = "\(likeCountLocally)"
         }
     }
     var likeCountListener: ListenerRegistration?
@@ -58,6 +63,7 @@ class PostTableViewCell: UITableViewCell {
     
     func configure(post: Post){
         self.post = post
+        getPostUserProfile()
         setupPost()
         hasUserLikedThePost()
         startListeningForLikeCount()
@@ -142,11 +148,9 @@ class PostTableViewCell: UITableViewCell {
     @objc func postDoubleTapped(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended { // Ensure the gesture has completed
             heartImageView.performCenterHeartAnimation()
-            updateLikeButton()
-            if !isLikedLocally{
-                isLikedLocally = true
-                self.updateLikesCollection { _ in }
-            }
+            performLikeButtonAnimation()
+            if !isLikedLocally{likeThePost()}
+            updateLikeButton(likedOrNot: true)
         }
     }
     
@@ -158,16 +162,37 @@ class PostTableViewCell: UITableViewCell {
         
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(postSingleTapped(_: )))
         singleTapGesture.numberOfTapsRequired = 1
+        singleTapGesture.require(toFail: doubleTapGesture)
         mediaDisplayView.addGestureRecognizer(singleTapGesture)
     }
     
+    // MARK: - Post Setup
     func setupPost(){
-        self.getPostUserProfile()
         self.avatarImageView.contentMode = .scaleAspectFill
         self.timeElapsedLabel.text = DateFormatter.localizedString(from: self.post.createdDate.dateValue(), dateStyle: .full, timeStyle: .none)
         self.displayMedia(type: post.type, mediaURL: post.contentURL)
-        self.likeCountLabel.text = "\(self.likeCountLocally)"
+        likeCountLocally = post.likeCount // this updates the likeCountLabel automatically
         self.descriptionLabel.text = self.post.description
+    }
+    
+    func getPostUserProfile() {
+        let userId = post.userId
+        Task{
+            do{
+                let userProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
+                setupPostUserProfile(with: userProfile)
+            }catch{
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    func setupPostUserProfile(with profile: UserProfile){
+        postUserProfile = profile
+        if let imageURL = postUserProfile?.avatarImageURL {
+            avatarImageView.sd_setImage(with: imageURL)
+        }
+        usernameLabel.text = postUserProfile?.username
     }
     
     func displayMedia(type: Post.ContentType, mediaURL: URL?) {
@@ -223,6 +248,7 @@ class PostTableViewCell: UITableViewCell {
             case .success(let like):
                 if self.isLikedLocally != like.isLiked{
                     self.isLikedLocally = like.isLiked
+                    self.updateLikeButton(likedOrNot: self.isLikedLocally)
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -230,38 +256,28 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    func updateLikeButton() {
-        let imageName: String = isLikedLocally ? "heart.fill" : "heart"
-        likeButton.tintColor = isLikedLocally ? .systemRed : .black
+    func updateLikeButton(likedOrNot: Bool) {
+        let imageName: String = likedOrNot ? "heart.fill" : "heart"
+        likeButton.tintColor = likedOrNot ? .systemRed : .black
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 23, weight: .regular, scale: .large)
         let image = UIImage(systemName: imageName, withConfiguration: largeConfig)
         likeButton.setImage(image, for: .normal)
+    }
+    
+    func performLikeButtonAnimation(){
         if isLikedLocally {
-            self.likeButton.bounceEffect()
+            self.likeButton.bounceEffect(withScale: 1.2, withDuration: 0.5)
+        }
+        else{
+            self.likeButton.bounceEffect(withScale: 0.1, withDuration: 0.5)
         }
     }
     
-    func getPostUserProfile() {
-        let userId = post.userId
-        Task{
-            do{
-                let userProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
-                setupPostUserProfile(with: userProfile)
-            }catch{
-                print(error.localizedDescription)
-            }
-        }
+    func updateLikeCountLabel() {
+        likeCountLabel.text = "\(likeCountLocally)"
     }
     
-    func setupPostUserProfile(with profile: UserProfile){
-        postUserProfile = profile
-        if let imageURL = postUserProfile?.avatarImageURL {
-            avatarImageView.sd_setImage(with: imageURL)
-        }
-        usernameLabel.text = postUserProfile?.username
-    }
-    
-    func updateLikesCollection(completion: @escaping (_ result: Bool) -> Void ) {
+    func updateLikesCollection(completion: @escaping (_ result: Bool) -> Void = {_ in }) {
         guard let userId = Auth.auth().currentUser?.uid else {
             completion(false)
             return
@@ -282,7 +298,6 @@ class PostTableViewCell: UITableViewCell {
             case .success(let count):
                 DispatchQueue.main.async {
                     self.likeCountLocally = count
-                    self.likeCountLabel.text = "\(count)"
                 }
             case .failure(let error):
                 print("Error updating like count in UI: \(error.localizedDescription)")
@@ -290,20 +305,38 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
+    //MARK: - Like Mechanism
+    func likeThePost(){
+        likeCountLocally += 1
+        isLikedLocally = true
+        tapWorkItem?.cancel()
+        let newWorkItem = DispatchWorkItem { [weak self] in
+            self?.updateLikesCollection()
+        }
+        self.tapWorkItem = newWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: newWorkItem)
+        
+    }
+    
+    func unlikeThePost(){
+        likeCountLocally -= 1
+        isLikedLocally = false
+        tapWorkItem?.cancel()
+        let newWorkItem = DispatchWorkItem { [weak self] in
+            self?.updateLikesCollection()
+        }
+        self.tapWorkItem = newWorkItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: newWorkItem)
+    }
+    
+    // MARK: - IBActions
     @IBAction func optionsButtonTapped(_ sender: Any) {
         postVideoView.player?.play()
     }
     @IBAction func likeButtonTapped(_ sender: Any) {
-        isLikedLocally.toggle()
-        
-        self.updateLikesCollection { result in
-            if result {
-                print("Success")
-            }
-            else{
-                print("Failed")
-            }
-        }
+        performLikeButtonAnimation()
+        isLikedLocally ? unlikeThePost() : likeThePost()
+        updateLikeButton(likedOrNot: isLikedLocally)
     }
     @IBAction func commentButtonTapped(_ sender: Any) {
         postVideoView.player?.pause()

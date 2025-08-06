@@ -27,9 +27,11 @@ class UserProfileManager{
                 guard let docs1 = snapshot1?.documents else {
                     return
                 }
-                docs1.forEach { doc in
-                    if let userProfile = UserProfile(snapshot: doc){
-                        results.append(userProfile)
+                results = docs1.compactMap{
+                    do{
+                        return try $0.data(as: UserProfile.self)
+                    }catch{
+                        return nil
                     }
                 }
                 prefix = name
@@ -48,11 +50,13 @@ class UserProfileManager{
                         guard let docs2 = snapshot2?.documents else {
                             return
                         }
-                        docs2.forEach { doc in
-                            if let userProfile = UserProfile(snapshot: doc){
-                                results.append(userProfile)
+                        results.append(contentsOf: docs2.compactMap{
+                            do{
+                                return try $0.data(as: UserProfile.self)
+                            }catch{
+                                return nil
                             }
-                        }
+                        })
 
                         let uniqueResults = Array(Set(results.map { $0.id }))
                             .compactMap { id in
