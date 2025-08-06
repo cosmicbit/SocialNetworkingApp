@@ -50,17 +50,13 @@ class PostTableViewCell: UITableViewCell {
             updateLikeCountLabel()
         }
     }
-    private var isLikedLocally: Bool = false {
-        didSet{
-            //updateLikeButton()
-            //likeCountLabel.text = "\(likeCountLocally)"
-        }
-    }
+    private var isLikedLocally: Bool = false
     var likeCountListener: ListenerRegistration?
     let postManager = PostManager()
     let likeManager = LikeManager()
     let userProfileManager = UserProfileManager()
     
+    //MARK: - Configuration before awaking
     func configure(post: Post){
         self.post = post
         getPostUserProfile()
@@ -69,6 +65,7 @@ class PostTableViewCell: UITableViewCell {
         startListeningForLikeCount()
     }
     
+    //MARK: - Overriden methods
     override func prepareForReuse() {
         super.prepareForReuse()
         postVideoView.player?.pause() // Stop any current playback
@@ -167,7 +164,7 @@ class PostTableViewCell: UITableViewCell {
     }
     
     // MARK: - Post Setup
-    func setupPost(){
+    private func setupPost(){
         self.avatarImageView.contentMode = .scaleAspectFill
         self.timeElapsedLabel.text = DateFormatter.localizedString(from: self.post.createdDate.dateValue(), dateStyle: .full, timeStyle: .none)
         self.displayMedia(type: post.type, mediaURL: post.contentURL)
@@ -175,7 +172,7 @@ class PostTableViewCell: UITableViewCell {
         self.descriptionLabel.text = self.post.description
     }
     
-    func getPostUserProfile() {
+    private func getPostUserProfile() {
         let userId = post.userId
         Task{
             do{
@@ -187,7 +184,7 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    func setupPostUserProfile(with profile: UserProfile){
+    private func setupPostUserProfile(with profile: UserProfile){
         postUserProfile = profile
         if let imageURL = postUserProfile?.avatarImageURL {
             avatarImageView.sd_setImage(with: imageURL)
@@ -195,7 +192,8 @@ class PostTableViewCell: UITableViewCell {
         usernameLabel.text = postUserProfile?.username
     }
     
-    func displayMedia(type: Post.ContentType, mediaURL: URL?) {
+    //MARK: - Media Display Mechanism
+    private func displayMedia(type: Post.ContentType, mediaURL: URL?) {
         postVideoView.player?.pause()
         postVideoView.playerLayer?.removeFromSuperlayer()
         postVideoView.playerLayer = nil
@@ -236,7 +234,8 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    func hasUserLikedThePost() {
+    //MARK: Post-specific functions
+    private func hasUserLikedThePost() {
         guard let userId = Auth.auth().currentUser?.uid else {
             return
         }
@@ -256,39 +255,25 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    func updateLikeButton(likedOrNot: Bool) {
+    private func updateLikeButton(likedOrNot: Bool) {
         let imageName: String = likedOrNot ? "heart.fill" : "heart"
         likeButton.tintColor = likedOrNot ? .systemRed : .black
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 23, weight: .regular, scale: .large)
         let image = UIImage(systemName: imageName, withConfiguration: largeConfig)
         likeButton.setImage(image, for: .normal)
     }
-    
-    func performLikeButtonAnimation(){
-        if isLikedLocally {
-            self.likeButton.bounceEffect(withScale: 1.2, withDuration: 0.5)
-        }
-        else{
-            self.likeButton.bounceEffect(withScale: 0.1, withDuration: 0.5)
-        }
-    }
-    
-    func updateLikeCountLabel() {
+
+    private func updateLikeCountLabel() {
         likeCountLabel.text = "\(likeCountLocally)"
     }
     
-    func updateLikesCollection(completion: @escaping (_ result: Bool) -> Void = {_ in }) {
-        guard let userId = Auth.auth().currentUser?.uid else {
-            completion(false)
-            return
-        }
-        guard let postId = post.id else {
-            completion(false)
-            return
-        }
-        likeManager.postLikeOfUserOnPost(userId: userId, postId: postId, likeOrNot: self.isLikedLocally)
+    private func performLikeButtonAnimation(){
+        isLikedLocally
+        ? self.likeButton.bounceEffect(withScale: 1.2, withDuration: 0.5)
+        : self.likeButton.bounceEffect(withScale: 0.1, withDuration: 0.5)
     }
     
+    //MARK: - Like Mechanism
     func startListeningForLikeCount() {
         likeCountListener = postManager.listenForLikeCount(forPost: post) { [weak self] result in
             guard let self = self else {
@@ -305,7 +290,6 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    //MARK: - Like Mechanism
     func likeThePost(){
         likeCountLocally += 1
         isLikedLocally = true
@@ -327,6 +311,18 @@ class PostTableViewCell: UITableViewCell {
         }
         self.tapWorkItem = newWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: newWorkItem)
+    }
+    
+    func updateLikesCollection(completion: @escaping (_ result: Bool) -> Void = {_ in }) {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            completion(false)
+            return
+        }
+        guard let postId = post.id else {
+            completion(false)
+            return
+        }
+        likeManager.postLikeOfUserOnPost(userId: userId, postId: postId, likeOrNot: self.isLikedLocally)
     }
     
     // MARK: - IBActions

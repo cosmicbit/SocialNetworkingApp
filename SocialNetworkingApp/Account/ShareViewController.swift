@@ -59,22 +59,29 @@ class ShareViewController: UIViewController {
         }
     }
     
+    private var backgroundViews: [UIView] = []
+    private var currentBackgroundView: UIView = UIView()
+    
     func changeBackgroundButtonTitle(){
-        var config = backgroundButton.configuration
+        
+        var config = backgroundButton.configuration ?? UIButton.Configuration.plain()
         var newTitle = AttributedString(currentBackgroundState.description.uppercased())
         newTitle.font = .boldSystemFont(ofSize: 10)
-        config?.attributedTitle = newTitle
+        config.attributedTitle = newTitle
         backgroundButton.configuration = config
     }
     
     func changeBackground(){
-        
+        currentBackgroundView.removeFromSuperview()
+        currentBackgroundView = backgroundViews[currentBackgroundState.rawValue]
+        view.insertSubview(currentBackgroundView, at: 0)
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupUserProfile()
+        addBackgroundTaps()
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,14 +94,10 @@ class ShareViewController: UIViewController {
     }
     
     func setupView(){
-        var config = UIButton.Configuration.plain()
-        backgroundButton.configuration = config
-        view.backgroundColor = .blue
-        currentBackgroundState = .color
+        setupBackgroundViews()
         qrCodeImageView.image = qrCodeImage
         qrCodeImageView.contentMode = .scaleAspectFill
-        
-        config = UIButton.Configuration.plain()
+        var config = UIButton.Configuration.plain()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
         config.preferredSymbolConfigurationForImage = largeConfig
         config.imagePlacement = .top
@@ -112,8 +115,29 @@ class ShareViewController: UIViewController {
         }
     }
     
+    func setupBackgroundViews(){
+        let colorView = ColorShareView(frame: view.bounds)
+        backgroundViews.append(colorView)
+        let emojiView = EmojiShareView(frame: view.bounds)
+        emojiView.backgroundColor = .red
+        backgroundViews.append(emojiView)
+        let selfieView = SelfieShareView(frame: view.bounds)
+        selfieView.backgroundColor = .yellow
+        backgroundViews.append(selfieView)
+        let imageView = ImageShareView(frame: view.bounds)
+        imageView.backgroundColor = .blue
+        backgroundViews.append(imageView)
+        currentBackgroundView = colorView
+        currentBackgroundState = .color
+    }
+    
     func setupUserProfile(){
         nameLabel.text = "@"+userProfile.name.uppercased().replacingOccurrences(of: " ", with: "_")
+    }
+    
+    private func addBackgroundTaps(){
+        let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap))
+        view.addGestureRecognizer(singleTap)
     }
     
     private func generateRequiredProperties(){
@@ -135,6 +159,22 @@ class ShareViewController: UIViewController {
             return
         }
         self.qrCodeImage = qrCodeImage
+    }
+    
+    @objc func handleSingleTap(){
+        switch currentBackgroundState {
+        case .color:
+            let view = currentBackgroundView as! ColorShareView
+            view.currentColor.toNextColor()
+        default:
+            print()
+//        case .image:
+//
+//        case .emoji:
+//            
+//        case .selfie:
+            
+        }
     }
     
     @IBAction func closeButtonTapped(_ sender: Any){
