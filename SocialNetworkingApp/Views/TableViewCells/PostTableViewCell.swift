@@ -34,7 +34,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     
     private var post: Post!
-    private var postUserProfile: UserProfile?
+    private var postUserProfile: RemoteUserProfile?
     
     var postImageView: UIImageView = {
         let view = UIImageView()
@@ -253,7 +253,7 @@ class PostTableViewCell: UITableViewCell {
         }
     }
     
-    func setupPostUserProfile(with profile: UserProfile){
+    func setupPostUserProfile(with profile: RemoteUserProfile){
         postUserProfile = profile
         if let imageURL = postUserProfile?.avatarImageURL {
             avatarImageView.sd_setImage(with: imageURL)

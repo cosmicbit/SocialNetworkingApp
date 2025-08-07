@@ -20,7 +20,7 @@ class AccountViewController: UIViewController {
     @IBOutlet weak var savedPostsButton: UIButton!
     @IBOutlet weak var signOutButton: UIButton!
     
-    var userProfile: UserProfile?
+    var userProfile: RemoteUserProfile?
     private let userProfileManager = UserProfileManager()
     
     required init?(coder: NSCoder) {
@@ -56,7 +56,7 @@ class AccountViewController: UIViewController {
         signOutButton.layer.borderWidth = 1
     }
     @objc func handleUserProfileUpdate(_ notification: Notification){
-        if let userProfile = notification.userInfo?["userProfile"] as? UserProfile{
+        if let userProfile = notification.userInfo?["userProfile"] as? RemoteUserProfile{
             self.userProfile = userProfile
         }
         setupUserProfile()

@@ -21,7 +21,7 @@ class SearchResultProfileTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     
     private weak var delegate: SearchResultProfileTableViewCellDelegate?
-    private var userProfile: UserProfile!
+    private var userProfile: RemoteUserProfile!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -43,7 +43,7 @@ class SearchResultProfileTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configure(userProfile: UserProfile, delegate: SearchResultProfileTableViewCellDelegate){
+    func configure(userProfile: RemoteUserProfile, delegate: SearchResultProfileTableViewCellDelegate){
         self.userProfile = userProfile
         self.delegate = delegate
     }

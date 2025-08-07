@@ -14,10 +14,13 @@
 		50037B652E250E910027149E /* CreateAlertActionSheetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50037B642E250E910027149E /* CreateAlertActionSheetView.xib */; };
 		50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */; };
 		5004A5E62E40CC5800C4C208 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5004A5E52E40CC5800C4C208 /* BioViewController.swift */; };
+		500778AD2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 500778AB2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodeld */; };
 		501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501804262E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift */; };
 		5018042C2E28D84C00BF1AEF /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042B2E28D84300BF1AEF /* UserProfileManager.swift */; };
 		5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */; };
 		501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */; };
+		5018360B2E44D3E6003D3ADA /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501836092E44D3E6003D3ADA /* UserProfile+CoreDataClass.swift */; };
+		5018360C2E44D3E6003D3ADA /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018360A2E44D3E6003D3ADA /* UserProfile+CoreDataProperties.swift */; };
 		50324E812E261C5200B703C2 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E802E261C4300B703C2 /* UIView+Extension.swift */; };
 		50324E832E26643A00B703C2 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E822E26642700B703C2 /* Like.swift */; };
 		50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3A2E27A30B000E53B7 /* PostManager.swift */; };
@@ -64,7 +67,7 @@
 		50A0172D2E1BFD5E00594A7C /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */; };
 		50A5DEEF2E388EE9001C9D6F /* ChatDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5DEEC2E388EE9001C9D6F /* ChatDetailTableViewCell.swift */; };
 		50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */; };
-		50B46AAE2E1E447A004CC093 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B46AAD2E1E447A004CC093 /* UserProfile.swift */; };
+		50B46AAE2E1E447A004CC093 /* RemoteUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B46AAD2E1E447A004CC093 /* RemoteUserProfile.swift */; };
 		50BAB62E2E3090BE006F3AE5 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAB62D2E3090BE006F3AE5 /* NotificationsViewController.swift */; };
 		50BAB6322E309165006F3AE5 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAB6312E309165006F3AE5 /* BackButton.swift */; };
 		50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */; };
@@ -118,10 +121,13 @@
 		50037B642E250E910027149E /* CreateAlertActionSheetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAlertActionSheetView.xib; sourceTree = "<group>"; };
 		50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetView.swift; sourceTree = "<group>"; };
 		5004A5E52E40CC5800C4C208 /* BioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
+		500778AC2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SocialNetworkingApp.xcdatamodel; sourceTree = "<group>"; };
 		501804262E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultProfileTableViewCell.swift; sourceTree = "<group>"; };
 		5018042B2E28D84300BF1AEF /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimarySegmentedControl.swift; sourceTree = "<group>"; };
+		501836092E44D3E6003D3ADA /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		5018360A2E44D3E6003D3ADA /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		50324E802E261C4300B703C2 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		50324E822E26642700B703C2 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		50396D3A2E27A30B000E53B7 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
@@ -166,7 +172,7 @@
 		50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		50A5DEEC2E388EE9001C9D6F /* ChatDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailTableViewCell.swift; sourceTree = "<group>"; };
 		50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailEntryButton.swift; sourceTree = "<group>"; };
-		50B46AAD2E1E447A004CC093 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		50B46AAD2E1E447A004CC093 /* RemoteUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserProfile.swift; sourceTree = "<group>"; };
 		50BAB62D2E3090BE006F3AE5 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		50BAB6312E309165006F3AE5 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetButtton.swift; sourceTree = "<group>"; };
@@ -375,7 +381,7 @@
 				50A016E42E1BD54500594A7C /* PostToUpload.swift */,
 				508759EA2E1CDD5100ABAEC6 /* Post.swift */,
 				50FEA75F2E1D251F0041C7BF /* UserProfileToUpload.swift */,
-				50B46AAD2E1E447A004CC093 /* UserProfile.swift */,
+				50B46AAD2E1E447A004CC093 /* RemoteUserProfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -453,6 +459,9 @@
 		E1A3671129F9226100A1B03E = {
 			isa = PBXGroup;
 			children = (
+				501836092E44D3E6003D3ADA /* UserProfile+CoreDataClass.swift */,
+				5018360A2E44D3E6003D3ADA /* UserProfile+CoreDataProperties.swift */,
+				500778AB2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodeld */,
 				E1A3671C29F9226100A1B03E /* SocialNetworkingApp */,
 				E1A3671B29F9226100A1B03E /* Products */,
 			);
@@ -659,6 +668,7 @@
 				50A5DEEF2E388EE9001C9D6F /* ChatDetailTableViewCell.swift in Sources */,
 				50DB56E62E2F43C3008236AE /* StoryCollectionViewCell.swift in Sources */,
 				50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */,
+				500778AD2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodeld in Sources */,
 				5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */,
 				501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */,
 				50F069A92E41D7C700B6D716 /* BorderView.swift in Sources */,
@@ -670,8 +680,10 @@
 				50CC29CF2E3B727F007ED579 /* LikeManager.swift in Sources */,
 				E1A3672029F9226100A1B03E /* SceneDelegate.swift in Sources */,
 				5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */,
+				5018360B2E44D3E6003D3ADA /* UserProfile+CoreDataClass.swift in Sources */,
+				5018360C2E44D3E6003D3ADA /* UserProfile+CoreDataProperties.swift in Sources */,
 				50A016E52E1BD54500594A7C /* PostToUpload.swift in Sources */,
-				50B46AAE2E1E447A004CC093 /* UserProfile.swift in Sources */,
+				50B46AAE2E1E447A004CC093 /* RemoteUserProfile.swift in Sources */,
 				50FEA7602E1D251F0041C7BF /* UserProfileToUpload.swift in Sources */,
 				50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */,
 				50324E832E26643A00B703C2 /* Like.swift in Sources */,
@@ -1002,6 +1014,19 @@
 			productName = GoogleSignInSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		500778AB2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				500778AC2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodel */,
+			);
+			currentVersion = 500778AC2E44C1A300BC5501 /* SocialNetworkingApp.xcdatamodel */;
+			path = SocialNetworkingApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E1A3671229F9226100A1B03E /* Project object */;
 }

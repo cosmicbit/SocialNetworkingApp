@@ -18,7 +18,7 @@ class BioViewController: UIViewController {
     
     private let BIO_CHARACTER_LIMIT = 150
     
-    var userProfile: UserProfile!
+    var userProfile: RemoteUserProfile!
     private let userProfileManager = UserProfileManager()
     var bioCharacterCount: Int = 0{
         didSet{

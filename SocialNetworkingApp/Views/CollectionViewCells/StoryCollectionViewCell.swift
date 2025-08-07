@@ -12,7 +12,7 @@ class StoryCollectionViewCell: UICollectionViewCell {
     
     private let userProfileManager = UserProfileManager()
     
-    var userProfile: UserProfile!
+    var userProfile: RemoteUserProfile!
 
     // Only the RingView instance
     let ringView: RingView = {

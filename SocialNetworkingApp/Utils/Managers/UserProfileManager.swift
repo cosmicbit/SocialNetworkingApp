@@ -9,7 +9,7 @@ import FirebaseFirestore
 class UserProfileManager{
     private let collectionRef = Firestore.firestore().collection("users")
     
-    func getUserProfilesByUsernameOrName(username: String, name: String, completion: @escaping (Result<[UserProfile], Error>) -> Void ){
+    func getUserProfilesByUsernameOrName(username: String, name: String, completion: @escaping (Result<[RemoteUserProfile], Error>) -> Void ){
         var prefix = username
         var endPrefix = prefix + "\u{f8ff}"
 
@@ -23,12 +23,12 @@ class UserProfileManager{
                     return
                 }
 
-                var results: [UserProfile] = []
+                var results: [RemoteUserProfile] = []
                 guard let docs1 = snapshot1?.documents else {
                     return
                 }
                 docs1.forEach { doc in
-                    if let userProfile = UserProfile(snapshot: doc){
+                    if let userProfile = RemoteUserProfile(snapshot: doc){
                         results.append(userProfile)
                     }
                 }
@@ -49,7 +49,7 @@ class UserProfileManager{
                             return
                         }
                         docs2.forEach { doc in
-                            if let userProfile = UserProfile(snapshot: doc){
+                            if let userProfile = RemoteUserProfile(snapshot: doc){
                                 results.append(userProfile)
                             }
                         }
@@ -63,12 +63,12 @@ class UserProfileManager{
             }
     }
     
-    func getUserProfileByUserID(userId:String) async throws -> UserProfile{
+    func getUserProfileByUserID(userId:String) async throws -> RemoteUserProfile{
         let querySnapshot = try await collectionRef.document(userId).getDocument()
-        return try querySnapshot.data(as: UserProfile.self)
+        return try querySnapshot.data(as: RemoteUserProfile.self)
     }
     
-    func getAllUsers(completion: @escaping (Result<[UserProfile], Error>) -> Void){
+    func getAllUsers(completion: @escaping (Result<[RemoteUserProfile], Error>) -> Void){
         collectionRef.getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -80,7 +80,7 @@ class UserProfileManager{
             }
             let userProfiles = documents.compactMap {
                 do{
-                    return try $0.data(as: UserProfile.self)
+                    return try $0.data(as: RemoteUserProfile.self)
                 }catch{
                     return nil
                 }
@@ -89,7 +89,7 @@ class UserProfileManager{
         }
     }
     
-    func updateUserProfile(userProfile: UserProfile, completion: @escaping (Bool) -> Void){
+    func updateUserProfile(userProfile: RemoteUserProfile, completion: @escaping (Bool) -> Void){
         guard let userId = userProfile.id else {
             completion(false)
             return
