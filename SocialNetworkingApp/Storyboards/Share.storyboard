@@ -24,7 +24,7 @@
                                     <constraint firstAttribute="height" constant="45" id="22h-pv-IwT"/>
                                     <constraint firstAttribute="width" constant="45" id="ADk-wb-J3X"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system" title=""/>
                                 <connections>
@@ -139,7 +139,7 @@
                                     <constraint firstAttribute="width" constant="45" id="9bb-5Y-OYp"/>
                                     <constraint firstAttribute="height" constant="45" id="QZP-M7-tV8"/>
                                 </constraints>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" systemColor="labelColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="">
                                     <imageReference key="image" image="qrcode.viewfinder" catalog="system" symbolScale="large"/>
@@ -148,7 +148,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tTc-eh-NRg"/>
-                        <color key="backgroundColor" systemColor="systemBlueColor"/>
+                        <color key="backgroundColor" red="0.0" green="0.79276491841836738" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="efW-PI-QhG" firstAttribute="leading" secondItem="tTc-eh-NRg" secondAttribute="leading" constant="5" id="E9k-WU-8f7"/>
                             <constraint firstItem="tTc-eh-NRg" firstAttribute="trailing" secondItem="Rso-SM-AW4" secondAttribute="trailing" constant="5" id="GxB-El-2v5"/>
@@ -183,11 +183,11 @@
     <resources>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

@@ -14,6 +14,8 @@
 		50037B652E250E910027149E /* CreateAlertActionSheetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50037B642E250E910027149E /* CreateAlertActionSheetView.xib */; };
 		50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */; };
 		5004A5E62E40CC5800C4C208 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5004A5E52E40CC5800C4C208 /* BioViewController.swift */; };
+		500778A82E4452D400BC5501 /* EmojiPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */; };
+		500778AA2E44545100BC5501 /* emoji.txt in Resources */ = {isa = PBXBuildFile; fileRef = 500778A92E44544300BC5501 /* emoji.txt */; };
 		500AB5F02E433A12003AC0DC /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500AB5EF2E433A12003AC0DC /* Share.storyboard */; };
 		500AB5F22E4376F0003AC0DC /* ColorShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500AB5F12E4376F0003AC0DC /* ColorShareView.swift */; };
 		500AB5F42E4383CB003AC0DC /* EmojiShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500AB5F32E4383CB003AC0DC /* EmojiShareView.swift */; };
@@ -125,6 +127,8 @@
 		50037B642E250E910027149E /* CreateAlertActionSheetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAlertActionSheetView.xib; sourceTree = "<group>"; };
 		50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetView.swift; sourceTree = "<group>"; };
 		5004A5E52E40CC5800C4C208 /* BioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
+		500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerViewController.swift; sourceTree = "<group>"; };
+		500778A92E44544300BC5501 /* emoji.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = emoji.txt; sourceTree = "<group>"; };
 		500AB5EF2E433A12003AC0DC /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
 		500AB5F12E4376F0003AC0DC /* ColorShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorShareView.swift; sourceTree = "<group>"; };
 		500AB5F32E4383CB003AC0DC /* EmojiShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiShareView.swift; sourceTree = "<group>"; };
@@ -253,10 +257,10 @@
 		5004F8B82E28B64000C18E31 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				500778A62E44526900BC5501 /* ShareProfile */,
 				5004A5E42E40CC3D00C4C208 /* EditProfile */,
 				5054FECB2E1BA825004395DF /* AccountViewController.swift */,
 				50037B1E2E2507DD0027149E /* CreateAlertViewController.swift */,
-				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
 			);
 			path = Account;
 			sourceTree = "<group>";
@@ -280,6 +284,15 @@
 				50A016E22E1BD17A00594A7C /* UploadImageAndPostViewController.swift */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		500778A62E44526900BC5501 /* ShareProfile */ = {
+			isa = PBXGroup;
+			children = (
+				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
+				500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */,
+			);
+			path = ShareProfile;
 			sourceTree = "<group>";
 		};
 		50396D3B2E27A30B000E53B7 /* Managers */ = {
@@ -451,6 +464,7 @@
 		E154F21D2AB1CCA0000BC44C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				500778A92E44544300BC5501 /* emoji.txt */,
 				50EB94842E3A3720005C1B20 /* sample_video.mp4 */,
 				E1FD31402A86E7BB00A4EDF5 /* Fonts */,
 			);
@@ -612,6 +626,7 @@
 				500AB5F02E433A12003AC0DC /* Share.storyboard in Resources */,
 				E1A3673229F922E200A1B03E /* Auth.storyboard in Resources */,
 				5002B5CF2E2A696500F36A80 /* PostTableViewCell.xib in Resources */,
+				500778AA2E44545100BC5501 /* emoji.txt in Resources */,
 				E1A3672A29F9226300A1B03E /* LaunchScreen.storyboard in Resources */,
 				E1A3672729F9226300A1B03E /* Assets.xcassets in Resources */,
 				E1FDD9162A0A50D4006AD0DF /* Colors.xcassets in Resources */,
@@ -646,6 +661,7 @@
 				50F4068A2E1B869000A23A2C /* LoginViewController.swift in Sources */,
 				500AB5F62E4383EF003AC0DC /* SelfieShareView.swift in Sources */,
 				50A016E32E1BD17A00594A7C /* UploadImageAndPostViewController.swift in Sources */,
+				500778A82E4452D400BC5501 /* EmojiPickerViewController.swift in Sources */,
 				50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */,
 				50A0169D2E1BB3FE00594A7C /* TabBarController.swift in Sources */,
 				50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */,

@@ -10,7 +10,7 @@ import CoreImage
 
 enum ShareBackgroundState: Int, CaseIterable, CustomStringConvertible{
     
-    case color = 0, image, emoji, selfie
+    case color = 0, emoji, selfie, image
     var nextState: ShareBackgroundState {
         guard let state = ShareBackgroundState(rawValue: (self.rawValue + 1) % ShareBackgroundState.allCases.count) else { return .color}
         return state
@@ -22,12 +22,12 @@ enum ShareBackgroundState: Int, CaseIterable, CustomStringConvertible{
         switch self {
         case .color:
             return "color"
-        case .image:
-            return "image"
         case .emoji:
             return "emoji"
         case .selfie:
             return "selfie"
+        case .image:
+            return "image"
         }
     }
 }
@@ -58,6 +58,10 @@ class ShareViewController: UIViewController {
             changeBackground()
         }
     }
+    private let emojiPickerVC: EmojiPickerViewController = {
+        let view = EmojiPickerViewController()
+        return view
+    }()
     
     private var backgroundViews: [UIView] = []
     private var currentBackgroundView: UIView = UIView()
@@ -82,12 +86,22 @@ class ShareViewController: UIViewController {
         setupView()
         setupUserProfile()
         addBackgroundTaps()
+        emojiPickerVC.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         qrCodeContainerView.layer.cornerRadius = 12
+        // Assuming you have a view named `myView`
+        qrCodeContainerView.layer.shadowColor = UIColor.black.cgColor
+        qrCodeContainerView.layer.shadowOpacity = 0.5
+        qrCodeContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        qrCodeContainerView.layer.shadowRadius = 4
         functionsContainerView.layer.cornerRadius = 12
+        functionsContainerView.layer.shadowColor = UIColor.black.cgColor
+        functionsContainerView.layer.shadowOpacity = 0.5
+        functionsContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        functionsContainerView.layer.shadowRadius = 4
         backgroundButton.layer.cornerRadius = 12
         backgroundButton.layer.borderColor = UIColor.white.cgColor
         backgroundButton.layer.borderWidth = 1
@@ -119,13 +133,15 @@ class ShareViewController: UIViewController {
         let colorView = ColorShareView(frame: view.bounds)
         backgroundViews.append(colorView)
         let emojiView = EmojiShareView(frame: view.bounds)
-        emojiView.backgroundColor = .red
+        emojiView.backgroundColor = .white
+        emojiView.collectionView.dataSource = self
+        emojiView.collectionView.delegate = self
         backgroundViews.append(emojiView)
         let selfieView = SelfieShareView(frame: view.bounds)
-        selfieView.backgroundColor = .yellow
+        selfieView.backgroundColor = .white
         backgroundViews.append(selfieView)
         let imageView = ImageShareView(frame: view.bounds)
-        imageView.backgroundColor = .blue
+        imageView.backgroundColor = .white
         backgroundViews.append(imageView)
         currentBackgroundView = colorView
         currentBackgroundState = .color
@@ -161,18 +177,30 @@ class ShareViewController: UIViewController {
         self.qrCodeImage = qrCodeImage
     }
     
+    func showEmojiPicker(){
+        emojiPickerVC.modalPresentationStyle = .pageSheet
+        if let sheet = emojiPickerVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            sheet.prefersGrabberVisible = true
+            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+            sheet.largestUndimmedDetentIdentifier = .large
+        }
+        present(emojiPickerVC, animated: true, completion: nil)
+    }
+    
     @objc func handleSingleTap(){
         switch currentBackgroundState {
         case .color:
             let view = currentBackgroundView as! ColorShareView
             view.currentColor.toNextColor()
+        case .emoji:
+            if let vc = self.presentedViewController{
+                vc.dismiss(animated: true)
+            }else{
+                showEmojiPicker()
+            }
         default:
             print()
-//        case .image:
-//
-//        case .emoji:
-//            
-//        case .selfie:
             
         }
     }
@@ -239,5 +267,66 @@ extension ShareViewController{
         }
         
         return UIImage(cgImage: cgImage)
+    }
+}
+
+//MARK: - Picker Delegate
+extension ShareViewController: PickerDelegate{
+    func didSelect(this: Any) {
+        switch currentBackgroundState {
+        case .emoji:
+            let emoji = this as! String
+            let view = currentBackgroundView as! EmojiShareView
+            view.changeCurrentEmoji(with: emoji)
+        default:
+            print()
+            
+        }
+        
+    }
+}
+
+//MARK: - UICollectionViewDataSource
+extension ShareViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        switch currentBackgroundState {
+        case .emoji:
+            return 1000
+        default:
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let itemsPerColumn = 9
+        let row = indexPath.item % itemsPerColumn
+        let column = indexPath.item / itemsPerColumn
+        
+        switch currentBackgroundState {
+        case .emoji:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LabelCell.identifier, for: indexPath) as! LabelCell
+            let view = currentBackgroundView as! EmojiShareView
+            if (row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0) {
+                cell.label.text = view.currentEmoji
+            }
+            else{
+                cell.label.text = " "
+            }
+            
+            return cell
+        default:
+            return UICollectionViewCell()
+        }
+    }
+}
+
+extension ShareViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let itemsPerScreen: CGFloat = 9 // This value is the key! It makes 3.5 cells visible.
+        let spacing: CGFloat = 10
+        
+        // Calculate the item width based on how many you want to see on screen at once
+        let itemHeight = (collectionView.bounds.height - (itemsPerScreen - 1) * spacing) / itemsPerScreen
+        return CGSize(width: itemHeight, height: itemHeight)
     }
 }
