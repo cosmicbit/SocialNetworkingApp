@@ -18,7 +18,7 @@ struct RemoteUserProfile: Codable {
     let isOnboardingComplete: Bool
     var avatarImageURL: URL?
     
-    init(id: String, name: String, username: String, modifiedDate: Date, isOnboardingComplete: Bool, avatarImageURL: URL?, pronouns: String?, bio: String?) {
+    init(id: String?, name: String, username: String, modifiedDate: Date, isOnboardingComplete: Bool, avatarImageURL: URL?, pronouns: String?, bio: String?) {
         self.id = id
         self.name = name
         self.username = username

@@ -16,10 +16,9 @@ class OnboardingViewController: UIViewController {
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var usernameTextField: UITextField!
     
-    
+    private let userProfileManager = UserProfileManager()
     var selectedImage: UIImage? = nil {
         didSet {
-            
             if selectedImage != nil {
                 avatarImageView.image = selectedImage
             }
@@ -31,11 +30,8 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         avatarImageView.contentMode = .scaleAspectFill
-        
         avatarContainerView.clipsToBounds = true
-        
         let viewTap = UITapGestureRecognizer(target: self, action: #selector(endTextFieldEditing))
         view.addGestureRecognizer(viewTap)
         view.isUserInteractionEnabled = true
@@ -49,7 +45,6 @@ class OnboardingViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         avatarContainerView.layer.cornerRadius = avatarContainerView.frame.width / 2
-        
     }
     
 
@@ -88,8 +83,6 @@ class OnboardingViewController: UIViewController {
         
     }
     
-    
-    
     @IBAction func createProfileButtonTapped(_ sender: Any) {
         guard let username = usernameTextField.text,
               !username.isEmpty else {
@@ -102,7 +95,7 @@ class OnboardingViewController: UIViewController {
             }
             return
         }
-        
+        let name = "Usopp"
         if selectedImage != nil{
             guard let avatarImage = avatarImageView.image else {
                 presentError(title: "Image Error", message: "Please add an image to continue")
@@ -120,51 +113,42 @@ class OnboardingViewController: UIViewController {
                     return
                 }
                 
-                guard let downloadURL = url?.absoluteString else {
-                    self.presentError(title: "Upload Error", message: "Please try again later.") {
+                let userProfile = RemoteUserProfile(
+                    id: userId,
+                    name: name,
+                    username: username,
+                    modifiedDate: Date(),
+                    isOnboardingComplete: true,
+                    avatarImageURL: url,
+                    pronouns: nil,
+                    bio: nil
+                )
+                self.userProfileManager.addUserProfile(userProfile: userProfile) { result in
+                    if result{
                         self.dismiss(animated: true)
                     }
-                    return
                 }
-                let userProfileData: [String: Any] = [
-                    "username": username,
-                    "avatarImageURL": downloadURL,
-                    "modifiedDate": Date().timeIntervalSince1970,
-                    "isOnboardingComplete": true
-                ]
-                Firestore.firestore().collection("users").document(userId).setData(userProfileData) { error in
-                    if let error = error {
-                        print(error.localizedDescription)
-                        self.presentError(title: "Post Error", message: "Post could not be created. Please try again later.") {
-                            self.dismiss(animated: true)
-                        }
-                        return
-                    }
+            }
+        }
+        else{
+            let userProfile = RemoteUserProfile(
+                id: userId,
+                name: name,
+                username: username,
+                modifiedDate: Date(),
+                isOnboardingComplete: true,
+                avatarImageURL: nil,
+                pronouns: nil,
+                bio: nil
+            )
+            self.userProfileManager.addUserProfile(userProfile: userProfile) { result in
+                if result{
                     self.dismiss(animated: true)
                 }
             }
         }
-        else {
-            let userProfileData: [String: Any] = [
-                "username": username,
-                "modifiedDate": Date().timeIntervalSince1970,
-                "isOnboardingComplete": true
-            ]
-            Firestore.firestore().collection("users").document(userId).setData(userProfileData) { error in
-                if let error = error {
-                    print(error.localizedDescription)
-                    self.presentError(title: "Post Error", message: "Post could not be created. Please try again later.") {
-                        self.dismiss(animated: true)
-                    }
-                    return
-                }
-                self.dismiss(animated: true)
-            }
-        }
         view.window?.rootViewController = TabBarController()
-        
     }
-
 }
 
 extension OnboardingViewController  : PHPickerViewControllerDelegate {

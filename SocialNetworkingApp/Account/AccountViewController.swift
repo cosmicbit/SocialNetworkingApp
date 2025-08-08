@@ -63,14 +63,24 @@ class AccountViewController: UIViewController {
     }
     
     func getUserProfile() {
+        guard let userId = Auth.auth().currentUser?.uid else {
+            return
+        }
+        if let localProfile = userProfileManager.getUserProfileByUserIDThroughCoreData(userId: userId) {
+            self.userProfile = localProfile
+            print("UI updated from Core Data.")
+        }
         Task{
-            guard let userId = Auth.auth().currentUser?.uid else {
-                return
-            }
-            do{
-                userProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
-            }catch{
+            // 2. Fetch from the network
+            do {
+                let remoteProfile = try await userProfileManager.getUserProfileByUserID(userId: userId)
+                self.userProfile = remoteProfile
+                print("UI updated from network.")
+                userProfileManager.updateUserProfileToCoreData(userProfile: remoteProfile)
+            } catch {
+                // Handle network fetch or saving errors
                 presentError(title: "Profile Fetch Error", message: error.localizedDescription)
+                print("Failed to fetch user profile from network.")
             }
         }
     }
