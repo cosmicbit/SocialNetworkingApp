@@ -12,7 +12,7 @@ import GoogleSignIn
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    lazy var coreDataStack = CoreDataStack(modelName: "SocialName")
+    lazy var coreDataStack = CoreDataStack(modelName: "SocialNetworkingApp")
     
     static let sharedAppDelegate: AppDelegate = {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {

@@ -74,8 +74,8 @@
 		50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CE41642E3777DB004AA246 /* MessageBarView.swift */; };
 		50D2BF552E45B462003B6D76 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2BF542E45B462003B6D76 /* CoreDataStack.swift */; };
 		50D2BF582E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 50D2BF562E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodeld */; };
-		50D2BFE72E45EE5C003B6D76 /* UserProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2BFE52E45EE5C003B6D76 /* UserProfile+CoreDataClass.swift */; };
-		50D2BFE82E45EE5C003B6D76 /* UserProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2BFE62E45EE5C003B6D76 /* UserProfile+CoreDataProperties.swift */; };
+		50D2BFE72E45EE5C003B6D76 /* UserProfileEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2BFE52E45EE5C003B6D76 /* UserProfileEntity+CoreDataClass.swift */; };
+		50D2BFE82E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D2BFE62E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift */; };
 		50DB56E62E2F43C3008236AE /* StoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */; };
 		50DB56E82E2F8909008236AE /* Story.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E72E2F8904008236AE /* Story.swift */; };
 		50DB56EA2E2F8C5D008236AE /* StoryManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DB56E92E2F8C57008236AE /* StoryManager.swift */; };
@@ -180,8 +180,8 @@
 		50CE41642E3777DB004AA246 /* MessageBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarView.swift; sourceTree = "<group>"; };
 		50D2BF542E45B462003B6D76 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		50D2BF572E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SocialNetworkingApp.xcdatamodel; sourceTree = "<group>"; };
-		50D2BFE52E45EE5C003B6D76 /* UserProfile+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
-		50D2BFE62E45EE5C003B6D76 /* UserProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		50D2BFE52E45EE5C003B6D76 /* UserProfileEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfileEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
+		50D2BFE62E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfileEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		50DB56E32E2F43C3008236AE /* StoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		50DB56E72E2F8904008236AE /* Story.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Story.swift; sourceTree = "<group>"; };
 		50DB56E92E2F8C57008236AE /* StoryManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryManager.swift; sourceTree = "<group>"; };
@@ -368,8 +368,8 @@
 			isa = PBXGroup;
 			children = (
 				50D2BF542E45B462003B6D76 /* CoreDataStack.swift */,
-				50D2BFE52E45EE5C003B6D76 /* UserProfile+CoreDataClass.swift */,
-				50D2BFE62E45EE5C003B6D76 /* UserProfile+CoreDataProperties.swift */,
+				50D2BFE52E45EE5C003B6D76 /* UserProfileEntity+CoreDataClass.swift */,
+				50D2BFE62E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift */,
 				50D2BF562E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodeld */,
 			);
 			path = CoreData;
@@ -693,8 +693,8 @@
 				5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */,
 				50A016E52E1BD54500594A7C /* PostToUpload.swift in Sources */,
 				50B46AAE2E1E447A004CC093 /* RemoteUserProfile.swift in Sources */,
-				50D2BFE72E45EE5C003B6D76 /* UserProfile+CoreDataClass.swift in Sources */,
-				50D2BFE82E45EE5C003B6D76 /* UserProfile+CoreDataProperties.swift in Sources */,
+				50D2BFE72E45EE5C003B6D76 /* UserProfileEntity+CoreDataClass.swift in Sources */,
+				50D2BFE82E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift in Sources */,
 				50D2BF582E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodeld in Sources */,
 				50FEA7602E1D251F0041C7BF /* UserProfileToUpload.swift in Sources */,
 				50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */,

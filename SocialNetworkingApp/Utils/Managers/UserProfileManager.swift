@@ -5,6 +5,7 @@
 //  Created by Philips on 17/07/25.
 //
 import FirebaseFirestore
+import os
 
 class UserProfileManager{
     private let collectionRef = Firestore.firestore().collection("users")
@@ -70,35 +71,18 @@ class UserProfileManager{
     }
     
     func getUserProfileByUserIDThroughCoreData(userId:String) -> RemoteUserProfile? {
-        let fetchRequest = UserProfile.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", userId)
-        do {
-            // Execute the fetch request
-            let fetchedResults = try managedContext.fetch(fetchRequest)
-
-            if let foundObject = fetchedResults.first {
-                print("Found object with custom ID: \(foundObject)")
-                print("Found odject of name: ", foundObject.name)
-                var url: URL?
-                if let urlString = foundObject.avatarImageURL{
-                    url = URL(string: urlString)
-                }
-                let userProfile = RemoteUserProfile(
-                    id: foundObject.id,
-                    name: foundObject.name,
-                    username: foundObject.username,
-                    modifiedDate: foundObject.modifiedDate,
-                    isOnboardingComplete: foundObject.isOnboardingComplete,
-                    avatarImageURL: url,
-                    pronouns: foundObject.pronouns,
-                    bio: foundObject.bio
-                )
-                return userProfile
+        switch findUserProfileFromCoreData(userId: userId){
+        case .success(let userProfileEntity):
+            print("Found core data object of name: ", userProfileEntity.name)
+            let userProfile = RemoteUserProfile(from: userProfileEntity)
+            return userProfile
+        case .failure(let error):
+            let nsError = error as NSError
+            if nsError.code == 404 {
+                print("User profile not found. Error: \(nsError.localizedDescription)")
             } else {
-                print("Object not found.")
+                print("Failed to fetch user profile. Error: \(error.localizedDescription)")
             }
-        } catch {
-            print("Failed to fetch object: \(error)")
         }
         return nil
     }
@@ -125,12 +109,15 @@ class UserProfileManager{
     }
     
     func updateUserProfile(userProfile: RemoteUserProfile, completion: @escaping (Bool) -> Void = {_ in}){
+        os_log("Updating UserProfile to firestore", type: .info)
         guard let userId = userProfile.id else {
             completion(false)
             return
         }
         do {
             try collectionRef.document(userId).setData(from: userProfile, merge: true)
+            os_log("Updated UserProfile to firestore", type: .info)
+            updateUserProfileToCoreData(userProfile: userProfile)
             completion(true)
         }catch{
             print(error.localizedDescription)
@@ -140,12 +127,14 @@ class UserProfileManager{
     
     func addUserProfile(userProfile: RemoteUserProfile,
                         completion: @escaping(Bool) -> Void = {_ in}){
+        os_log("Adding UserProfile to firestore", type: .info)
         guard let userId = userProfile.id else {
             completion(false)
             return
         }
         do {
             try collectionRef.document(userId).setData(from: userProfile, merge: true)
+            os_log("Added UserProfile to firestore", type: .info)
             addUserProfileToCoreData(userProfile: userProfile)
             completion(true)
         }catch{
@@ -156,48 +145,53 @@ class UserProfileManager{
     
     func addUserProfileToCoreData(userProfile: RemoteUserProfile,
                                   completion: @escaping (Bool) -> Void = {_ in}){
-        
-        let newUserProfile = UserProfile(context: managedContext)
-        newUserProfile.id = userProfile.id
-        newUserProfile.name = userProfile.name
-        newUserProfile.username = userProfile.username
-        newUserProfile.pronouns = userProfile.pronouns
-        newUserProfile.bio = userProfile.bio
-        newUserProfile.isOnboardingComplete = userProfile.isOnboardingComplete
-        newUserProfile.modifiedDate = userProfile.modifiedDate
-        newUserProfile.avatarImageURL = userProfile.avatarImageURL?.absoluteString
+        os_log("Adding UserProfile to core data stack", type: .info)
+        let _ = UserProfileEntity(from: userProfile, in: managedContext)
         AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
+        os_log("Added UserProfile to core data stack", type: .info)
         completion(true)
     }
     
     func updateUserProfileToCoreData(userProfile: RemoteUserProfile,
                                     completion: @escaping (Bool) -> Void = {_ in}){
+        os_log("Updating UserProfile to core data stack", type: .info)
         guard let userId = userProfile.id else {
             completion(false)
             return
         }
-        let fetchRequest = UserProfile.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "id == %@", userId)
-        do {
-            let fetchedResults = try managedContext.fetch(fetchRequest)
-
-            if let foundObject = fetchedResults.first {
-                print("Found core data object of name: ", foundObject.name)
-                foundObject.name = userProfile.name
-                foundObject.username = userProfile.username
-                foundObject.pronouns = userProfile.pronouns
-                foundObject.bio = userProfile.bio
-                foundObject.modifiedDate = userProfile.modifiedDate
-                foundObject.avatarImageURL = userProfile.avatarImageURL?.absoluteString
-                AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
-            } else {
-                print("Object not found in core data.")
+        switch findUserProfileFromCoreData(userId: userId){
+        case .success(let userProfileEntity):
+            userProfileEntity.update(with: userProfile)
+            AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
+            os_log("Updated UserProfile to core data stack", type: .info)
+        case .failure(let error):
+            let nsError = error as NSError
+            if nsError.code == 404 {
+                os_log("Since UserProfile NOT FOUND in core data stack", type: .info)
                 addUserProfileToCoreData(userProfile: userProfile)
+            } else {
+                os_log("Failed to fetch user profile. Error: \(error.localizedDescription)")
             }
-        } catch {
-            print("Failed to fetch object: \(error)")
         }
     }
     
-    
+    func findUserProfileFromCoreData(userId: String) -> Result<UserProfileEntity, Error> {
+        os_log("Finding UserProfile for id: %{public}@ in core data stack", type: .info, userId)
+        let fetchRequest = UserProfileEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id == %@", userId)
+        
+        do {
+            let fetchedResults = try managedContext.fetch(fetchRequest)
+            if let foundObject = fetchedResults.first {
+                os_log("UserProfile FOUND for id: %{public}@ in core data stack", type: .info, userId)
+                return .success(foundObject)
+            } else {
+                os_log("UserProfile NOT FOUND for id: %{public}@ in core data stack", type: .info)
+                let error = NSError(domain: "com.SocialNetworkingApp.CoreData", code: 404, userInfo: [NSLocalizedDescriptionKey: "CoreData object not found for the given ID."])
+                return .failure(error)
+            }
+        } catch {
+            return .failure(error) // This now correctly returns the caught error
+        }
+    }
 }
