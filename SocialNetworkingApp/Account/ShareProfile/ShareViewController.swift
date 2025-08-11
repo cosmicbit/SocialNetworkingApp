@@ -273,7 +273,20 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func customizeImageButtonTapped(_ sender: Any){
+        let optionsVC = OptionsViewController(title:"Options", options: ["Change Background", "Blur"])
+        optionsVC.delegate = self
+        if let sheet = optionsVC.sheetPresentationController {
+            sheet.detents = [.medium(), .large()]
+            
+            // Set the corner radius for the top corners
+            sheet.preferredCornerRadius = 24
+            
+            // Make it show a grabber handle
+            sheet.prefersGrabberVisible = true
+        }
         
+        // Present the view controller
+        present(optionsVC, animated: true, completion: nil)
     }
 }
 
@@ -405,4 +418,21 @@ extension ShareViewController: SelfieRetakeDelegate{
             view.changeCurrentSelfie(with: snapshot)
         }
     }
+}
+
+extension ShareViewController: OptionsViewControllerDelegate{
+    func optionsViewController(_ controller: OptionsViewController, didSelectOption option: String) {
+        switch option {
+            case "Change Background":
+                print("Change Background")
+            case "Blur":
+                print("Blur")
+            default:
+                break
+            }
+    }
+}
+
+extension UIImagePickerControllerDelegate{
+    
 }

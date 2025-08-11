@@ -90,6 +90,7 @@
 		50E9C2822E2A46B900DE5544 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E9C2812E2A46B900DE5544 /* Home.storyboard */; };
 		50EB06672E49C294001F5E61 /* SelfieRetakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */; };
 		50EB06692E49DAC3001F5E61 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB06682E49DAC3001F5E61 /* OvalView.swift */; };
+		50EB066B2E4A16BC001F5E61 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB066A2E4A16BC001F5E61 /* OptionsViewController.swift */; };
 		50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */; };
 		50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50EB94842E3A3720005C1B20 /* sample_video.mp4 */; };
 		50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */; };
@@ -202,6 +203,7 @@
 		50E9C2812E2A46B900DE5544 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieRetakeViewController.swift; sourceTree = "<group>"; };
 		50EB06682E49DAC3001F5E61 /* OvalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
+		50EB066A2E4A16BC001F5E61 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListTableViewCell.swift; sourceTree = "<group>"; };
 		50EB94842E3A3720005C1B20 /* sample_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_video.mp4; sourceTree = "<group>"; };
 		50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingTextView.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 		500778A62E44526900BC5501 /* ShareProfile */ = {
 			isa = PBXGroup;
 			children = (
+				50EB066A2E4A16BC001F5E61 /* OptionsViewController.swift */,
 				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
 				500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */,
 				50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */,
@@ -685,6 +688,7 @@
 				E1FDD9142A0A4FB7006AD0DF /* PrimaryButton.swift in Sources */,
 				501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */,
 				50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */,
+				50EB066B2E4A16BC001F5E61 /* OptionsViewController.swift in Sources */,
 				506A46382E3738EB0073FF87 /* NewChatTableHeaderView.swift in Sources */,
 				504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */,
 				E1A3672229F9226100A1B03E /* ExploreViewController.swift in Sources */,
