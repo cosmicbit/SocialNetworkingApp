@@ -19,7 +19,7 @@ class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchResultsTableView: UITableView!
     
-    private var userProfiles: [RemoteUserProfile] = [] {
+    private var userProfiles: [UserProfile] = [] {
         didSet{
             searchResultsTableView.reloadData()
         }

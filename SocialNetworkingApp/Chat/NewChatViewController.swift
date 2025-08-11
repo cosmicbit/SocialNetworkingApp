@@ -16,8 +16,8 @@ class NewChatViewController: UIViewController {
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var newMessageTableView: UITableView!
 
-    private var users: [RemoteUserProfile] = [] // Assuming you have an AppUser struct for displaying users
-    private var filteredUsers: [RemoteUserProfile] = []
+    private var users: [UserProfile] = [] // Assuming you have an AppUser struct for displaying users
+    private var filteredUsers: [UserProfile] = []
     private var currentUserId: String?
     
     private var userProfileManager = UserProfileManager()
@@ -25,7 +25,7 @@ class NewChatViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ChatDetailSegue"{
             let destinationVC = segue.destination as! ChatDetailViewController
-            destinationVC.otherUserProfile = sender as? RemoteUserProfile
+            destinationVC.otherUserProfile = sender as? UserProfile
         }
     }
     override func viewDidLoad() {
@@ -87,7 +87,7 @@ class NewChatViewController: UIViewController {
 
     // MARK: - Navigation
 
-    private func startChat(with selectedUser: RemoteUserProfile) {
+    private func startChat(with selectedUser: UserProfile) {
         performSegue(withIdentifier: "ChatDetailSegue", sender: selectedUser)
     }
     

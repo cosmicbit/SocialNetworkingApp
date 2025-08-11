@@ -33,7 +33,7 @@ extension UserProfileEntity : Identifiable {
 
 extension UserProfileEntity {
 
-    convenience init(from userProfile: RemoteUserProfile, in context: NSManagedObjectContext) {
+    convenience init(from userProfile: UserProfile, in context: NSManagedObjectContext) {
         // You must call a designated initializer of NSManagedObject
         self.init(context: context)
         self.id = userProfile.id
@@ -46,7 +46,7 @@ extension UserProfileEntity {
         self.avatarImageURL = userProfile.avatarImageURL?.absoluteString
     }
     
-    func update(with userProfile: RemoteUserProfile) {
+    func update(with userProfile: UserProfile) {
         self.username = userProfile.username
         self.name = userProfile.name
         self.pronouns = userProfile.pronouns

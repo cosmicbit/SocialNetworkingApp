@@ -25,7 +25,7 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var bioTextView: HorizontalScrollingTextView!
     
     var avatarImageView = UIImageView()
-    var userProfile: RemoteUserProfile!
+    var userProfile: UserProfile!
     
     let frontImageView = UIImageView()
     let backImageView = UIImageView()
@@ -48,7 +48,7 @@ class EditProfileViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "BioSegue"{
             let destinationVC = segue.destination as! BioViewController
-            destinationVC.userProfile = sender as? RemoteUserProfile
+            destinationVC.userProfile = sender as? UserProfile
         }
     }
     
@@ -73,7 +73,7 @@ class EditProfileViewController: UIViewController {
     }
     
     @objc func handleUserProfileUpdate(_ notification: Notification){
-        if let updatedProfile = notification.userInfo?["userProfile"] as? RemoteUserProfile {
+        if let updatedProfile = notification.userInfo?["userProfile"] as? UserProfile {
              self.userProfile = updatedProfile
         }
         setupUserProfile()

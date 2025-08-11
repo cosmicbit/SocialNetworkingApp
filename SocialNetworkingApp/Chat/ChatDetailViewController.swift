@@ -27,7 +27,7 @@ class ChatDetailViewController: UIViewController {
     
     // MARK: - Public variables
     var otherUserId: String!
-    var otherUserProfile: RemoteUserProfile!
+    var otherUserProfile: UserProfile!
     
     //MARK: - Overloaded functions
     override func viewDidLoad() {

@@ -16,19 +16,14 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
     }
     
 
     @IBAction func loginWithGoogleButtonTapped(_ sender: Any) {
         
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-
-        // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-        print(config)
-        
         if GIDSignIn.sharedInstance.hasPreviousSignIn(){
             GIDSignIn.sharedInstance.restorePreviousSignIn { [weak self] user, error in
                 guard let strongSelf = self else {return}
@@ -80,7 +75,6 @@ class LoginViewController: UIViewController {
                 return
             }
             
-            
             let window = strongSelf.view.window
             
             guard let userId = Auth.auth().currentUser?.uid else {
@@ -111,7 +105,6 @@ class LoginViewController: UIViewController {
                         let onboardingStoryboard = UIStoryboard(name: "Onboarding", bundle: nil)
                         let onboardingViewController = onboardingStoryboard.instantiateViewController(withIdentifier: "OnboardingViewController")
                         window?.rootViewController = onboardingViewController
-                        
                     }
                     return
                 }
@@ -128,9 +121,6 @@ class LoginViewController: UIViewController {
                     window?.rootViewController = onboardingViewController
                 }
             }
-            
         }
     }
-    
-
 }

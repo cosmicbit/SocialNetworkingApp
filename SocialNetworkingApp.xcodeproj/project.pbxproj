@@ -64,7 +64,7 @@
 		50A0172D2E1BFD5E00594A7C /* ImageFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */; };
 		50A5DEEF2E388EE9001C9D6F /* ChatDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5DEEC2E388EE9001C9D6F /* ChatDetailTableViewCell.swift */; };
 		50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */; };
-		50B46AAE2E1E447A004CC093 /* RemoteUserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B46AAD2E1E447A004CC093 /* RemoteUserProfile.swift */; };
+		50B46AAE2E1E447A004CC093 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B46AAD2E1E447A004CC093 /* UserProfile.swift */; };
 		50BAB62E2E3090BE006F3AE5 /* NotificationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAB62D2E3090BE006F3AE5 /* NotificationsViewController.swift */; };
 		50BAB6322E309165006F3AE5 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BAB6312E309165006F3AE5 /* BackButton.swift */; };
 		50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */; };
@@ -170,7 +170,7 @@
 		50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileManager.swift; sourceTree = "<group>"; };
 		50A5DEEC2E388EE9001C9D6F /* ChatDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDetailTableViewCell.swift; sourceTree = "<group>"; };
 		50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailEntryButton.swift; sourceTree = "<group>"; };
-		50B46AAD2E1E447A004CC093 /* RemoteUserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteUserProfile.swift; sourceTree = "<group>"; };
+		50B46AAD2E1E447A004CC093 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		50BAB62D2E3090BE006F3AE5 /* NotificationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsViewController.swift; sourceTree = "<group>"; };
 		50BAB6312E309165006F3AE5 /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		50BF0F962E251F8C00906BBA /* CreateAlertActionSheetButtton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetButtton.swift; sourceTree = "<group>"; };
@@ -278,6 +278,7 @@
 		50396D3B2E27A30B000E53B7 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */,
 				50CC29CE2E3B7279007ED579 /* LikeManager.swift */,
 				5059EBA32E3347A100AFC960 /* ChatManager.swift */,
 				50DB56E92E2F8C57008236AE /* StoryManager.swift */,
@@ -394,7 +395,7 @@
 				50A016E42E1BD54500594A7C /* PostToUpload.swift */,
 				508759EA2E1CDD5100ABAEC6 /* Post.swift */,
 				50FEA75F2E1D251F0041C7BF /* UserProfileToUpload.swift */,
-				50B46AAD2E1E447A004CC093 /* RemoteUserProfile.swift */,
+				50B46AAD2E1E447A004CC093 /* UserProfile.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -498,7 +499,6 @@
 				E19709AE2A84D6F300A76B19 /* Utils */,
 				E11960B72A162B4A0037EA8F /* Models */,
 				E1A3674F29FAB23D00A1B03E /* Extensions */,
-				50A0172C2E1BFD5E00594A7C /* ImageFileManager.swift */,
 				E1A3672629F9226300A1B03E /* Assets.xcassets */,
 				E1FDD9152A0A50D4006AD0DF /* Colors.xcassets */,
 				E1A3672829F9226300A1B03E /* LaunchScreen.storyboard */,
@@ -692,7 +692,7 @@
 				E1A3672029F9226100A1B03E /* SceneDelegate.swift in Sources */,
 				5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */,
 				50A016E52E1BD54500594A7C /* PostToUpload.swift in Sources */,
-				50B46AAE2E1E447A004CC093 /* RemoteUserProfile.swift in Sources */,
+				50B46AAE2E1E447A004CC093 /* UserProfile.swift in Sources */,
 				50D2BFE72E45EE5C003B6D76 /* UserProfileEntity+CoreDataClass.swift in Sources */,
 				50D2BFE82E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift in Sources */,
 				50D2BF582E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodeld in Sources */,

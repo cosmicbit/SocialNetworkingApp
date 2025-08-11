@@ -11,10 +11,14 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class OnboardingViewController: UIViewController {
-
+    
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var avatarContainerView: UIView!
     @IBOutlet weak var avatarImageView: UIImageView!
+    @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var usernameTextField: UITextField!
+    @IBOutlet weak var uploadAvatarButton: UIButton!
+    @IBOutlet weak var createProfileButton: UIButton!
     
     private let userProfileManager = UserProfileManager()
     var selectedImage: UIImage? = nil {
@@ -30,12 +34,7 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        avatarImageView.contentMode = .scaleAspectFill
-        avatarContainerView.clipsToBounds = true
-        let viewTap = UITapGestureRecognizer(target: self, action: #selector(endTextFieldEditing))
-        view.addGestureRecognizer(viewTap)
-        view.isUserInteractionEnabled = true
-        
+        setupView()
     }
     
     @objc func endTextFieldEditing() {
@@ -45,6 +44,25 @@ class OnboardingViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         avatarContainerView.layer.cornerRadius = avatarContainerView.frame.width / 2
+        uploadAvatarButton.layer.borderWidth = 2
+        uploadAvatarButton.layer.cornerRadius = 6
+        uploadAvatarButton.layer.borderColor = UIColor.link.cgColor
+        
+        createProfileButton.layer.cornerRadius = 12
+        createProfileButton.layer.shadowColor = UIColor.black.cgColor
+        createProfileButton.layer.shadowOpacity = 0.5
+        createProfileButton.layer.shadowRadius = 4
+        createProfileButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+    }
+    
+    func setupView(){
+        uploadAvatarButton.backgroundColor = .white
+        uploadAvatarButton.setTitleColor(.link, for: .normal)
+        avatarImageView.contentMode = .scaleAspectFill
+        avatarContainerView.clipsToBounds = true
+        let viewTap = UITapGestureRecognizer(target: self, action: #selector(endTextFieldEditing))
+        view.addGestureRecognizer(viewTap)
+        view.isUserInteractionEnabled = true
     }
     
 
@@ -84,6 +102,11 @@ class OnboardingViewController: UIViewController {
     }
     
     @IBAction func createProfileButtonTapped(_ sender: Any) {
+        guard let name = nameTextField.text,
+              !name.isEmpty else {
+            presentError(title: "Name Field Empty!", message: "Please add your name")
+            return
+        }
         guard let username = usernameTextField.text,
               !username.isEmpty else {
             presentError(title: "Username Field Empty!", message: "Please add a username")
@@ -95,7 +118,6 @@ class OnboardingViewController: UIViewController {
             }
             return
         }
-        let name = "Usopp"
         if selectedImage != nil{
             guard let avatarImage = avatarImageView.image else {
                 presentError(title: "Image Error", message: "Please add an image to continue")
@@ -113,7 +135,7 @@ class OnboardingViewController: UIViewController {
                     return
                 }
                 
-                let userProfile = RemoteUserProfile(
+                let userProfile = UserProfile(
                     id: userId,
                     name: name,
                     username: username,
@@ -131,7 +153,7 @@ class OnboardingViewController: UIViewController {
             }
         }
         else{
-            let userProfile = RemoteUserProfile(
+            let userProfile = UserProfile(
                 id: userId,
                 name: name,
                 username: username,
@@ -176,9 +198,6 @@ extension OnboardingViewController  : PHPickerViewControllerDelegate {
             }
         }
     }
-    
-    
-    
 }
 
 extension OnboardingViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {

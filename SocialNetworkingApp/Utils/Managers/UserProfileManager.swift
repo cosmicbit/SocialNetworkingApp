@@ -11,7 +11,7 @@ class UserProfileManager{
     private let collectionRef = Firestore.firestore().collection("users")
     private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
     
-    func getUserProfilesByUsernameOrName(username: String, name: String, completion: @escaping (Result<[RemoteUserProfile], Error>) -> Void ){
+    func getUserProfilesByUsernameOrName(username: String, name: String, completion: @escaping (Result<[UserProfile], Error>) -> Void ){
         var prefix = username
         var endPrefix = prefix + "\u{f8ff}"
 
@@ -25,12 +25,12 @@ class UserProfileManager{
                     return
                 }
 
-                var results: [RemoteUserProfile] = []
+                var results: [UserProfile] = []
                 guard let docs1 = snapshot1?.documents else {
                     return
                 }
                 docs1.forEach { doc in
-                    if let userProfile = RemoteUserProfile(snapshot: doc){
+                    if let userProfile = UserProfile(snapshot: doc){
                         results.append(userProfile)
                     }
                 }
@@ -51,7 +51,7 @@ class UserProfileManager{
                             return
                         }
                         docs2.forEach { doc in
-                            if let userProfile = RemoteUserProfile(snapshot: doc){
+                            if let userProfile = UserProfile(snapshot: doc){
                                 results.append(userProfile)
                             }
                         }
@@ -65,16 +65,16 @@ class UserProfileManager{
             }
     }
     
-    func getUserProfileByUserID(userId: String) async throws -> RemoteUserProfile {
+    func getUserProfileByUserID(userId: String) async throws -> UserProfile {
         let querySnapshot = try await collectionRef.document(userId).getDocument()
-        return try querySnapshot.data(as: RemoteUserProfile.self)
+        return try querySnapshot.data(as: UserProfile.self)
     }
     
-    func getUserProfileByUserIDThroughCoreData(userId:String) -> RemoteUserProfile? {
+    func getUserProfileByUserIDThroughCoreData(userId:String) -> UserProfile? {
         switch findUserProfileFromCoreData(userId: userId){
         case .success(let userProfileEntity):
             print("Found core data object of name: ", userProfileEntity.name)
-            let userProfile = RemoteUserProfile(from: userProfileEntity)
+            let userProfile = UserProfile(from: userProfileEntity)
             return userProfile
         case .failure(let error):
             let nsError = error as NSError
@@ -87,7 +87,7 @@ class UserProfileManager{
         return nil
     }
     
-    func getAllUsers(completion: @escaping (Result<[RemoteUserProfile], Error>) -> Void){
+    func getAllUsers(completion: @escaping (Result<[UserProfile], Error>) -> Void){
         collectionRef.getDocuments { querySnapshot, error in
             if let error = error {
                 completion(.failure(error))
@@ -99,7 +99,7 @@ class UserProfileManager{
             }
             let userProfiles = documents.compactMap {
                 do{
-                    return try $0.data(as: RemoteUserProfile.self)
+                    return try $0.data(as: UserProfile.self)
                 }catch{
                     return nil
                 }
@@ -108,7 +108,7 @@ class UserProfileManager{
         }
     }
     
-    func updateUserProfile(userProfile: RemoteUserProfile, completion: @escaping (Bool) -> Void = {_ in}){
+    func updateUserProfile(userProfile: UserProfile, completion: @escaping (Bool) -> Void = {_ in}){
         os_log("Updating UserProfile to firestore", type: .info)
         guard let userId = userProfile.id else {
             completion(false)
@@ -125,7 +125,7 @@ class UserProfileManager{
         }
     }
     
-    func addUserProfile(userProfile: RemoteUserProfile,
+    func addUserProfile(userProfile: UserProfile,
                         completion: @escaping(Bool) -> Void = {_ in}){
         os_log("Adding UserProfile to firestore", type: .info)
         guard let userId = userProfile.id else {
@@ -143,7 +143,7 @@ class UserProfileManager{
         }
     }
     
-    func addUserProfileToCoreData(userProfile: RemoteUserProfile,
+    func addUserProfileToCoreData(userProfile: UserProfile,
                                   completion: @escaping (Bool) -> Void = {_ in}){
         os_log("Adding UserProfile to core data stack", type: .info)
         let _ = UserProfileEntity(from: userProfile, in: managedContext)
@@ -152,7 +152,7 @@ class UserProfileManager{
         completion(true)
     }
     
-    func updateUserProfileToCoreData(userProfile: RemoteUserProfile,
+    func updateUserProfileToCoreData(userProfile: UserProfile,
                                     completion: @escaping (Bool) -> Void = {_ in}){
         os_log("Updating UserProfile to core data stack", type: .info)
         guard let userId = userProfile.id else {

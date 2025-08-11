@@ -1,5 +1,5 @@
 //
-//  RemoteUserProfile.swift
+//  UserProfile.swift
 //  SocialNetworkingApp
 //
 //  Created by Philips on 09/07/25.
@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct RemoteUserProfile: Codable {
+struct UserProfile: Codable {
     @DocumentID var id: String?
     var name: String
     var username: String

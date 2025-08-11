@@ -33,7 +33,7 @@ class ChatsListViewController: UIViewController {
         if segue.identifier == "ChatDetailSegue"{
             print("preparing...")
             let destinationVC = segue.destination as! ChatDetailViewController
-            destinationVC.otherUserProfile = sender as? RemoteUserProfile
+            destinationVC.otherUserProfile = sender as? UserProfile
         }
     }
     

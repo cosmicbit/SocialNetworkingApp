@@ -15,7 +15,7 @@ class NewChatTableViewCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var usernameLabel: UILabel!
     
-    private var userProfile: RemoteUserProfile!
+    private var userProfile: UserProfile!
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -23,7 +23,7 @@ class NewChatTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configure(userProfile: RemoteUserProfile){
+    func configure(userProfile: UserProfile){
         self.userProfile = userProfile
         setupViews()
     }
