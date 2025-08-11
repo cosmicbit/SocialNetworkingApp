@@ -8,6 +8,7 @@
 import UIKit
 import CoreImage
 
+
 enum ShareBackgroundState: Int, CaseIterable, CustomStringConvertible{
     
     case color = 0, emoji, selfie, image
@@ -42,6 +43,8 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var shareProfileButton: UIButton!
     @IBOutlet weak var copyLinkButton: UIButton!
     @IBOutlet weak var downloadButton: UIButton!
+    @IBOutlet weak var retakeButton: UIButton!
+    @IBOutlet weak var customizeImageButton: UIButton!
     
     var userProfile: UserProfile!{
         didSet{
@@ -52,12 +55,17 @@ class ShareViewController: UIViewController {
     var profileURL: URL?
     var webURL: URL?
     var qrCodeImage: UIImage?
+    
     private var currentBackgroundState: ShareBackgroundState = .color {
         didSet{
+            print("currentBackgroundState changed from ", oldValue, " to ", currentBackgroundState)
             changeBackgroundButtonTitle()
             changeBackground()
+            changeRetakeButtonVisibility()
+            changeCustomizeImageButtonVisibility()
         }
     }
+    
     private let emojiPickerVC: EmojiPickerViewController = {
         let view = EmojiPickerViewController()
         return view
@@ -67,7 +75,6 @@ class ShareViewController: UIViewController {
     private var currentBackgroundView: UIView = UIView()
     
     func changeBackgroundButtonTitle(){
-        
         var config = backgroundButton.configuration ?? UIButton.Configuration.plain()
         var newTitle = AttributedString(currentBackgroundState.description.uppercased())
         newTitle.font = .boldSystemFont(ofSize: 10)
@@ -79,6 +86,32 @@ class ShareViewController: UIViewController {
         currentBackgroundView.removeFromSuperview()
         currentBackgroundView = backgroundViews[currentBackgroundState.rawValue]
         view.insertSubview(currentBackgroundView, at: 0)
+    }
+    
+    func changeRetakeButtonVisibility(){
+        switch currentBackgroundState {
+        case .color:
+            retakeButton.isHidden = true
+        case .emoji:
+            retakeButton.isHidden = true
+        case .selfie:
+            retakeButton.isHidden = false
+        case .image:
+            retakeButton.isHidden = true
+        }
+    }
+    
+    func changeCustomizeImageButtonVisibility(){
+        switch currentBackgroundState {
+        case .color:
+            customizeImageButton.isHidden = true
+        case .emoji:
+            customizeImageButton.isHidden = true
+        case .selfie:
+            customizeImageButton.isHidden = true
+        case .image:
+            customizeImageButton.isHidden = false
+        }
     }
 
     override func viewDidLoad() {
@@ -92,7 +125,6 @@ class ShareViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         qrCodeContainerView.layer.cornerRadius = 12
-        // Assuming you have a view named `myView`
         qrCodeContainerView.layer.shadowColor = UIColor.black.cgColor
         qrCodeContainerView.layer.shadowOpacity = 0.5
         qrCodeContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -139,11 +171,12 @@ class ShareViewController: UIViewController {
         backgroundViews.append(emojiView)
         let selfieView = SelfieShareView(frame: view.bounds)
         selfieView.backgroundColor = .white
+        selfieView.collectionView.dataSource = self
+        selfieView.collectionView.delegate = self
         backgroundViews.append(selfieView)
         let imageView = ImageShareView(frame: view.bounds)
         imageView.backgroundColor = .white
         backgroundViews.append(imageView)
-        currentBackgroundView = colorView
         currentBackgroundState = .color
     }
     
@@ -201,7 +234,6 @@ class ShareViewController: UIViewController {
             }
         default:
             print()
-            
         }
     }
     
@@ -210,8 +242,9 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func backgroundButtonTapped(_ sender: Any){
+        print("backgroundButton Tapped")
         backgroundButton.bounceEffect(withScale: 0.95, withDuration: 0.5)
-        currentBackgroundState = currentBackgroundState.nextState
+        currentBackgroundState.toNextState()
     }
     
     @IBAction func shareProfileButtonTapped(_ sender: Any){
@@ -229,6 +262,18 @@ class ShareViewController: UIViewController {
         }
         
         present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction func retakeButtonTapped(_ sender: Any){
+        let vc = SelfieRetakeViewController()
+        vc.delegate = self
+        vc.modalTransitionStyle = .crossDissolve
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true)
+    }
+    
+    @IBAction func customizeImageButtonTapped(_ sender: Any){
+        
     }
 }
 
@@ -290,7 +335,7 @@ extension ShareViewController: PickerDelegate{
 extension ShareViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch currentBackgroundState {
-        case .emoji:
+        case .emoji, .selfie:
             return 1000
         default:
             return 0
@@ -301,18 +346,35 @@ extension ShareViewController: UICollectionViewDataSource {
         let itemsPerColumn = 9
         let row = indexPath.item % itemsPerColumn
         let column = indexPath.item / itemsPerColumn
-        
+        let degrees:[CGFloat] = [45, 0, -45]
         switch currentBackgroundState {
         case .emoji:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LabelCell.identifier, for: indexPath) as! LabelCell
             let view = currentBackgroundView as! EmojiShareView
             if (row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0) {
                 cell.label.text = view.currentEmoji
+                if let randomDegree = degrees.randomElement(){
+                    cell.label.rotate(by: randomDegree)
+                }
             }
             else{
                 cell.label.text = " "
             }
             
+            return cell
+        case .selfie:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelfieCell.identifier, for: indexPath) as! SelfieCell
+            let view = currentBackgroundView as! SelfieShareView
+            if (row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0) {
+                cell.imageView.image = view.currentSelfie
+                if let randomDegree = degrees.randomElement(){
+                    cell.imageView.rotate(by: randomDegree)
+                }
+                
+            }
+            else{
+                cell.imageView.image = UIImage()
+            }
             return cell
         default:
             return UICollectionViewCell()
@@ -328,5 +390,19 @@ extension ShareViewController: UICollectionViewDelegateFlowLayout{
         // Calculate the item width based on how many you want to see on screen at once
         let itemHeight = (collectionView.bounds.height - (itemsPerScreen - 1) * spacing) / itemsPerScreen
         return CGSize(width: itemHeight, height: itemHeight)
+    }
+}
+
+extension ShareViewController: SelfieRetakeDelegate{
+    func didTapOnBackgroundButton() {
+        currentBackgroundState.toNextState()
+    }
+    
+    func didFinishCapture(withShot snapshot: UIImage) {
+        
+        if currentBackgroundState == .selfie{
+            let view = currentBackgroundView as! SelfieShareView
+            view.changeCurrentSelfie(with: snapshot)
+        }
     }
 }

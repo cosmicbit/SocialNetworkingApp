@@ -88,6 +88,8 @@
 		50E9C27E2E2A258D00DE5544 /* ForYouResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9C27D2E2A258D00DE5544 /* ForYouResultsViewController.swift */; };
 		50E9C2802E2A264A00DE5544 /* AccountsResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9C27F2E2A264A00DE5544 /* AccountsResultsViewController.swift */; };
 		50E9C2822E2A46B900DE5544 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E9C2812E2A46B900DE5544 /* Home.storyboard */; };
+		50EB06672E49C294001F5E61 /* SelfieRetakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */; };
+		50EB06692E49DAC3001F5E61 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB06682E49DAC3001F5E61 /* OvalView.swift */; };
 		50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */; };
 		50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50EB94842E3A3720005C1B20 /* sample_video.mp4 */; };
 		50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */; };
@@ -198,6 +200,8 @@
 		50E9C27D2E2A258D00DE5544 /* ForYouResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouResultsViewController.swift; sourceTree = "<group>"; };
 		50E9C27F2E2A264A00DE5544 /* AccountsResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsResultsViewController.swift; sourceTree = "<group>"; };
 		50E9C2812E2A46B900DE5544 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieRetakeViewController.swift; sourceTree = "<group>"; };
+		50EB06682E49DAC3001F5E61 /* OvalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
 		50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListTableViewCell.swift; sourceTree = "<group>"; };
 		50EB94842E3A3720005C1B20 /* sample_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_video.mp4; sourceTree = "<group>"; };
 		50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingTextView.swift; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 			children = (
 				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
 				500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */,
+				50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */,
 			);
 			path = ShareProfile;
 			sourceTree = "<group>";
@@ -431,6 +436,7 @@
 		E154F2172AB121DF000BC44C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				50EB06682E49DAC3001F5E61 /* OvalView.swift */,
 				50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */,
 				E1FDD9132A0A4FB7006AD0DF /* PrimaryButton.swift */,
 				50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */,
@@ -688,6 +694,7 @@
 				50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */,
 				E1A3671E29F9226100A1B03E /* AppDelegate.swift in Sources */,
 				5059EBA42E3347B400AFC960 /* ChatManager.swift in Sources */,
+				50EB06692E49DAC3001F5E61 /* OvalView.swift in Sources */,
 				509977FC2E33A17400F82E3E /* NewChatViewController.swift in Sources */,
 				50E9C2802E2A264A00DE5544 /* AccountsResultsViewController.swift in Sources */,
 				5002B5C92E2A620100F36A80 /* ExplorePostViewController.swift in Sources */,
@@ -726,6 +733,7 @@
 				E154F21C2AB1C841000BC44C /* UIColor+Extension.swift in Sources */,
 				507AE8062E3CB00300B86D52 /* ScaleTransitionDelegate.swift in Sources */,
 				5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */,
+				50EB06672E49C294001F5E61 /* SelfieRetakeViewController.swift in Sources */,
 				5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */,
 				50A0172D2E1BFD5E00594A7C /* ImageFileManager.swift in Sources */,
 				508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */,

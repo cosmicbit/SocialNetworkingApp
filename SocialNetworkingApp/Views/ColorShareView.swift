@@ -14,18 +14,6 @@ class ColorShareView: UIView {
             self.backgroundColor = currentColor.uiColor
         }
     }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder: ) have not been implemented")
-    }
-
-    private func setupView(){
-        backgroundColor = .green
-    }
     
     enum AvailableColors: Int, CaseIterable{
         case blue = 0, green, black, orange, systemPink

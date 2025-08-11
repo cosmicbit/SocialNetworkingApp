@@ -114,6 +114,7 @@ class AccountViewController: UIViewController {
         let shareVC = shareSB.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
         shareVC.userProfile = userProfile
         let navC = UINavigationController(rootViewController: shareVC)
+        navC.navigationBar.isHidden = true
         navC.modalPresentationStyle = .overFullScreen
         present(navC, animated: true)
     }

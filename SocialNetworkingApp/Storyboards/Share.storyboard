@@ -146,10 +146,32 @@
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                 </buttonConfiguration>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvR-KV-9pU">
+                                <rect key="frame" x="156.33333333333334" y="759.66666666666663" width="80.666666666666657" height="24.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Retake" image="camera" catalog="system"/>
+                                <connections>
+                                    <action selector="retakeButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="jKq-8G-aGS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zr-Fe-hek">
+                                <rect key="frame" x="119.66666666666667" y="759.66666666666663" width="153.66666666666663" height="24.333333333333371"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Customize image" image="camera" catalog="system"/>
+                                <connections>
+                                    <action selector="customizeImageButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="07g-OC-v5Y"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tTc-eh-NRg"/>
                         <color key="backgroundColor" red="0.0" green="0.79276491841836738" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="8zr-Fe-hek" firstAttribute="centerX" secondItem="Ujv-xl-Upu" secondAttribute="centerX" id="5S8-Vt-YHe"/>
+                            <constraint firstItem="OvR-KV-9pU" firstAttribute="centerX" secondItem="Ujv-xl-Upu" secondAttribute="centerX" id="8Nd-Iz-yph"/>
                             <constraint firstItem="efW-PI-QhG" firstAttribute="leading" secondItem="tTc-eh-NRg" secondAttribute="leading" constant="5" id="E9k-WU-8f7"/>
                             <constraint firstItem="tTc-eh-NRg" firstAttribute="trailing" secondItem="Rso-SM-AW4" secondAttribute="trailing" constant="5" id="GxB-El-2v5"/>
                             <constraint firstItem="H5O-da-9c7" firstAttribute="top" secondItem="MLB-YB-m9a" secondAttribute="bottom" constant="15" id="Jgs-eF-Q8e"/>
@@ -157,6 +179,8 @@
                             <constraint firstItem="MLB-YB-m9a" firstAttribute="centerX" secondItem="Ujv-xl-Upu" secondAttribute="centerX" id="WMu-VT-IGX"/>
                             <constraint firstItem="MLB-YB-m9a" firstAttribute="top" secondItem="efW-PI-QhG" secondAttribute="bottom" constant="85" id="YeV-k0-PFA"/>
                             <constraint firstItem="XK8-c8-gR5" firstAttribute="centerX" secondItem="Ujv-xl-Upu" secondAttribute="centerX" id="c3Y-yX-GiR"/>
+                            <constraint firstItem="OvR-KV-9pU" firstAttribute="bottom" secondItem="tTc-eh-NRg" secondAttribute="bottom" id="dR5-GQ-Nma"/>
+                            <constraint firstItem="8zr-Fe-hek" firstAttribute="bottom" secondItem="tTc-eh-NRg" secondAttribute="bottom" id="eYu-A6-92U"/>
                             <constraint firstItem="efW-PI-QhG" firstAttribute="top" secondItem="tTc-eh-NRg" secondAttribute="top" id="hX7-ia-km4"/>
                             <constraint firstItem="H5O-da-9c7" firstAttribute="width" secondItem="MLB-YB-m9a" secondAttribute="width" id="oad-CW-Lem"/>
                             <constraint firstItem="Rso-SM-AW4" firstAttribute="top" secondItem="tTc-eh-NRg" secondAttribute="top" id="rAk-dJ-jpH"/>
@@ -167,11 +191,13 @@
                     <connections>
                         <outlet property="backgroundButton" destination="XK8-c8-gR5" id="5nt-4N-60D"/>
                         <outlet property="copyLinkButton" destination="WRh-et-h0M" id="Ega-GG-k6B"/>
+                        <outlet property="customizeImageButton" destination="8zr-Fe-hek" id="4dA-5R-Wbe"/>
                         <outlet property="downloadButton" destination="PZN-Zr-Ycd" id="2sS-mk-dgt"/>
                         <outlet property="functionsContainerView" destination="H5O-da-9c7" id="wBg-xl-Oy5"/>
                         <outlet property="nameLabel" destination="YdR-7z-ht8" id="aqp-Y1-e2R"/>
                         <outlet property="qrCodeContainerView" destination="MLB-YB-m9a" id="pMg-GQ-JnR"/>
                         <outlet property="qrCodeImageView" destination="PZ4-lO-eno" id="NbU-oH-qv4"/>
+                        <outlet property="retakeButton" destination="OvR-KV-9pU" id="U0c-c2-pOu"/>
                         <outlet property="shareProfileButton" destination="Qw1-Sq-vRO" id="47P-BB-liZ"/>
                     </connections>
                 </viewController>
@@ -181,6 +207,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="camera" catalog="system" width="128" height="93"/>
         <image name="qrcode.viewfinder" catalog="system" width="128" height="115"/>
         <image name="xmark" catalog="system" width="128" height="113"/>
         <systemColor name="labelColor">

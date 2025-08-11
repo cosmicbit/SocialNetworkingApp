@@ -31,11 +31,8 @@ class OnboardingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         avatarImageView.contentMode = .scaleAspectFill
-        
         avatarContainerView.clipsToBounds = true
-        
         let viewTap = UITapGestureRecognizer(target: self, action: #selector(endTextFieldEditing))
         view.addGestureRecognizer(viewTap)
         view.isUserInteractionEnabled = true
@@ -51,7 +48,6 @@ class OnboardingViewController: UIViewController {
         avatarContainerView.layer.cornerRadius = avatarContainerView.frame.width / 2
         
     }
-    
 
     @IBAction func uploadAvatarButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Choose Image Source", message: "Attach an image to your avatar", preferredStyle: .actionSheet)

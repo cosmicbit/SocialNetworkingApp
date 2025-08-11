@@ -27,3 +27,19 @@ extension UIView {
         return combinedTransform
     }
 }
+
+extension UIView {
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: self.bounds)
+        return renderer.image { rendererContext in
+            self.layer.render(in: rendererContext.cgContext)
+        }
+    }
+}
+
+extension UIView{
+    func rotate(by degree: CGFloat){
+        let radians = degree * .pi / 180
+        self.transform = CGAffineTransform(rotationAngle: radians)
+    }
+}
