@@ -4,6 +4,8 @@
 <dict>
 	<key>NSCameraUsageDescription</key>
 	<string>SocialNetworking app needs permission to access the camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>SocialNetworking app needs permission to access the photo library</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

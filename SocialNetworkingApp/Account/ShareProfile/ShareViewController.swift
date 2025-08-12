@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreImage
+import Photos
 
 
 enum ShareBackgroundState: Int, CaseIterable, CustomStringConvertible{
@@ -314,16 +315,11 @@ extension ShareViewController{
 //MARK: - Picker Delegate
 extension ShareViewController: PickerDelegate{
     func didSelect(this: Any) {
-        switch currentBackgroundState {
-        case .emoji:
+        if currentBackgroundState == .emoji{
             let emoji = this as! String
             let view = currentBackgroundView as! EmojiShareView
             view.changeCurrentEmoji(with: emoji)
-        default:
-            print()
-            
         }
-        
     }
 }
 
@@ -356,7 +352,6 @@ extension ShareViewController: UICollectionViewDataSource {
             else{
                 cell.label.text = " "
             }
-            
             return cell
         case .selfie:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelfieCell.identifier, for: indexPath) as! SelfieCell
@@ -366,7 +361,6 @@ extension ShareViewController: UICollectionViewDataSource {
                 if let randomDegree = degrees.randomElement(){
                     cell.imageView.rotate(by: randomDegree)
                 }
-                
             }
             else{
                 cell.imageView.image = UIImage()
@@ -380,10 +374,8 @@ extension ShareViewController: UICollectionViewDataSource {
 
 extension ShareViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemsPerScreen: CGFloat = 9 // This value is the key! It makes 3.5 cells visible.
+        let itemsPerScreen: CGFloat = 9
         let spacing: CGFloat = 10
-        
-        // Calculate the item width based on how many you want to see on screen at once
         let itemHeight = (collectionView.bounds.height - (itemsPerScreen - 1) * spacing) / itemsPerScreen
         return CGSize(width: itemHeight, height: itemHeight)
     }
@@ -407,15 +399,35 @@ extension ShareViewController: OptionsViewControllerDelegate{
     func optionsViewController(_ controller: OptionsViewController, didSelectOption option: String) {
         switch option {
             case "Change Background":
-                print("Change Background")
+                let imagePicker = UIImagePickerController()
+                imagePicker.delegate = self
+                imagePicker.sourceType = .photoLibrary // Specify the source as the photo library
+                
+                present(imagePicker, animated: true, completion: nil)
             case "Blur":
-                print("Blur")
+                if currentBackgroundState == .image{
+                    let view = currentBackgroundView as! ImageShareView
+                    view.isBlurred.toggle()
+                }
             default:
                 break
-            }
+        }
     }
 }
 
-extension UIImagePickerControllerDelegate{
+extension ShareViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true){
+            if let selectedImage = info[.originalImage] as? UIImage {
+                if self.currentBackgroundState == .image{
+                    let view = self.currentBackgroundView as! ImageShareView
+                    view.changeBackgroundImage(with: selectedImage)
+                }
+            }
+        }
+    }
     
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true)
+    }
 }
