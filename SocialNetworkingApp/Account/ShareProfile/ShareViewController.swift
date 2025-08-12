@@ -114,7 +114,10 @@ class ShareViewController: UIViewController {
         switch currentBackgroundState {
         case .color:
             let view = currentBackgroundView as! ColorShareView
-            qrCodeImage = permanentProfileURL.generateQRCode(withColor: view.currentColor.uiColor)
+            let colors = view.currentGradient.colors.compactMap{UIColor(cgColor: $0)}
+            let startPoint = view.currentGradient.startPoint
+            let endPoint = view.currentGradient.endPoint
+            qrCodeImage = permanentProfileURL.generateGradientQRCode(colors: colors, startPoint: startPoint, endPoint: endPoint)
         case .emoji:
             let view = currentBackgroundView as! EmojiShareView
             if let emojiImage = view.currentEmoji.image(),
@@ -218,7 +221,7 @@ class ShareViewController: UIViewController {
     
     func setupBackgroundViews(){
         let colorView = ColorShareView(frame: view.bounds)
-        colorView.currentColor = .green
+        colorView.currentGradient = .sunrise
         backgroundViews.append(colorView)
         let emojiView = EmojiShareView(frame: view.bounds)
         emojiView.backgroundColor = .white
@@ -264,7 +267,7 @@ class ShareViewController: UIViewController {
         switch currentBackgroundState {
         case .color:
             let view = currentBackgroundView as! ColorShareView
-            view.changeColor()
+            view.changeColorGradient()
             changeQRCodeColor()
         case .emoji:
             if let vc = self.presentedViewController{

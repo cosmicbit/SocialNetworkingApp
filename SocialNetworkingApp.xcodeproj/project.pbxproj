@@ -31,6 +31,7 @@
 		50211A3B2E4B16E8000C2164 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A352E4B16E8000C2164 /* UIView+Extension.swift */; };
 		50211A3C2E4B16E8000C2164 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A362E4B16E8000C2164 /* UIViewController+Extension.swift */; };
 		50211A402E4B4D2C000C2164 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A3F2E4B4D13000C2164 /* String+Extension.swift */; };
+		50211A422E4B6B96000C2164 /* GradientPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A412E4B6B96000C2164 /* GradientPreset.swift */; };
 		50324E832E26643A00B703C2 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E822E26642700B703C2 /* Like.swift */; };
 		50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3A2E27A30B000E53B7 /* PostManager.swift */; };
 		50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3D2E27BC16000E53B7 /* SearchViewController.swift */; };
@@ -148,6 +149,7 @@
 		50211A352E4B16E8000C2164 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		50211A362E4B16E8000C2164 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
 		50211A3F2E4B4D13000C2164 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		50211A412E4B6B96000C2164 /* GradientPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPreset.swift; sourceTree = "<group>"; };
 		50324E822E26642700B703C2 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		50396D3A2E27A30B000E53B7 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		50396D3D2E27BC16000E53B7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 			isa = PBXGroup;
 			children = (
 				50396D3B2E27A30B000E53B7 /* Managers */,
+				50211A412E4B6B96000C2164 /* GradientPreset.swift */,
 				509977F32E33884D00F82E3E /* SlideTransitionDelegate.swift */,
 				508525002E310C7D002B9E5C /* PushTransitionDelegate.swift */,
 				507AE8052E3CB00300B86D52 /* ScaleTransitionDelegate.swift */,
@@ -692,6 +695,7 @@
 				50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */,
 				50EB066B2E4A16BC001F5E61 /* OptionsViewController.swift in Sources */,
 				506A46382E3738EB0073FF87 /* NewChatTableHeaderView.swift in Sources */,
+				50211A422E4B6B96000C2164 /* GradientPreset.swift in Sources */,
 				504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */,
 				E1A3672229F9226100A1B03E /* ExploreViewController.swift in Sources */,
 				507AE8042E3C933900B86D52 /* StoryViewController.swift in Sources */,

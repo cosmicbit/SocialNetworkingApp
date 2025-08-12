@@ -9,41 +9,31 @@ import UIKit
 
 class ColorShareView: UIView {
     
-    var currentColor: AvailableColors = .green {
+    private let gradientLayer = CAGradientLayer()
+    var currentGradient = GradientPreset.sunrise{
         didSet{
-            self.backgroundColor = currentColor.uiColor
+            gradientLayer.colors = currentGradient.colors
+            gradientLayer.locations = currentGradient.locations
+            gradientLayer.startPoint = currentGradient.startPoint
+            gradientLayer.endPoint = currentGradient.endPoint
         }
     }
     
-    enum AvailableColors: Int, CaseIterable{
-        case blue = 0, green, black, orange, systemPink
-        
-        var uiColor: UIColor {
-            switch self {
-            case .blue:
-                return .blue
-            case .green:
-                return .green
-            case .black:
-                return .black
-            case .orange:
-                return .orange
-            case .systemPink:
-                return .systemPink
-            }
-        }
-        
-        mutating func toNextColor(){
-            self = self.nextColor
-        }
-        
-        var nextColor: AvailableColors{
-            guard let color = AvailableColors(rawValue: (self.rawValue + 1) % AvailableColors.allCases.count) else { return AvailableColors.blue}
-            return color
-        }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.layer.insertSublayer(gradientLayer, at: 0)
     }
     
-    func changeColor(){
-        currentColor.toNextColor()
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        gradientLayer.frame = self.bounds
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func changeColorGradient(){
+        currentGradient.toNextGradient()
     }
 }

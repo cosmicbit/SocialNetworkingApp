@@ -60,5 +60,54 @@ extension String {
         
         return UIImage(cgImage: cgImage)
     }
+    
+    func generateGradientQRCode(colors: [UIColor], startPoint: CGPoint, endPoint: CGPoint) -> UIImage? {
+        let data = self.data(using: String.Encoding.ascii)
+        
+        // 1. Generate the standard square-based QR code CIImage
+        guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
+        qrFilter.setValue(data, forKey: "inputMessage")
+        qrFilter.setValue("M", forKey: "inputCorrectionLevel")
+        guard let ciImage = qrFilter.outputImage else { return nil }
+        
+        // 2. Create a CIImage with a transparent background
+        // This is the key step to isolate the QR code's pattern.
+        let transparentBackgroundFilter = CIFilter(name: "CIMaskToAlpha")
+        transparentBackgroundFilter?.setValue(ciImage, forKey: "inputImage")
+        
+        guard let transparentQRCodeImage = transparentBackgroundFilter?.outputImage else { return nil }
+        
+        // 3. Create the gradient CIImage
+        let gradientFilter = CIFilter(name: "CILinearGradient")
+        let ciColors = colors.map { CIColor(color: $0) }
+        guard let firstColor = ciColors.first, let lastColor = ciColors.last else { return nil }
+        
+        gradientFilter?.setValue(firstColor, forKey: "inputColor0")
+        gradientFilter?.setValue(lastColor, forKey: "inputColor1")
+        gradientFilter?.setValue(CIVector(x: endPoint.x * ciImage.extent.width, y: endPoint.y * ciImage.extent.height), forKey: "inputPoint0")
+        gradientFilter?.setValue(CIVector(x: startPoint.x * ciImage.extent.width, y: startPoint.y * ciImage.extent.height), forKey: "inputPoint1")
+        
+        guard let gradientImage = gradientFilter?.outputImage?.cropped(to: ciImage.extent) else { return nil }
+        
+        // 4. Layer the transparent QR code over the gradient using CISourceOverCompositing
+        guard let sourceOverFilter = CIFilter(name: "CISourceOverCompositing") else { return nil }
+        sourceOverFilter.setValue(gradientImage, forKey: "inputBackgroundImage")
+        sourceOverFilter.setValue(transparentQRCodeImage, forKey: "inputImage") // The QR code now becomes the foreground
+        
+        guard let finalImage = sourceOverFilter.outputImage else { return nil }
+        
+        // 5. Scale and render the final image
+        let outputSize = CGSize(width: 200, height: 200)
+        let scaleX = outputSize.width / finalImage.extent.size.width
+        let scaleY = outputSize.height / finalImage.extent.size.height
+        let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
+        let scaledImage = finalImage.transformed(by: transform)
+        
+        let context = CIContext()
+        guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else { return nil }
+        
+        return UIImage(cgImage: cgImage)
+    }
 }
+
 
