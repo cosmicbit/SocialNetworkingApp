@@ -9,7 +9,7 @@ import UIKit
 
 class ColorShareView: UIView {
     
-    var currentColor: AvailableColors = .blue {
+    var currentColor: AvailableColors = .green {
         didSet{
             self.backgroundColor = currentColor.uiColor
         }
@@ -17,6 +17,7 @@ class ColorShareView: UIView {
     
     enum AvailableColors: Int, CaseIterable{
         case blue = 0, green, black, orange, systemPink
+        
         var uiColor: UIColor {
             switch self {
             case .blue:
@@ -31,13 +32,18 @@ class ColorShareView: UIView {
                 return .systemPink
             }
         }
+        
         mutating func toNextColor(){
             self = self.nextColor
         }
         
         var nextColor: AvailableColors{
-            guard let color = AvailableColors(rawValue: (self.rawValue + 1) % AvailableColors.allCases.count) else { return .blue}
+            guard let color = AvailableColors(rawValue: (self.rawValue + 1) % AvailableColors.allCases.count) else { return AvailableColors.blue}
             return color
         }
+    }
+    
+    func changeColor(){
+        currentColor.toNextColor()
     }
 }

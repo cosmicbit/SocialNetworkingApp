@@ -32,11 +32,22 @@ enum ShareBackgroundState: Int, CaseIterable, CustomStringConvertible{
             return "image"
         }
     }
+    
+    var tintColor: UIColor{
+        switch self {
+        case .color, .image:
+            return .white
+        case .emoji, .selfie:
+            return .black
+        }
+    }
 }
 
 class ShareViewController: UIViewController {
     
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var backgroundButton: UIButton!
+    @IBOutlet weak var qrCodeScannerButton: UIButton!
     @IBOutlet weak var qrCodeContainerView: UIView!
     @IBOutlet weak var qrCodeImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -47,23 +58,24 @@ class ShareViewController: UIViewController {
     @IBOutlet weak var retakeButton: UIButton!
     @IBOutlet weak var customizeImageButton: UIButton!
     
-    var userProfile: UserProfile!{
-        didSet{
-            generateRequiredProperties()
-        }
-    }
+    var userProfile: UserProfile!
     
+    private let gradientLayer = CAGradientLayer()
     var profileURL: URL?
     var webURL: URL?
-    var qrCodeImage: UIImage?
+    var qrCodeImage: UIImage?{
+        didSet{
+            qrCodeImageView.image = qrCodeImage
+        }
+    }
     
     private var currentBackgroundState: ShareBackgroundState = .color {
         didSet{
             print("currentBackgroundState changed from ", oldValue, " to ", currentBackgroundState)
             changeBackgroundButtonTitle()
             changeBackground()
-            changeRetakeButtonVisibility()
-            changeCustomizeImageButtonVisibility()
+            changeQRCodeColor()
+            changeUIAppearance()
         }
     }
     
@@ -75,11 +87,20 @@ class ShareViewController: UIViewController {
     private var backgroundViews: [UIView] = []
     private var currentBackgroundView: UIView = UIView()
     
-    func changeBackgroundButtonTitle(){
+    lazy var permanentProfileURL: String = {
+        guard let userId = userProfile.id else {return ""}
+        let username = userProfile.username
+        let baseURL = "https://www.socialnetworkingapp.com/"
+        let urlString = baseURL + username + "/" + userId
+        return urlString
+    }()
+    
+    func changeBackgroundButtonTitle(withColor strokeColor: UIColor = .black){
         var config = backgroundButton.configuration ?? UIButton.Configuration.plain()
         var newTitle = AttributedString(currentBackgroundState.description.uppercased())
         newTitle.font = .boldSystemFont(ofSize: 10)
         config.attributedTitle = newTitle
+        config.baseForegroundColor = strokeColor
         backgroundButton.configuration = config
     }
     
@@ -89,35 +110,59 @@ class ShareViewController: UIViewController {
         view.insertSubview(currentBackgroundView, at: 0)
     }
     
-    func changeRetakeButtonVisibility(){
+    func changeQRCodeColor(){
         switch currentBackgroundState {
         case .color:
-            retakeButton.isHidden = true
+            let view = currentBackgroundView as! ColorShareView
+            qrCodeImage = permanentProfileURL.generateQRCode(withColor: view.currentColor.uiColor)
         case .emoji:
-            retakeButton.isHidden = true
+            let view = currentBackgroundView as! EmojiShareView
+            if let emojiImage = view.currentEmoji.image(),
+                let dominantColor = emojiImage.dominantColor() {
+                qrCodeImage = permanentProfileURL.generateQRCode(withColor: dominantColor)
+            }
         case .selfie:
-            retakeButton.isHidden = false
+            qrCodeImage = permanentProfileURL.generateQRCode(withColor: .black)
         case .image:
-            retakeButton.isHidden = true
+            qrCodeImage = permanentProfileURL.generateQRCode(withColor: .black)
         }
     }
     
-    func changeCustomizeImageButtonVisibility(){
+    func changeUIAppearance(){
+        let color = currentBackgroundState.tintColor
+        closeButton.tintColor = color
+        changeBackgroundButtonTitle(withColor: color)
+        qrCodeScannerButton.tintColor = color
+        customizeImageButton.tintColor = color
         switch currentBackgroundState {
         case .color:
             customizeImageButton.isHidden = true
+            gradientLayer.isHidden = true
+            retakeButton.isHidden = true
+            backgroundButton.backgroundColor = .black.withAlphaComponent(0.25)
         case .emoji:
             customizeImageButton.isHidden = true
+            gradientLayer.isHidden = true
+            retakeButton.isHidden = true
+            backgroundButton.backgroundColor = .white
         case .selfie:
             customizeImageButton.isHidden = true
+            gradientLayer.isHidden = true
+            retakeButton.isHidden = false
+            backgroundButton.backgroundColor = .white
         case .image:
             customizeImageButton.isHidden = false
+            gradientLayer.isHidden = false
+            retakeButton.isHidden = true
+            backgroundButton.backgroundColor = .black.withAlphaComponent(0.25)
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        generateRequiredProperties()
         setupView()
+        setupGradientLayer()
         setupUserProfile()
         addBackgroundTaps()
         emojiPickerVC.delegate = self
@@ -125,6 +170,7 @@ class ShareViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        gradientLayer.frame = self.view.bounds
         qrCodeContainerView.layer.cornerRadius = 12
         qrCodeContainerView.layer.shadowColor = UIColor.black.cgColor
         qrCodeContainerView.layer.shadowOpacity = 0.5
@@ -136,13 +182,12 @@ class ShareViewController: UIViewController {
         functionsContainerView.layer.shadowOffset = CGSize(width: 0, height: 2)
         functionsContainerView.layer.shadowRadius = 4
         backgroundButton.layer.cornerRadius = 12
-        backgroundButton.layer.borderColor = UIColor.white.cgColor
         backgroundButton.layer.borderWidth = 1
+        backgroundButton.layer.borderColor = currentBackgroundState.tintColor.cgColor
     }
     
     func setupView(){
         setupBackgroundViews()
-        qrCodeImageView.image = qrCodeImage
         qrCodeImageView.contentMode = .scaleAspectFill
         var config = UIButton.Configuration.plain()
         let largeConfig = UIImage.SymbolConfiguration(pointSize: 30, weight: .light)
@@ -162,8 +207,18 @@ class ShareViewController: UIViewController {
         }
     }
     
+    func setupGradientLayer(){
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        let clearColor = UIColor.clear.cgColor
+        let blackColor = UIColor.black.withAlphaComponent(0.5).cgColor
+        gradientLayer.colors = [blackColor, clearColor, clearColor, blackColor]
+        gradientLayer.locations = [0.0, 0.2, 0.8, 1.0]
+    }
+    
+    
     func setupBackgroundViews(){
         let colorView = ColorShareView(frame: view.bounds)
+        colorView.currentColor = .green
         backgroundViews.append(colorView)
         let emojiView = EmojiShareView(frame: view.bounds)
         emojiView.backgroundColor = .white
@@ -191,24 +246,7 @@ class ShareViewController: UIViewController {
     }
     
     private func generateRequiredProperties(){
-        guard let username = userProfile?.username else { return }
-        let profileURLString = "my-app://profiles/\(username)"
-        guard let profileURL = URL(string: profileURLString) else {
-            print("Error: Invalid profile URL.")
-            return
-        }
-        self.profileURL = profileURL
-        let webURLString = "https://www.instagram.com/philips_j0se/"
-        guard let webURL = URL(string: webURLString) else {
-            print("Error: Invalid web URL string.")
-            return
-        }
-        self.webURL = webURL
-        guard let qrCodeImage = generateQRCode(from: profileURLString) else {
-            print("Error: Could not generate QR code image.")
-            return
-        }
-        self.qrCodeImage = qrCodeImage
+        self.qrCodeImage = generateQRCode(from: permanentProfileURL)
     }
     
     func showEmojiPicker(){
@@ -226,7 +264,8 @@ class ShareViewController: UIViewController {
         switch currentBackgroundState {
         case .color:
             let view = currentBackgroundView as! ColorShareView
-            view.currentColor.toNextColor()
+            view.changeColor()
+            changeQRCodeColor()
         case .emoji:
             if let vc = self.presentedViewController{
                 vc.dismiss(animated: true)
@@ -249,12 +288,17 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func shareProfileButtonTapped(_ sender: Any){
-        guard let profileURL = profileURL,
-        let webURL = webURL,
-        let qrCodeImage = qrCodeImage
-        else { return }
-        let shareText = "Check out my profile on MyAwesomeApp!"
-        let items: [Any] = [shareText, profileURL, webURL, qrCodeImage]
+        let qrCodeImageWidth = qrCodeContainerView.bounds.width
+        let qrCodeImage = qrCodeContainerView.asImage()
+        let containerWidth = currentBackgroundView.bounds.width
+        let containerHeight = containerWidth * 1.4
+        let containerRect = CGRect(x: 0, y: 0, width: containerWidth, height: containerHeight) // altering the container into a square
+        let containerImage = currentBackgroundView.asImage(ofBounds: containerRect)
+        let overlayXPos = containerWidth/2 - qrCodeImageWidth/2 // placing the position of the overlay at center of the container
+        let overlayYPos = containerHeight/2 - qrCodeImageWidth/2 // since the overlay has to be square
+        let overlayRect = CGRect(x: overlayXPos, y: overlayYPos, width: qrCodeImageWidth, height: qrCodeImageWidth)
+        let combinedImage = containerImage.overlayWith(overlayImage: qrCodeImage, in: overlayRect)
+        let items: [Any] = [permanentProfileURL, combinedImage]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         if let popoverController = activityViewController.popoverPresentationController {
             popoverController.sourceView = self.view
@@ -262,6 +306,15 @@ class ShareViewController: UIViewController {
             popoverController.permittedArrowDirections = []
         }
         present(activityViewController, animated: true, completion: nil)
+    }
+    
+    @IBAction func copyLinkButtonTapped(_ sender: Any){
+        UIPasteboard.general.string = permanentProfileURL
+        showToast(message: "Link copied")
+    }
+    
+    @IBAction func downloadButtonTapped(_ sender: Any){
+        
     }
     
     @IBAction func retakeButtonTapped(_ sender: Any){
@@ -290,7 +343,7 @@ class ShareViewController: UIViewController {
 // MARK: - QR Code Generation
 extension ShareViewController{
     // A helper method to generate a QR code image from a given string.
-    private func generateQRCode(from string: String) -> UIImage? {
+    private func generateQRCode(from string: String, withColor color: UIColor = .black) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
         guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else {
             return nil
@@ -300,10 +353,15 @@ extension ShareViewController{
         guard let ciImage = qrFilter.outputImage else {
             return nil
         }
-        let scaleX = 200 / ciImage.extent.size.width
-        let scaleY = 200 / ciImage.extent.size.height
+        let colorFilter = CIFilter(name: "CIFalseColor")
+        colorFilter?.setValue(ciImage, forKey: "inputImage")
+        colorFilter?.setValue(CIColor(color: color), forKey: "inputColor0") // The foreground color
+        colorFilter?.setValue(CIColor(color: UIColor.clear), forKey: "inputColor1") // The background color
+        guard let outputImage = colorFilter?.outputImage else { return nil }
+        let scaleX = 200 / outputImage.extent.size.width
+        let scaleY = 200 / outputImage.extent.size.height
         let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
-        let scaledImage = ciImage.transformed(by: transform)
+        let scaledImage = outputImage.transformed(by: transform)
         let context = CIContext()
         guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else {
             return nil
@@ -315,10 +373,12 @@ extension ShareViewController{
 //MARK: - Picker Delegate
 extension ShareViewController: PickerDelegate{
     func didSelect(this: Any) {
+        
         if currentBackgroundState == .emoji{
             let emoji = this as! String
             let view = currentBackgroundView as! EmojiShareView
             view.changeCurrentEmoji(with: emoji)
+            changeQRCodeColor()
         }
     }
 }
@@ -387,7 +447,6 @@ extension ShareViewController: SelfieRetakeDelegate{
     }
     
     func didFinishCapture(withShot snapshot: UIImage) {
-        
         if currentBackgroundState == .selfie{
             let view = currentBackgroundView as! SelfieShareView
             view.changeCurrentSelfie(with: snapshot)

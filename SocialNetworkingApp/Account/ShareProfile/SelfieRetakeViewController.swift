@@ -100,7 +100,6 @@ class SelfieRetakeViewController: UIViewController {
         containerView.addSubview(filterImageView)
         captureButton.backgroundColor = .white
         backgroundButton.backgroundColor = .black.withAlphaComponent(0.25)
-        
         NSLayoutConstraint.activate([
             cameraView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 100),
             cameraView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -109,19 +108,15 @@ class SelfieRetakeViewController: UIViewController {
             cameraView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -100),
             cameraView.heightAnchor.constraint(equalTo: cameraView.widthAnchor, multiplier: 1.25),
             cameraView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -100),
-            
             filterImageView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             filterImageView.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
             filterImageView.heightAnchor.constraint(equalTo: cameraView.heightAnchor, multiplier: 1.25),
             filterImageView.widthAnchor.constraint(equalTo: cameraView.widthAnchor, multiplier: 1.25),
-            
         ])
-        
         view.addSubview(cancelButton)
         view.addSubview(backgroundButton)
         view.addSubview(containerView)
         view.addSubview(captureButton)
-        
         NSLayoutConstraint.activate([
             cancelButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
             cancelButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 10),
@@ -152,12 +147,9 @@ class SelfieRetakeViewController: UIViewController {
         captureButton.layer.cornerRadius = captureButton.bounds.width / 2
         captureButton.layer.borderColor = UIColor.systemGray5.cgColor
         captureButton.layer.borderWidth = 5
-        
         backgroundButton.layer.cornerRadius = 12
         backgroundButton.layer.borderColor = UIColor.white.cgColor
         backgroundButton.layer.borderWidth = 1
-        
-        // Update the frame of the preview layer on layout changes (like rotation)
         if let videoPreviewLayer = videoPreviewLayer {
             videoPreviewLayer.frame = cameraView.layer.bounds
         }
@@ -188,32 +180,22 @@ class SelfieRetakeViewController: UIViewController {
     
     private func setupCamera() {
         captureSession = AVCaptureSession()
-
-        // Use AVCaptureDevice.DiscoverySession to find the front camera
         let discoverySession = AVCaptureDevice.DiscoverySession(
             deviceTypes: [.builtInTrueDepthCamera, .builtInWideAngleCamera],
             mediaType: .video,
             position: .front
         )
-
-        // Get the first device from the list
         guard let frontCamera = discoverySession.devices.first else {
             print("Unable to access the front camera!")
             return
         }
-
         do {
             let input = try AVCaptureDeviceInput(device: frontCamera)
             captureSession.addInput(input)
-
-            // Setup the preview layer
             videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             videoPreviewLayer.videoGravity = .resizeAspectFill
             videoPreviewLayer.frame = cameraView.layer.bounds
-
             cameraView.layer.addSublayer(videoPreviewLayer)
-
-            // Start the session on a background thread
             DispatchQueue.global(qos: .userInitiated).async {
                 self.captureSession.startRunning()
             }
@@ -230,5 +212,4 @@ class SelfieRetakeViewController: UIViewController {
         let singleTap = UITapGestureRecognizer(target: self, action: #selector(handleSingleTap))
         view.addGestureRecognizer(singleTap)
     }
-    
 }

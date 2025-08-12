@@ -35,6 +35,12 @@ extension UIView {
             self.layer.render(in: rendererContext.cgContext)
         }
     }
+    func asImage(ofBounds newBounds: CGRect) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: newBounds)
+        return renderer.image { rendererContext in
+            self.layer.render(in: rendererContext.cgContext)
+        }
+    }
 }
 
 extension UIView{

@@ -93,6 +93,9 @@
                                         <state key="normal">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="copyLinkButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="BHb-bC-Lle"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qw1-Sq-vRO">
                                         <rect key="frame" x="17" y="25" width="80" height="80"/>
@@ -118,6 +121,9 @@
                                         <state key="normal">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
+                                        <connections>
+                                            <action selector="downloadButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="rNJ-JR-rNe"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -190,6 +196,7 @@
                     <navigationItem key="navigationItem" id="S0T-7d-pXU"/>
                     <connections>
                         <outlet property="backgroundButton" destination="XK8-c8-gR5" id="5nt-4N-60D"/>
+                        <outlet property="closeButton" destination="efW-PI-QhG" id="K1u-vp-5Xg"/>
                         <outlet property="copyLinkButton" destination="WRh-et-h0M" id="Ega-GG-k6B"/>
                         <outlet property="customizeImageButton" destination="8zr-Fe-hek" id="4dA-5R-Wbe"/>
                         <outlet property="downloadButton" destination="PZN-Zr-Ycd" id="2sS-mk-dgt"/>
@@ -197,6 +204,7 @@
                         <outlet property="nameLabel" destination="YdR-7z-ht8" id="aqp-Y1-e2R"/>
                         <outlet property="qrCodeContainerView" destination="MLB-YB-m9a" id="pMg-GQ-JnR"/>
                         <outlet property="qrCodeImageView" destination="PZ4-lO-eno" id="NbU-oH-qv4"/>
+                        <outlet property="qrCodeScannerButton" destination="Rso-SM-AW4" id="HdE-AW-C1d"/>
                         <outlet property="retakeButton" destination="OvR-KV-9pU" id="U0c-c2-pOu"/>
                         <outlet property="shareProfileButton" destination="Qw1-Sq-vRO" id="47P-BB-liZ"/>
                     </connections>
