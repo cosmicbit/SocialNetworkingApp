@@ -260,7 +260,6 @@ class ShareViewController: UIViewController {
             popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
             popoverController.permittedArrowDirections = []
         }
-        
         present(activityViewController, animated: true, completion: nil)
     }
     
@@ -273,19 +272,16 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func customizeImageButtonTapped(_ sender: Any){
-        let optionsVC = OptionsViewController(title:"Options", options: ["Change Background", "Blur"])
+        let optionsVC = OptionsViewController(title: "Options", options: ["Change Background", "Blur"])
         optionsVC.delegate = self
         if let sheet = optionsVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            
-            // Set the corner radius for the top corners
+            let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("small")) { context in
+                return 180
+            }
+            sheet.detents = [customDetent]
             sheet.preferredCornerRadius = 24
-            
-            // Make it show a grabber handle
             sheet.prefersGrabberVisible = true
         }
-        
-        // Present the view controller
         present(optionsVC, animated: true, completion: nil)
     }
 }
@@ -294,36 +290,23 @@ class ShareViewController: UIViewController {
 extension ShareViewController{
     // A helper method to generate a QR code image from a given string.
     private func generateQRCode(from string: String) -> UIImage? {
-        // 1. Get the data from the string.
         let data = string.data(using: String.Encoding.ascii)
-        
-        // 2. Create a QR code filter.
         guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else {
             return nil
         }
-        
-        // 3. Set the input message and error correction level.
         qrFilter.setValue(data, forKey: "inputMessage")
         qrFilter.setValue("M", forKey: "inputCorrectionLevel")
-        
-        // 4. Get the output image from the filter.
         guard let ciImage = qrFilter.outputImage else {
             return nil
         }
-        
-        // 5. Scale the QR code to a larger, more usable size.
         let scaleX = 200 / ciImage.extent.size.width
         let scaleY = 200 / ciImage.extent.size.height
         let transform = CGAffineTransform(scaleX: scaleX, y: scaleY)
-        
         let scaledImage = ciImage.transformed(by: transform)
-        
-        // 6. Convert the CIImage to a UIImage.
         let context = CIContext()
         guard let cgImage = context.createCGImage(scaledImage, from: scaledImage.extent) else {
             return nil
         }
-        
         return UIImage(cgImage: cgImage)
     }
 }

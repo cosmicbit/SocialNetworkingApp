@@ -15,11 +15,21 @@ protocol OptionsViewControllerDelegate: AnyObject {
 class OptionsViewController: UIViewController {
     
     weak var delegate: OptionsViewControllerDelegate?
-    private let titleLabel: String
+    //private let titleLabel: String
     private let options:[String]
     
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        //titleLabel.text = self.titleLabel
+        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.backgroundColor = .white
+        return label
+    }()
+    
     init(title: String, options: [String]) {
-        self.titleLabel = title
+        self.titleLabel.text = title
         self.options = options
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,33 +43,36 @@ class OptionsViewController: UIViewController {
         setupView()
     }
     
-    // Helper function to create a styled button
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        titleLabel.applyBorders(for: [.bottom], borderWidth: 0.2, borderColor: .lightGray)
+    }
+
     private func createOptionButton(title: String) -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
         button.contentHorizontalAlignment = .left
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         button.backgroundColor = .white
         button.setTitleColor(.label, for: .normal)
         button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        //button.applyBorders(for: [.bottom], borderWidth: 2, borderColor: .red)
         return button
     }
     
     func setupView(){
         view.backgroundColor = .white
         // Add your options UI here
-        let titleLabel = UILabel()
-        titleLabel.text = self.titleLabel
-        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        titleLabel.textAlignment = .center
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        
         
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 10
         stackView.distribution = .fillEqually
+        stackView.backgroundColor = .white
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         // 3. Dynamically create buttons based on the options array
@@ -76,15 +89,17 @@ class OptionsViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             // Pin the title label to the top, with some padding
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 50),
             
             // Pin the stack view below the title label
-            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            stackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
         ])
+        //titleLabel.applyBorders(for: [.bottom], borderWidth: 2, borderColor: .black)
     }
     
     // 4. A single action method to handle all button taps
