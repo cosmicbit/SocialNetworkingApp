@@ -319,6 +319,13 @@ class ShareViewController: UIViewController {
         currentBackgroundState.toNextState()
     }
     
+    @IBAction func qrCodeScannerButtonTapped(_ sender: Any){
+        let qrScanVC = QRCodeScannerViewController()
+        qrScanVC.modalPresentationStyle = .overFullScreen
+        qrScanVC.modalTransitionStyle = .crossDissolve
+        present(qrScanVC, animated: true)
+    }
+    
     @IBAction func shareProfileButtonTapped(_ sender: Any){
         let imageToShare = qrCodeImageWithBackground
         let items: [Any] = [permanentProfileURL, imageToShare]

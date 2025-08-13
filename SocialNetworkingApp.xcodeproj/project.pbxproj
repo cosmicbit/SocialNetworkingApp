@@ -40,6 +40,8 @@
 		504028312E2E596900F5D4C9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028302E2E596900F5D4C9 /* RingView.swift */; };
 		504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */; };
 		5053184E2E4C90DB001715D3 /* Extension+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */; };
+		505318502E4CA67D001715D3 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */; };
+		505318522E4CC657001715D3 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505318512E4CC649001715D3 /* CALayer+Extension.swift */; };
 		5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */; };
 		5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC92E1BA817004395DF /* PostViewController.swift */; };
 		5054FECC2E1BA825004395DF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FECB2E1BA825004395DF /* AccountViewController.swift */; };
@@ -159,6 +161,8 @@
 		504028302E2E596900F5D4C9 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
 		5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGPoint.swift"; sourceTree = "<group>"; };
+		5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		505318512E4CC649001715D3 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5054FEC92E1BA817004395DF /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		5054FECB2E1BA825004395DF /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -305,6 +309,7 @@
 				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
 				500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */,
 				50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */,
+				5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */,
 			);
 			path = ShareProfile;
 			sourceTree = "<group>";
@@ -312,6 +317,7 @@
 		50211A372E4B16E8000C2164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				505318512E4CC649001715D3 /* CALayer+Extension.swift */,
 				5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */,
 				50211A3F2E4B4D13000C2164 /* String+Extension.swift */,
 				50211A322E4B16E8000C2164 /* UIApplication+Extension.swift */,
@@ -701,6 +707,7 @@
 				50BAB6322E309165006F3AE5 /* BackButton.swift in Sources */,
 				50E9C27E2E2A258D00DE5544 /* ForYouResultsViewController.swift in Sources */,
 				5054FECC2E1BA825004395DF /* AccountViewController.swift in Sources */,
+				505318522E4CC657001715D3 /* CALayer+Extension.swift in Sources */,
 				E1FDD9142A0A4FB7006AD0DF /* PrimaryButton.swift in Sources */,
 				501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */,
 				50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */,
@@ -747,6 +754,7 @@
 				50A016E52E1BD54500594A7C /* PostToUpload.swift in Sources */,
 				50B46AAE2E1E447A004CC093 /* UserProfile.swift in Sources */,
 				50FEA7602E1D251F0041C7BF /* UserProfileToUpload.swift in Sources */,
+				505318502E4CA67D001715D3 /* QRCodeScannerViewController.swift in Sources */,
 				50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */,
 				50324E832E26643A00B703C2 /* Like.swift in Sources */,
 				50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */,

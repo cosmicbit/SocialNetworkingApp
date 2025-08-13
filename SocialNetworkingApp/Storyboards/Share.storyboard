@@ -151,6 +151,9 @@
                                     <imageReference key="image" image="qrcode.viewfinder" catalog="system" symbolScale="large"/>
                                     <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="large"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="qrCodeScannerButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="pns-Or-iSG"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OvR-KV-9pU">
                                 <rect key="frame" x="156.33333333333334" y="759.66666666666663" width="80.666666666666657" height="24.333333333333371"/>
