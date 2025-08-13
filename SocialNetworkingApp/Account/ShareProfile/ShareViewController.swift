@@ -61,6 +61,7 @@ class ShareViewController: UIViewController {
     var userProfile: UserProfile!
     
     private let gradientLayer = CAGradientLayer()
+    private var includeBackground: Bool = false
     var profileURL: URL?
     var webURL: URL?
     var qrCodeImage: UIImage?{
@@ -93,6 +94,35 @@ class ShareViewController: UIViewController {
         let baseURL = "https://www.socialnetworkingapp.com/"
         let urlString = baseURL + username + "/" + userId
         return urlString
+    }()
+    
+    lazy var qrCodeImageWithBackground: UIImage = {
+        let qrCodeImageWidth = qrCodeContainerView.bounds.width
+        let qrCodeImage = qrCodeContainerView.asImage()
+        let containerWidth = currentBackgroundView.bounds.width
+        let containerHeight = containerWidth * 1.4
+        let containerRect = CGRect(x: 0, y: 0, width: containerWidth, height: containerHeight) // altering the container into a square
+        let containerImage = currentBackgroundView.asImage(ofBounds: containerRect)
+        let overlayXPos = containerWidth/2 - qrCodeImageWidth/2 // placing the position of the overlay at center of the container
+        let overlayYPos = containerHeight/2 - qrCodeImageWidth/2 // since the overlay has to be square
+        let overlayRect = CGRect(x: overlayXPos, y: overlayYPos, width: qrCodeImageWidth, height: qrCodeImageWidth)
+        let combinedImage = containerImage.overlayWith(overlayImage: qrCodeImage, in: overlayRect)
+        return combinedImage
+    }()
+    
+    lazy var qrCodeImageWithoutBackground: UIImage = {
+        let qrCodeImageWidth = qrCodeContainerView.bounds.width
+        let qrCodeImage = qrCodeContainerView.asImage()
+        let containerWidth = currentBackgroundView.bounds.width
+        let containerHeight = containerWidth * 1.4
+        let containerView = UIView(frame: CGRect(x: 0, y: 0, width: containerWidth, height: containerHeight))
+        containerView.backgroundColor = .black
+        let containerImage = containerView.asImage()
+        let overlayXPos = containerWidth/2 - qrCodeImageWidth/2 // placing the position of the overlay at center of the container
+        let overlayYPos = containerHeight/2 - qrCodeImageWidth/2 // since the overlay has to be square
+        let overlayRect = CGRect(x: overlayXPos, y: overlayYPos, width: qrCodeImageWidth, height: qrCodeImageWidth)
+        let combinedImage = containerImage.overlayWith(overlayImage: qrCodeImage, in: overlayRect)
+        return combinedImage
     }()
     
     func changeBackgroundButtonTitle(withColor strokeColor: UIColor = .black){
@@ -285,23 +315,13 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func backgroundButtonTapped(_ sender: Any){
-        print("backgroundButton Tapped")
         backgroundButton.bounceEffect(withScale: 0.95, withDuration: 0.5)
         currentBackgroundState.toNextState()
     }
     
     @IBAction func shareProfileButtonTapped(_ sender: Any){
-        let qrCodeImageWidth = qrCodeContainerView.bounds.width
-        let qrCodeImage = qrCodeContainerView.asImage()
-        let containerWidth = currentBackgroundView.bounds.width
-        let containerHeight = containerWidth * 1.4
-        let containerRect = CGRect(x: 0, y: 0, width: containerWidth, height: containerHeight) // altering the container into a square
-        let containerImage = currentBackgroundView.asImage(ofBounds: containerRect)
-        let overlayXPos = containerWidth/2 - qrCodeImageWidth/2 // placing the position of the overlay at center of the container
-        let overlayYPos = containerHeight/2 - qrCodeImageWidth/2 // since the overlay has to be square
-        let overlayRect = CGRect(x: overlayXPos, y: overlayYPos, width: qrCodeImageWidth, height: qrCodeImageWidth)
-        let combinedImage = containerImage.overlayWith(overlayImage: qrCodeImage, in: overlayRect)
-        let items: [Any] = [permanentProfileURL, combinedImage]
+        let imageToShare = qrCodeImageWithBackground
+        let items: [Any] = [permanentProfileURL, imageToShare]
         let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
         if let popoverController = activityViewController.popoverPresentationController {
             popoverController.sourceView = self.view
@@ -317,7 +337,21 @@ class ShareViewController: UIViewController {
     }
     
     @IBAction func downloadButtonTapped(_ sender: Any){
-        
+        let downloadVC = OptionsViewController(title: "Download", options: [
+            "Include background",
+            "Save image",
+            "Download as PDF"
+        ])
+        downloadVC.delegate = self
+        if let sheet = downloadVC.sheetPresentationController{
+            let customDetent = UISheetPresentationController.Detent.custom(identifier: .init("small")) { context in
+                return 220
+            }
+            sheet.detents = [customDetent]
+            sheet.preferredCornerRadius = 24
+            sheet.prefersGrabberVisible = true
+        }
+        present(downloadVC, animated: true)
     }
     
     @IBAction func retakeButtonTapped(_ sender: Any){
@@ -345,7 +379,6 @@ class ShareViewController: UIViewController {
 
 // MARK: - QR Code Generation
 extension ShareViewController{
-    // A helper method to generate a QR code image from a given string.
     private func generateQRCode(from string: String, withColor color: UIColor = .black) -> UIImage? {
         let data = string.data(using: String.Encoding.ascii)
         guard let qrFilter = CIFilter(name: "CIQRCodeGenerator") else {
@@ -376,7 +409,6 @@ extension ShareViewController{
 //MARK: - Picker Delegate
 extension ShareViewController: PickerDelegate{
     func didSelect(this: Any) {
-        
         if currentBackgroundState == .emoji{
             let emoji = this as! String
             let view = currentBackgroundView as! EmojiShareView
@@ -435,6 +467,7 @@ extension ShareViewController: UICollectionViewDataSource {
     }
 }
 
+//MARK: - UICollectionViewDelegateFlowLayout
 extension ShareViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerScreen: CGFloat = 9
@@ -444,6 +477,7 @@ extension ShareViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
+//MARK: - SelfieRetakeDelegate
 extension ShareViewController: SelfieRetakeDelegate{
     func didTapOnBackgroundButton() {
         currentBackgroundState.toNextState()
@@ -457,26 +491,85 @@ extension ShareViewController: SelfieRetakeDelegate{
     }
 }
 
+//MARK: - OptionsViewControllerDelegate
 extension ShareViewController: OptionsViewControllerDelegate{
+    
     func optionsViewController(_ controller: OptionsViewController, didSelectOption option: String) {
-        switch option {
-            case "Change Background":
-                let imagePicker = UIImagePickerController()
-                imagePicker.delegate = self
-                imagePicker.sourceType = .photoLibrary // Specify the source as the photo library
-                
-                present(imagePicker, animated: true, completion: nil)
-            case "Blur":
-                if currentBackgroundState == .image{
-                    let view = currentBackgroundView as! ImageShareView
-                    view.isBlurred.toggle()
+        if controller.titleLabel.text == "Options"{
+            controller.dismiss(animated: true){
+                switch option {
+                case "Change Background":
+                    let imagePicker = UIImagePickerController()
+                    imagePicker.delegate = self
+                    imagePicker.sourceType = .photoLibrary // Specify the source as the photo library
+                    
+                    self.present(imagePicker, animated: true, completion: nil)
+                case "Blur":
+                    if self.currentBackgroundState == .image{
+                        let view = self.currentBackgroundView as! ImageShareView
+                        view.isBlurred.toggle()
+                    }
+                default:
+                    break
+                }
+            }
+        }else if controller.titleLabel.text == "Download"{
+            switch option{
+            case "Include background":
+                includeBackground.toggle()
+            case "Save image":
+                controller.dismiss(animated: true){
+                    let imageToSave = self.includeBackground ? self.qrCodeImageWithBackground : self.qrCodeImageWithoutBackground
+                    UIImageWriteToSavedPhotosAlbum(imageToSave, self, #selector(self.handleSaveImageToAlbum(_:didFinishSavingWithError:contextInfo:)), nil)
+                }
+            case "Download as PDF":
+                controller.dismiss(animated: true){
+                    let imageToSave = self.includeBackground ? self.qrCodeImageWithBackground : self.qrCodeImageWithoutBackground
+                    guard let pdfData = imageToSave.pdfData() else {
+                        print("Failed to generate PDF data.")
+                        self.showToast(message: "Failed to generate PDF")
+                        return
+                    }
+                    let tempURL = FileManager.default.temporaryDirectory
+                        .appendingPathComponent("qrcode_\(Int.random(in: 1...1_000_000))")
+                        .appendingPathExtension("pdf")
+                    do {
+                        try pdfData.write(to: tempURL)
+                        print("PDF saved temporarily to: \(tempURL.path)")
+                        let activityViewController = UIActivityViewController(activityItems: [tempURL], applicationActivities: nil)
+                        activityViewController.completionWithItemsHandler = {(activityType, completed, returnedItems, error) in
+                            if completed {
+                                if let activity = activityType {
+                                    print("Activity completed: \(activity.rawValue)")
+                                }
+                                self.showToast(message: "Saved")
+                            }
+                        }
+                        self.present(activityViewController, animated: true, completion: nil)
+                        
+                    } catch {
+                        print("Error saving PDF: \(error.localizedDescription)")
+                        self.showToast(message: "Failed to save PDF")
+                    }
                 }
             default:
                 break
+            }
+        }
+    }
+    
+    @objc func handleSaveImageToAlbum(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer){
+        if let error = error {
+            print("Error saving image: \(error.localizedDescription)")
+            showToast(message: "Failed to save")
+        } else {
+            print("Image saved successfully!")
+            showToast(message: "Saved")
         }
     }
 }
 
+//MARK: - UIImagePickerControllerDelegate
 extension ShareViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true){

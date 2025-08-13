@@ -84,10 +84,10 @@ class OptionsViewController: UIViewController {
     }
     
     @objc private func optionTapped(_ sender: UIButton) {
-        dismiss(animated: true){
+        //dismiss(animated: true){
             if let selectedOption = sender.titleLabel?.text {
                 self.delegate?.optionsViewController(self, didSelectOption: selectedOption)
             }
-        }
+        //}
     }
 }

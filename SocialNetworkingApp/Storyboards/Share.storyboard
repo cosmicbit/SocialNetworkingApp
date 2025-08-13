@@ -33,7 +33,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XK8-c8-gR5">
                                 <rect key="frame" x="166.66666666666666" y="128" width="60" height="25"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.25491514900000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.25" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="W3V-ZH-chy"/>
                                     <constraint firstAttribute="width" constant="60" id="YnR-OA-Hkm"/>
@@ -174,7 +174,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="tTc-eh-NRg"/>
-                        <color key="backgroundColor" red="0.0" green="0.79276491841836738" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.80651575330000003" green="0.81005144120000006" blue="0.81005144120000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="8zr-Fe-hek" firstAttribute="centerX" secondItem="Ujv-xl-Upu" secondAttribute="centerX" id="5S8-Vt-YHe"/>
                             <constraint firstItem="OvR-KV-9pU" firstAttribute="centerX" secondItem="Ujv-xl-Upu" secondAttribute="centerX" id="8Nd-Iz-yph"/>

@@ -120,3 +120,29 @@ extension UIImage {
         return UIColor(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
+
+extension UIImage {
+    func pdfData() -> Data? {
+        // 1. Define the size of the PDF page based on the image size.
+        let pdfMetaData = [
+            kCGPDFContextCreator: "Your App",
+            kCGPDFContextAuthor: "Your Name"
+        ]
+        let format = UIGraphicsPDFRendererFormat()
+        format.documentInfo = pdfMetaData as [String: Any]
+
+        let pageRect = CGRect(origin: .zero, size: self.size)
+        
+        let renderer = UIGraphicsPDFRenderer(bounds: pageRect, format: format)
+
+        // 2. Render the image to a PDF context.
+        let data = renderer.pdfData { context in
+            context.beginPage()
+            
+            // Draw the image onto the page.
+            self.draw(in: pageRect)
+        }
+
+        return data
+    }
+}

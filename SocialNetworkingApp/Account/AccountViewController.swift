@@ -29,7 +29,6 @@ class AccountViewController: UIViewController {
         getUserProfile()
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditProfileSegue" {
             let destinationVC = segue.destination as! EditProfileViewController
