@@ -10,56 +10,68 @@ import UIKit
 
 // Define a protocol to ensure each gradient preset provides the necessary properties.
 protocol GradientRepresentable {
-    var colors: [CGColor] { get }
+    var uiColors: [UIColor] { get }
+    var cgColors: [CGColor] { get }
     var locations: [NSNumber]? { get }
     var startPoint: CGPoint { get }
     var endPoint: CGPoint { get }
 }
 
 enum GradientPreset: Int, CaseIterable, GradientRepresentable{
-    case sunrise
-    case nightSky
-    case oceanBlue
+    case greenToBlue
+    case darkGray
+    case yellowToPink
+    case pinkToPurple
+    case blueToPurple
     
-    var colors: [CGColor] {
+    var uiColors: [UIColor] {
         switch self {
-        case .sunrise:
+        case .greenToBlue:
             return [
-                UIColor(red: 0.9, green: 0.5, blue: 0.3, alpha: 1.0).cgColor, // Top: A warm orange
-                UIColor(red: 1.0, green: 0.8, blue: 0.5, alpha: 1.0).cgColor, // Middle: A soft peach
-                UIColor(red: 1.0, green: 0.9, blue: 0.8, alpha: 1.0).cgColor  // Bottom: A light cream
+                UIColor(named: "GreenToBlue1") ?? UIColor.green,
+                UIColor(named: "GreenToBlue2") ?? UIColor.blue
             ]
-        case .nightSky:
+        case .darkGray:
             return [
-                UIColor(red: 0.05, green: 0.1, blue: 0.2, alpha: 1.0).cgColor, // Top: Dark blue
-                UIColor(red: 0.2, green: 0.3, blue: 0.4, alpha: 1.0).cgColor,  // Middle: Lighter blue-grey
-                UIColor(red: 0.4, green: 0.5, blue: 0.6, alpha: 1.0).cgColor   // Bottom: Soft grey-blue
+                UIColor(named: "darkGray") ?? UIColor.darkGray
             ]
-        case .oceanBlue:
+        case .yellowToPink:
             return [
-                UIColor(red: 0.0, green: 0.4, blue: 0.7, alpha: 1.0).cgColor, // Top: Deep blue
-                UIColor(red: 0.2, green: 0.6, blue: 0.8, alpha: 1.0).cgColor  // Bottom: Lighter blue
+                UIColor(named: "YellowToPink1") ?? UIColor.yellow,
+                UIColor(named: "YellowToPink2") ?? UIColor.systemPink
+            ]
+        case .pinkToPurple:
+            return [
+                UIColor(named: "PinkToPurple1") ?? UIColor.systemPink,
+                UIColor(named: "PinkToPurple2") ?? UIColor.systemPurple
+            ]
+        case .blueToPurple:
+            return [
+                UIColor(named: "BlueToPurple1") ?? UIColor.blue,
+                UIColor(named: "BlueToPurple2") ?? UIColor.systemPurple
             ]
         }
+    }
+    
+    var cgColors: [CGColor] {
+        return self.uiColors.compactMap { $0.cgColor }
     }
     
     var locations: [NSNumber]? {
         switch self {
-        case .sunrise:
-            return [0.0, 0.5, 1.0]
-        case .nightSky:
-            return [0.0, 0.5, 1.0]
-        case .oceanBlue:
-            return [0.0, 1.0]
+        case .greenToBlue, .yellowToPink, .pinkToPurple, .blueToPurple:
+            [0.0, 1.0]
+        case .darkGray:
+            nil
         }
     }
     
     var startPoint: CGPoint {
-        return CGPoint(x: 0.5, y: 0.0) // Top-to-bottom for all presets
+        return CGPoint(x: 0.0, y: 0.0) // Top-to-bottom for all presets
     }
     
     var endPoint: CGPoint {
-        return CGPoint(x: 0.5, y: 1.0) // Top-to-bottom for all presets
+        return CGPoint(x: 1.0, y: 1.0) // Top-to-bottom for all presets
     }
     
     mutating func toNextGradient(){
@@ -67,7 +79,7 @@ enum GradientPreset: Int, CaseIterable, GradientRepresentable{
     }
     
     var nextGradient: GradientPreset{
-        guard let color = GradientPreset(rawValue: (self.rawValue + 1) % GradientPreset.allCases.count) else { return GradientPreset.sunrise}
+        guard let color = GradientPreset(rawValue: (self.rawValue + 1) % GradientPreset.allCases.count) else { return GradientPreset.greenToBlue}
         return color
     }
 }

@@ -39,6 +39,7 @@
 		5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */; };
 		504028312E2E596900F5D4C9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028302E2E596900F5D4C9 /* RingView.swift */; };
 		504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */; };
+		5053184E2E4C90DB001715D3 /* Extension+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */; };
 		5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */; };
 		5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC92E1BA817004395DF /* PostViewController.swift */; };
 		5054FECC2E1BA825004395DF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FECB2E1BA825004395DF /* AccountViewController.swift */; };
@@ -157,6 +158,7 @@
 		5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		504028302E2E596900F5D4C9 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
+		5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGPoint.swift"; sourceTree = "<group>"; };
 		5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5054FEC92E1BA817004395DF /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		5054FECB2E1BA825004395DF /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 		50211A372E4B16E8000C2164 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */,
 				50211A3F2E4B4D13000C2164 /* String+Extension.swift */,
 				50211A322E4B16E8000C2164 /* UIApplication+Extension.swift */,
 				50211A332E4B16E8000C2164 /* UIColor+Extension.swift */,
@@ -756,6 +759,7 @@
 				50EB06672E49C294001F5E61 /* SelfieRetakeViewController.swift in Sources */,
 				5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */,
 				50A0172D2E1BFD5E00594A7C /* ImageFileManager.swift in Sources */,
+				5053184E2E4C90DB001715D3 /* Extension+CGPoint.swift in Sources */,
 				508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */,
 				50037B1F2E2507DD0027149E /* CreateAlertViewController.swift in Sources */,
 				508759F82E1D0E7E00ABAEC6 /* SplashViewController.swift in Sources */,

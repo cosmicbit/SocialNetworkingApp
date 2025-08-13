@@ -10,9 +10,9 @@ import UIKit
 class ColorShareView: UIView {
     
     private let gradientLayer = CAGradientLayer()
-    var currentGradient = GradientPreset.sunrise{
+    var currentGradient = GradientPreset.greenToBlue{
         didSet{
-            gradientLayer.colors = currentGradient.colors
+            gradientLayer.colors = currentGradient.cgColors
             gradientLayer.locations = currentGradient.locations
             gradientLayer.startPoint = currentGradient.startPoint
             gradientLayer.endPoint = currentGradient.endPoint
