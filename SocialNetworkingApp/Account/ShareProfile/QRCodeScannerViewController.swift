@@ -88,7 +88,7 @@ class QRCodeScannerViewController: UIViewController {
         ])
         print(view.bounds)
         qrCodeFrameView.frame = CGRect(x: view.bounds.midX - 150, y: view.bounds.midY - 150, width: 300, height: 300)
-        qrCodeFrameView.layer.addCornerOverlay(withWidth: 2, withColor: .white)
+        qrCodeFrameView.layer.addCornerOverlay(withWidth: 5, withColor: .white, withLength: 30, isRounded: true)
         backButton.addTarget(self, action: #selector(backButtonTapped(_:)), for: .touchUpInside)
     }
     
