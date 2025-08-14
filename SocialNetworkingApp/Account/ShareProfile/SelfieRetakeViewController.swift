@@ -102,11 +102,10 @@ class SelfieRetakeViewController: UIViewController {
             changeFilterImage()
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        currentFilter = .hearts
         containerView.addSubview(cameraView)
         containerView.addSubview(filterImageView)
         captureButton.backgroundColor = .white
