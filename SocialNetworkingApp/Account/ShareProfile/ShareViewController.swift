@@ -62,6 +62,7 @@ class ShareViewController: UIViewController {
     
     private let gradientLayer = CAGradientLayer()
     private var includeBackground: Bool = false
+    private var degreeIndex: Int = 0
     var profileURL: URL?
     var webURL: URL?
     var qrCodeImage: UIImage?{
@@ -305,6 +306,9 @@ class ShareViewController: UIViewController {
             }else{
                 showEmojiPicker()
             }
+        case .selfie:
+            let view = currentBackgroundView as! SelfieShareView
+            view.changeFilter()
         default:
             print()
         }
@@ -364,6 +368,8 @@ class ShareViewController: UIViewController {
     @IBAction func retakeButtonTapped(_ sender: Any){
         let vc = SelfieRetakeViewController()
         vc.delegate = self
+        let view = currentBackgroundView as! SelfieShareView
+        vc.currentFilter = view.currentFilter
         vc.modalTransitionStyle = .crossDissolve
         vc.modalPresentationStyle = .overFullScreen
         present(vc, animated: true)
@@ -440,16 +446,17 @@ extension ShareViewController: UICollectionViewDataSource {
         let itemsPerColumn = 9
         let row = indexPath.item % itemsPerColumn
         let column = indexPath.item / itemsPerColumn
-        let degrees:[CGFloat] = [45, 0, -45]
+        let degrees:[CGFloat] = [45, -45]
+        
         switch currentBackgroundState {
         case .emoji:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LabelCell.identifier, for: indexPath) as! LabelCell
             let view = currentBackgroundView as! EmojiShareView
             if (row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0) {
                 cell.label.text = view.currentEmoji
-                if let randomDegree = degrees.randomElement(){
-                    cell.label.rotate(by: randomDegree)
-                }
+                let degree = degrees[degreeIndex]
+                degreeIndex = (degreeIndex + 1) % 2
+                cell.label.rotate(by: degree)
             }
             else{
                 cell.label.text = " "
@@ -459,10 +466,10 @@ extension ShareViewController: UICollectionViewDataSource {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SelfieCell.identifier, for: indexPath) as! SelfieCell
             let view = currentBackgroundView as! SelfieShareView
             if (row % 2 == 0 && column % 2 == 0) || (row % 2 != 0 && column % 2 != 0) {
-                cell.imageView.image = view.currentSelfie
-                if let randomDegree = degrees.randomElement(){
-                    cell.imageView.rotate(by: randomDegree)
-                }
+                cell.imageView.image = view.currentSelfieWithFilter
+                let degree = degrees[degreeIndex]
+                degreeIndex = (degreeIndex + 1) % 2
+                cell.imageView.rotate(by: degree)
             }
             else{
                 cell.imageView.image = UIImage()
@@ -486,15 +493,15 @@ extension ShareViewController: UICollectionViewDelegateFlowLayout{
 
 //MARK: - SelfieRetakeDelegate
 extension ShareViewController: SelfieRetakeDelegate{
-    func didTapOnBackgroundButton() {
-        currentBackgroundState.toNextState()
-    }
-    
-    func didFinishCapture(withShot snapshot: UIImage) {
+    func didFinishCapture(withCombinedShot snapshot: UIImage, withCapturedImage image: UIImage, withFilter filter : Filters) {
         if currentBackgroundState == .selfie{
             let view = currentBackgroundView as! SelfieShareView
-            view.changeCurrentSelfie(with: snapshot)
+            view.changeCurrentSelfie(with: image, withFilter: filter)
         }
+    }
+    
+    func didTapOnBackgroundButton() {
+        currentBackgroundState.toNextState()
     }
 }
 

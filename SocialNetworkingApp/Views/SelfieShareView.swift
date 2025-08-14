@@ -29,7 +29,10 @@ class SelfieShareView: UIView {
         fatalError("init(coder: ) have not been implemented")
     }
     
-    var currentSelfie = UIImage(systemName: "person.fill")
+    var currentSelfieWithFilter = UIImage(systemName: "person.fill")
+    var currentFilterImage = UIImage()
+    var currentFilter  = Filters.specs
+    var currentSelfie = UIImage()
 
     private func setupView(){
         backgroundColor = .green
@@ -43,10 +46,48 @@ class SelfieShareView: UIView {
     }
     
     func changeCurrentSelfie(with newSelfie: UIImage){
-        currentSelfie = newSelfie
+        currentSelfieWithFilter = newSelfie
         collectionView.reloadData()
     }
+    
+    func changeCurrentSelfie(with selfie: UIImage, withFilter filter: Filters){
+        
+        currentFilter = filter
+        guard let filterImage = filter.getImage() else { return }
+        currentFilterImage = filterImage
+        currentSelfie = selfie
+        createImage()
+        collectionView.reloadData()
+    }
+    
+    func createImage(){
+        let size = CGSize(width: 100, height: 100)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        var resultImage = renderer.image { context in
+            UIColor.clear.setFill()
+            context.fill(CGRect(origin: .zero, size: size))
+        }
+        let selfieSize = CGSize(width: resultImage.size.width * currentSelfie.size.width / currentSelfie.size.height, height: resultImage.size.height)
+        resultImage = resultImage.overlayWith(overlayImage: currentSelfie,
+                                              in: CGRect(
+                                                x: size.width / 2 - (selfieSize.width) / 2,
+                                                y: 0,
+                                                width: selfieSize.width,
+                                                height: selfieSize.height ))
+        currentSelfieWithFilter = resultImage.overlayWith(overlayImage: currentFilterImage,
+                                                          in: CGRect(x: size.width / 2 - (selfieSize.width * 1.25) / 2 ,
+                                                                     y: size.height / 2 - (selfieSize.height * 1.25) / 2,
+                                                                     width: selfieSize.width * 1.25,
+                                                                     height: selfieSize.height * 1.25))
+    }
 
+    func changeFilter(){
+        currentFilter.toNextState()
+        guard let filterImage = currentFilter.getImage() else { return }
+        currentFilterImage = filterImage
+        createImage()
+        collectionView.reloadData()
+    }
 }
 
 
@@ -58,6 +99,10 @@ class SelfieCell: UICollectionViewCell {
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
+    
+    func configure(){
+        
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)

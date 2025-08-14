@@ -19,11 +19,22 @@ enum Filters: Int, CaseIterable{
         guard let filter = Filters(rawValue: (self.rawValue + 1) % Filters.allCases.count) else { return .specs}
         return filter
     }
+    
+    func getImage() -> UIImage?{
+        switch self {
+        case .specs:
+            UIImage(named: "spectacles")
+        case .hearts:
+            UIImage(named: "hearts")
+        case .mustache:
+            UIImage(named: "mustache")
+        }
+    }
 }
 
 protocol SelfieRetakeDelegate: AnyObject{
     func didTapOnBackgroundButton()
-    func didFinishCapture(withShot snapshot: UIImage)
+    func didFinishCapture(withCombinedShot snapshot: UIImage, withCapturedImage image: UIImage, withFilter filter : Filters)
 }
 
 class SelfieRetakeViewController: UIViewController {
@@ -86,7 +97,7 @@ class SelfieRetakeViewController: UIViewController {
         UIImage(named: "hearts"),
         UIImage(named: "mustache")
     ]
-    private var currentFilter = Filters.mustache{
+    var currentFilter = Filters.mustache{
         didSet{
             changeFilterImage()
         }
@@ -169,8 +180,9 @@ class SelfieRetakeViewController: UIViewController {
     @objc func captureButtonTapped(){
         captureButton.bounceEffect(withScale: 0.9, withDuration: 0.5)
         let selfieShot = containerView.asImage()
+        let image = cameraView.asImage()
         dismiss(animated: true) {
-            self.delegate?.didFinishCapture(withShot: selfieShot )
+            self.delegate?.didFinishCapture(withCombinedShot: selfieShot, withCapturedImage: image, withFilter: self.currentFilter)
         }
     }
     
