@@ -46,15 +46,19 @@ extension UIView{
         }
     }
     
-    func bounceEffect() {
-        self.transform = CGAffineTransform(scaleX: 0, y: 0)
-        UIView.animate(withDuration: 0.2, animations: {
-            self.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { _ in
-            UIView.animate(withDuration: 0.2) {
-                self.transform = .identity // Back to original size
-            }
-        }
+    func bounceEffect(withScale scale: CGFloat, withDuration duration: TimeInterval) {
+        self.transform = CGAffineTransform(scaleX: scale, y: scale)
+        
+        // Now animate back to the original size with spring physics
+        UIView.animate(withDuration: duration,
+                       delay: 0,
+                       usingSpringWithDamping: 0.5, // Damping controls the "bounciness"
+                       initialSpringVelocity: 0.5, // Velocity controls the initial momentum
+                       options: .allowUserInteraction, // Allows the user to interact with the view during the animation
+                       animations: {
+                           self.transform = .identity
+                       },
+                       completion: nil)
     }
     
     func slideFromRightAnimation(){

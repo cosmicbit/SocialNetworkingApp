@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import SDWebImage
 
+
 class AccountViewController: UIViewController {
 
     @IBOutlet weak var avatarImageView: UIImageView!
@@ -33,6 +34,10 @@ class AccountViewController: UIViewController {
             let destinationVC = segue.destination as! EditProfileViewController
             destinationVC.userProfile = userProfile
         }
+        if segue.identifier == "ShareSegue"{
+            let destinationVC = segue.destination as! ShareViewController
+            destinationVC.userProfile = userProfile
+        }
     }
     
     override func viewDidLoad() {
@@ -40,6 +45,7 @@ class AccountViewController: UIViewController {
         setupViews()
         setupUserProfile()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(handleUserProfileUpdate(_:)), name: NSNotification.Name("UserProfileDidUpdate"), object: nil)
@@ -106,12 +112,20 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
+        
     }
     
     @IBAction func editProfileButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "EditProfileSegue", sender: nil)
     }
     @IBAction func shareProfileButtonTapped(_ sender: Any) {
+        let shareSB = UIStoryboard(name: "Share", bundle: .main)
+        let shareVC = shareSB.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
+        shareVC.userProfile = userProfile
+        let navC = UINavigationController(rootViewController: shareVC)
+        navC.navigationBar.isHidden = true
+        navC.modalPresentationStyle = .overFullScreen
+        present(navC, animated: true)
     }
     
     @IBAction func savedPostsButtonTapped(_ sender: Any) {

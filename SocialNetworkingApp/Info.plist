@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>SocialApp would like access to your photo library in order to create posts</string>
 	<key>NSCameraUsageDescription</key>
-	<string>SocialApp would like access to your camera in order to create posts</string>
+	<string>SocialNetworking app needs permission to access the camera</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>SocialNetworking app needs permission to access the photo library</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

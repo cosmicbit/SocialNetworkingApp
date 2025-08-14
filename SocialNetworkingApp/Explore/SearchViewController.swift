@@ -14,9 +14,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var searchTextField: UITextField!
     @IBOutlet weak var searchCancelButton: UIButton!
-
     @IBOutlet weak var searchButton: UIButton!
-    
     @IBOutlet weak var searchResultsTableView: UITableView!
     
     private var userProfiles: [UserProfile] = [] {
@@ -60,7 +58,6 @@ class SearchViewController: UIViewController {
         searchResultsTableView.dataSource = self
         searchResultsTableView.estimatedRowHeight = 80
         searchResultsTableView.rowHeight = UITableView.automaticDimension
-        searchResultsTableView.tableFooterView = UIView()
         searchResultsTableView.separatorStyle = .none
         
     }
@@ -82,14 +79,10 @@ class SearchViewController: UIViewController {
             }
             switch result {
             case .success(let userProfiles):
-                DispatchQueue.main.async {
-                    self.userProfiles = userProfiles
-                }
-                
+                self.userProfiles = userProfiles
             case .failure(let error):
                 print("Error updating like count in UI: \(error.localizedDescription)")
             }
-            
         }
     }
     
@@ -97,7 +90,6 @@ class SearchViewController: UIViewController {
         navigationController?.popViewController(animated: false)
     }
    
-    
     @IBAction func searchCancelButtonTapped(_ sender: Any) {
         searchTextField.text?.removeAll()
     }
@@ -109,15 +101,12 @@ class SearchViewController: UIViewController {
 }
 
 extension SearchViewController: UITextFieldDelegate{
-    
-    
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if textField.hasText{
             searchCancelButton.isHidden = false
             searchButton.isHidden = false
             searchButton.transform = CGAffineTransform.identity
             fetchProfileResults(keyword: textField.text!)
-            
         }
         else{
             searchCancelButton.isHidden = true
@@ -126,8 +115,6 @@ extension SearchViewController: UITextFieldDelegate{
             userProfiles.removeAll()
         }
     }
-    
-    
 }
 
 extension SearchViewController: UITableViewDataSource{
@@ -141,8 +128,6 @@ extension SearchViewController: UITableViewDataSource{
         cell.configure(userProfile: userProfile, delegate: self)
         return cell
     }
-    
-    
 }
 
 extension SearchViewController: UITableViewDelegate{

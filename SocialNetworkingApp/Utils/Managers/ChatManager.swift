@@ -111,6 +111,7 @@ class ChatManager {
     ///   - user2Id: The ID of the other user in the chat.
     ///   - lastMessageTimestamp: The timestamp of the oldest message currently loaded.
     ///   - limit: The number of additional messages to fetch.
+    ///   - completion: The completion handler to perform functions after the completion of this function
     func fetchMoreChatMessages(user1Id: String, user2Id: String, lastMessageTimestamp: Timestamp, limit: Int = 20, completion: @escaping ([Message]?, Error?) -> Void) {
         let chatId = getChatID(for: user1Id, and: user2Id)
         let messagesCollectionRef = db.collection("chats").document(chatId).collection("messages")

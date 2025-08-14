@@ -23,28 +23,24 @@ class SearchResultProfileTableViewCell: UITableViewCell {
     private weak var delegate: SearchResultProfileTableViewCellDelegate?
     private var userProfile: UserProfile!
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
-        usernameLabel.text = userProfile.username
-        nameLabel.text = userProfile.name
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         avatarImageView.layer.cornerRadius = avatarImageView.frame.width / 2
     }
     
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
     func configure(userProfile: UserProfile, delegate: SearchResultProfileTableViewCellDelegate){
         self.userProfile = userProfile
         self.delegate = delegate
+        setupUserProfile()
+    }
+    
+    func setupUserProfile(){
+        avatarImageView.sd_setImage(with: userProfile.avatarImageURL)
+        usernameLabel.text = userProfile.username
+        nameLabel.text = userProfile.name
     }
 }

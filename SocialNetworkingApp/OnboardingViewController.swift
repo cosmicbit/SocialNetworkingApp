@@ -64,7 +64,6 @@ class OnboardingViewController: UIViewController {
         view.addGestureRecognizer(viewTap)
         view.isUserInteractionEnabled = true
     }
-    
 
     @IBAction func uploadAvatarButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Choose Image Source", message: "Attach an image to your avatar", preferredStyle: .actionSheet)

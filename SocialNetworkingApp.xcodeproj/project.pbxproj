@@ -14,11 +14,24 @@
 		50037B652E250E910027149E /* CreateAlertActionSheetView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50037B642E250E910027149E /* CreateAlertActionSheetView.xib */; };
 		50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */; };
 		5004A5E62E40CC5800C4C208 /* BioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5004A5E52E40CC5800C4C208 /* BioViewController.swift */; };
+		500778A82E4452D400BC5501 /* EmojiPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */; };
+		500778AA2E44545100BC5501 /* emoji.txt in Resources */ = {isa = PBXBuildFile; fileRef = 500778A92E44544300BC5501 /* emoji.txt */; };
+		500AB5F02E433A12003AC0DC /* Share.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500AB5EF2E433A12003AC0DC /* Share.storyboard */; };
+		500AB5F22E4376F0003AC0DC /* ColorShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500AB5F12E4376F0003AC0DC /* ColorShareView.swift */; };
+		500AB5F42E4383CB003AC0DC /* EmojiShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500AB5F32E4383CB003AC0DC /* EmojiShareView.swift */; };
+		500AB5F62E4383EF003AC0DC /* SelfieShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500AB5F52E4383EF003AC0DC /* SelfieShareView.swift */; };
+		500AB5F82E438402003AC0DC /* ImageShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500AB5F72E438402003AC0DC /* ImageShareView.swift */; };
 		501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501804262E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift */; };
 		5018042C2E28D84C00BF1AEF /* UserProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042B2E28D84300BF1AEF /* UserProfileManager.swift */; };
 		5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */; };
 		501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */; };
-		50324E812E261C5200B703C2 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E802E261C4300B703C2 /* UIView+Extension.swift */; };
+		50211A382E4B16E8000C2164 /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A322E4B16E8000C2164 /* UIApplication+Extension.swift */; };
+		50211A392E4B16E8000C2164 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A332E4B16E8000C2164 /* UIColor+Extension.swift */; };
+		50211A3A2E4B16E8000C2164 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A342E4B16E8000C2164 /* UIImage+Extension.swift */; };
+		50211A3B2E4B16E8000C2164 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A352E4B16E8000C2164 /* UIView+Extension.swift */; };
+		50211A3C2E4B16E8000C2164 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A362E4B16E8000C2164 /* UIViewController+Extension.swift */; };
+		50211A402E4B4D2C000C2164 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A3F2E4B4D13000C2164 /* String+Extension.swift */; };
+		50211A422E4B6B96000C2164 /* GradientPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A412E4B6B96000C2164 /* GradientPreset.swift */; };
 		50324E832E26643A00B703C2 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E822E26642700B703C2 /* Like.swift */; };
 		50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3A2E27A30B000E53B7 /* PostManager.swift */; };
 		50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3D2E27BC16000E53B7 /* SearchViewController.swift */; };
@@ -26,8 +39,9 @@
 		5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */; };
 		504028312E2E596900F5D4C9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028302E2E596900F5D4C9 /* RingView.swift */; };
 		504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */; };
-		5054FEC12E1B9051004395DF /* UIApplication+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC02E1B9038004395DF /* UIApplication+Extension.swift */; };
-		5054FEC32E1B978C004395DF /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC22E1B978C004395DF /* UIViewController+Extension.swift */; };
+		5053184E2E4C90DB001715D3 /* Extension+CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */; };
+		505318502E4CA67D001715D3 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */; };
+		505318522E4CC657001715D3 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505318512E4CC649001715D3 /* CALayer+Extension.swift */; };
 		5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */; };
 		5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC92E1BA817004395DF /* PostViewController.swift */; };
 		5054FECC2E1BA825004395DF /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FECB2E1BA825004395DF /* AccountViewController.swift */; };
@@ -84,10 +98,14 @@
 		50E9C27E2E2A258D00DE5544 /* ForYouResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9C27D2E2A258D00DE5544 /* ForYouResultsViewController.swift */; };
 		50E9C2802E2A264A00DE5544 /* AccountsResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E9C27F2E2A264A00DE5544 /* AccountsResultsViewController.swift */; };
 		50E9C2822E2A46B900DE5544 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E9C2812E2A46B900DE5544 /* Home.storyboard */; };
+		50EB06672E49C294001F5E61 /* SelfieRetakeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */; };
+		50EB06692E49DAC3001F5E61 /* OvalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB06682E49DAC3001F5E61 /* OvalView.swift */; };
+		50EB066B2E4A16BC001F5E61 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB066A2E4A16BC001F5E61 /* OptionsViewController.swift */; };
 		50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */; };
 		50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 50EB94842E3A3720005C1B20 /* sample_video.mp4 */; };
 		50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */; };
 		50F069A92E41D7C700B6D716 /* BorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069A82E41D7C700B6D716 /* BorderView.swift */; };
+		50F069AB2E42128800B6D716 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F069AA2E42128800B6D716 /* ShareViewController.swift */; };
 		50F4067D2E1B81CC00A23A2C /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 50F4067C2E1B81CC00A23A2C /* FirebaseAuth */; };
 		50F4067F2E1B81CC00A23A2C /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 50F4067E2E1B81CC00A23A2C /* FirebaseFirestore */; };
 		50F406812E1B81CC00A23A2C /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 50F406802E1B81CC00A23A2C /* FirebaseStorage */; };
@@ -97,7 +115,6 @@
 		50F4068A2E1B869000A23A2C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F406892E1B869000A23A2C /* LoginViewController.swift */; };
 		50FEA7602E1D251F0041C7BF /* UserProfileToUpload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FEA75F2E1D251F0041C7BF /* UserProfileToUpload.swift */; };
 		E154F21A2AB1C809000BC44C /* Typography.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154F2192AB1C809000BC44C /* Typography.swift */; };
-		E154F21C2AB1C841000BC44C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E154F21B2AB1C841000BC44C /* UIColor+Extension.swift */; };
 		E19709B02A84D70900A76B19 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E19709AF2A84D70900A76B19 /* Poppins-Medium.ttf */; };
 		E19709B22A84D71100A76B19 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E19709B12A84D71100A76B19 /* Poppins-Regular.ttf */; };
 		E19709B42A84D71800A76B19 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E19709B32A84D71800A76B19 /* Poppins-SemiBold.ttf */; };
@@ -122,11 +139,24 @@
 		50037B642E250E910027149E /* CreateAlertActionSheetView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreateAlertActionSheetView.xib; sourceTree = "<group>"; };
 		50037B662E250EF60027149E /* CreateAlertActionSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAlertActionSheetView.swift; sourceTree = "<group>"; };
 		5004A5E52E40CC5800C4C208 /* BioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BioViewController.swift; sourceTree = "<group>"; };
+		500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiPickerViewController.swift; sourceTree = "<group>"; };
+		500778A92E44544300BC5501 /* emoji.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = emoji.txt; sourceTree = "<group>"; };
+		500AB5EF2E433A12003AC0DC /* Share.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Share.storyboard; sourceTree = "<group>"; };
+		500AB5F12E4376F0003AC0DC /* ColorShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorShareView.swift; sourceTree = "<group>"; };
+		500AB5F32E4383CB003AC0DC /* EmojiShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiShareView.swift; sourceTree = "<group>"; };
+		500AB5F52E4383EF003AC0DC /* SelfieShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieShareView.swift; sourceTree = "<group>"; };
+		500AB5F72E438402003AC0DC /* ImageShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageShareView.swift; sourceTree = "<group>"; };
 		501804262E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultProfileTableViewCell.swift; sourceTree = "<group>"; };
 		5018042B2E28D84300BF1AEF /* UserProfileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileManager.swift; sourceTree = "<group>"; };
 		5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimarySegmentedControl.swift; sourceTree = "<group>"; };
-		50324E802E261C4300B703C2 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		50211A322E4B16E8000C2164 /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
+		50211A332E4B16E8000C2164 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		50211A342E4B16E8000C2164 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		50211A352E4B16E8000C2164 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		50211A362E4B16E8000C2164 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		50211A3F2E4B4D13000C2164 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		50211A412E4B6B96000C2164 /* GradientPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPreset.swift; sourceTree = "<group>"; };
 		50324E822E26642700B703C2 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		50396D3A2E27A30B000E53B7 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		50396D3D2E27BC16000E53B7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -134,8 +164,9 @@
 		5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		504028302E2E596900F5D4C9 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
-		5054FEC02E1B9038004395DF /* UIApplication+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+Extension.swift"; sourceTree = "<group>"; };
-		5054FEC22E1B978C004395DF /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extension+CGPoint.swift"; sourceTree = "<group>"; };
+		5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		505318512E4CC649001715D3 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5054FEC92E1BA817004395DF /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		5054FECB2E1BA825004395DF /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
@@ -189,15 +220,18 @@
 		50E9C27D2E2A258D00DE5544 /* ForYouResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForYouResultsViewController.swift; sourceTree = "<group>"; };
 		50E9C27F2E2A264A00DE5544 /* AccountsResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsResultsViewController.swift; sourceTree = "<group>"; };
 		50E9C2812E2A46B900DE5544 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfieRetakeViewController.swift; sourceTree = "<group>"; };
+		50EB06682E49DAC3001F5E61 /* OvalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvalView.swift; sourceTree = "<group>"; };
+		50EB066A2E4A16BC001F5E61 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		50EB94822E3A18FF005C1B20 /* ChatsListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatsListTableViewCell.swift; sourceTree = "<group>"; };
 		50EB94842E3A3720005C1B20 /* sample_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = sample_video.mp4; sourceTree = "<group>"; };
 		50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollingTextView.swift; sourceTree = "<group>"; };
 		50F069A82E41D7C700B6D716 /* BorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BorderView.swift; sourceTree = "<group>"; };
+		50F069AA2E42128800B6D716 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		50F406872E1B83D300A23A2C /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		50F406892E1B869000A23A2C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		50FEA75F2E1D251F0041C7BF /* UserProfileToUpload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileToUpload.swift; sourceTree = "<group>"; };
 		E154F2192AB1C809000BC44C /* Typography.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Typography.swift; sourceTree = "<group>"; };
-		E154F21B2AB1C841000BC44C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 		E19709AF2A84D70900A76B19 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		E19709B12A84D71100A76B19 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		E19709B32A84D71800A76B19 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -247,6 +281,7 @@
 		5004F8B82E28B64000C18E31 /* Account */ = {
 			isa = PBXGroup;
 			children = (
+				500778A62E44526900BC5501 /* ShareProfile */,
 				5004A5E42E40CC3D00C4C208 /* EditProfile */,
 				5054FECB2E1BA825004395DF /* AccountViewController.swift */,
 				50037B1E2E2507DD0027149E /* CreateAlertViewController.swift */,
@@ -258,10 +293,10 @@
 			isa = PBXGroup;
 			children = (
 				E1A3672129F9226100A1B03E /* ExploreViewController.swift */,
+				5002B5C82E2A620100F36A80 /* ExplorePostViewController.swift */,
 				50396D3D2E27BC16000E53B7 /* SearchViewController.swift */,
 				5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */,
 				50E9C27C2E2A256400DE5544 /* SearchResultsChildren */,
-				5002B5C82E2A620100F36A80 /* ExplorePostViewController.swift */,
 			);
 			path = Explore;
 			sourceTree = "<group>";
@@ -273,6 +308,33 @@
 				50A016E22E1BD17A00594A7C /* UploadImageAndPostViewController.swift */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		500778A62E44526900BC5501 /* ShareProfile */ = {
+			isa = PBXGroup;
+			children = (
+				50EB066A2E4A16BC001F5E61 /* OptionsViewController.swift */,
+				50F069AA2E42128800B6D716 /* ShareViewController.swift */,
+				500778A72E4452D400BC5501 /* EmojiPickerViewController.swift */,
+				50EB06662E49C294001F5E61 /* SelfieRetakeViewController.swift */,
+				5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */,
+			);
+			path = ShareProfile;
+			sourceTree = "<group>";
+		};
+		50211A372E4B16E8000C2164 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				505318512E4CC649001715D3 /* CALayer+Extension.swift */,
+				5053184D2E4C90D1001715D3 /* Extension+CGPoint.swift */,
+				50211A3F2E4B4D13000C2164 /* String+Extension.swift */,
+				50211A322E4B16E8000C2164 /* UIApplication+Extension.swift */,
+				50211A332E4B16E8000C2164 /* UIColor+Extension.swift */,
+				50211A342E4B16E8000C2164 /* UIImage+Extension.swift */,
+				50211A352E4B16E8000C2164 /* UIView+Extension.swift */,
+				50211A362E4B16E8000C2164 /* UIViewController+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		50396D3B2E27A30B000E53B7 /* Managers */ = {
@@ -297,6 +359,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		5053184C2E4C3E5B001715D3 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				50211A412E4B6B96000C2164 /* GradientPreset.swift */,
+			);
+			path = Enums;
+			sourceTree = "<group>";
+		};
 		5054FEC62E1B9D99004395DF /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -309,6 +379,10 @@
 				506A463D2E376F490073FF87 /* MessageBarView.xib */,
 				50CE41642E3777DB004AA246 /* MessageBarView.swift */,
 				50CC29CC2E3B677B007ED579 /* VideoContainerView.swift */,
+				500AB5F12E4376F0003AC0DC /* ColorShareView.swift */,
+				500AB5F32E4383CB003AC0DC /* EmojiShareView.swift */,
+				500AB5F52E4383EF003AC0DC /* SelfieShareView.swift */,
+				500AB5F72E438402003AC0DC /* ImageShareView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -411,6 +485,7 @@
 				5054FECF2E1BA897004395DF /* Account.storyboard */,
 				508759F32E1CF3B100ABAEC6 /* Onboarding.storyboard */,
 				508759F92E1D0F2700ABAEC6 /* Splash.storyboard */,
+				500AB5EF2E433A12003AC0DC /* Share.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -418,6 +493,7 @@
 		E154F2172AB121DF000BC44C /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				50EB06682E49DAC3001F5E61 /* OvalView.swift */,
 				50F069A62E41C49D00B6D716 /* HorizontalScrollingTextView.swift */,
 				E1FDD9132A0A4FB7006AD0DF /* PrimaryButton.swift */,
 				50ABA2082E1FC78A00E44643 /* ProfileDetailEntryButton.swift */,
@@ -451,6 +527,7 @@
 		E154F21D2AB1CCA0000BC44C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				500778A92E44544300BC5501 /* emoji.txt */,
 				50EB94842E3A3720005C1B20 /* sample_video.mp4 */,
 				E1FD31402A86E7BB00A4EDF5 /* Fonts */,
 			);
@@ -460,6 +537,7 @@
 		E19709AE2A84D6F300A76B19 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5053184C2E4C3E5B001715D3 /* Enums */,
 				50396D3B2E27A30B000E53B7 /* Managers */,
 				509977F32E33884D00F82E3E /* SlideTransitionDelegate.swift */,
 				508525002E310C7D002B9E5C /* PushTransitionDelegate.swift */,
@@ -506,17 +584,6 @@
 				50F406872E1B83D300A23A2C /* GoogleService-Info.plist */,
 			);
 			path = SocialNetworkingApp;
-			sourceTree = "<group>";
-		};
-		E1A3674F29FAB23D00A1B03E /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				50324E802E261C4300B703C2 /* UIView+Extension.swift */,
-				5054FEC02E1B9038004395DF /* UIApplication+Extension.swift */,
-				E154F21B2AB1C841000BC44C /* UIColor+Extension.swift */,
-				5054FEC22E1B978C004395DF /* UIViewController+Extension.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E1FD31402A86E7BB00A4EDF5 /* Fonts */ = {
@@ -608,8 +675,10 @@
 			files = (
 				506A463E2E376F490073FF87 /* MessageBarView.xib in Resources */,
 				509977F62E33892600F82E3E /* Chat.storyboard in Resources */,
+				500AB5F02E433A12003AC0DC /* Share.storyboard in Resources */,
 				E1A3673229F922E200A1B03E /* Auth.storyboard in Resources */,
 				5002B5CF2E2A696500F36A80 /* PostTableViewCell.xib in Resources */,
+				500778AA2E44545100BC5501 /* emoji.txt in Resources */,
 				E1A3672A29F9226300A1B03E /* LaunchScreen.storyboard in Resources */,
 				E1A3672729F9226300A1B03E /* Assets.xcassets in Resources */,
 				E1FDD9162A0A50D4006AD0DF /* Colors.xcassets in Resources */,
@@ -642,7 +711,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				50F4068A2E1B869000A23A2C /* LoginViewController.swift in Sources */,
+				500AB5F62E4383EF003AC0DC /* SelfieShareView.swift in Sources */,
 				50A016E32E1BD17A00594A7C /* UploadImageAndPostViewController.swift in Sources */,
+				500778A82E4452D400BC5501 /* EmojiPickerViewController.swift in Sources */,
 				50F069A72E41C49D00B6D716 /* HorizontalScrollingTextView.swift in Sources */,
 				50A0169D2E1BB3FE00594A7C /* TabBarController.swift in Sources */,
 				50EB94832E3A18FF005C1B20 /* ChatsListTableViewCell.swift in Sources */,
@@ -651,15 +722,18 @@
 				5059EBA62E33590C00AFC960 /* ChatDetailViewController.swift in Sources */,
 				508759F62E1CF40800ABAEC6 /* OnboardingViewController.swift in Sources */,
 				508759EB2E1CDD5100ABAEC6 /* Post.swift in Sources */,
-				50324E812E261C5200B703C2 /* UIView+Extension.swift in Sources */,
 				50BF0F992E25213E00906BBA /* Animations.swift in Sources */,
+				50F069AB2E42128800B6D716 /* ShareViewController.swift in Sources */,
 				50BAB6322E309165006F3AE5 /* BackButton.swift in Sources */,
 				50E9C27E2E2A258D00DE5544 /* ForYouResultsViewController.swift in Sources */,
 				5054FECC2E1BA825004395DF /* AccountViewController.swift in Sources */,
+				505318522E4CC657001715D3 /* CALayer+Extension.swift in Sources */,
 				E1FDD9142A0A4FB7006AD0DF /* PrimaryButton.swift in Sources */,
 				501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */,
 				50037B672E250EF60027149E /* CreateAlertActionSheetView.swift in Sources */,
+				50EB066B2E4A16BC001F5E61 /* OptionsViewController.swift in Sources */,
 				506A46382E3738EB0073FF87 /* NewChatTableHeaderView.swift in Sources */,
+				50211A422E4B6B96000C2164 /* GradientPreset.swift in Sources */,
 				504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */,
 				E1A3672229F9226100A1B03E /* ExploreViewController.swift in Sources */,
 				507AE8042E3C933900B86D52 /* StoryViewController.swift in Sources */,
@@ -669,23 +743,30 @@
 				50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */,
 				E1A3671E29F9226100A1B03E /* AppDelegate.swift in Sources */,
 				5059EBA42E3347B400AFC960 /* ChatManager.swift in Sources */,
+				50EB06692E49DAC3001F5E61 /* OvalView.swift in Sources */,
 				509977FC2E33A17400F82E3E /* NewChatViewController.swift in Sources */,
 				50E9C2802E2A264A00DE5544 /* AccountsResultsViewController.swift in Sources */,
 				5002B5C92E2A620100F36A80 /* ExplorePostViewController.swift in Sources */,
 				50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */,
 				50DB56EA2E2F8C5D008236AE /* StoryManager.swift in Sources */,
 				50E989AC2E1F8FD500C6016C /* EditProfileViewController.swift in Sources */,
-				5054FEC32E1B978C004395DF /* UIViewController+Extension.swift in Sources */,
 				504028312E2E596900F5D4C9 /* RingView.swift in Sources */,
 				50A5DEEF2E388EE9001C9D6F /* ChatDetailTableViewCell.swift in Sources */,
 				50DB56E62E2F43C3008236AE /* StoryCollectionViewCell.swift in Sources */,
 				50BF0F972E251F8C00906BBA /* CreateAlertActionSheetButtton.swift in Sources */,
 				5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */,
+				50211A402E4B4D2C000C2164 /* String+Extension.swift in Sources */,
 				501804272E28BDA300BF1AEF /* SearchResultProfileTableViewCell.swift in Sources */,
+				500AB5F42E4383CB003AC0DC /* EmojiShareView.swift in Sources */,
+				50211A382E4B16E8000C2164 /* UIApplication+Extension.swift in Sources */,
+				50211A392E4B16E8000C2164 /* UIColor+Extension.swift in Sources */,
+				50211A3A2E4B16E8000C2164 /* UIImage+Extension.swift in Sources */,
+				50211A3B2E4B16E8000C2164 /* UIView+Extension.swift in Sources */,
+				50211A3C2E4B16E8000C2164 /* UIViewController+Extension.swift in Sources */,
 				50F069A92E41D7C700B6D716 /* BorderView.swift in Sources */,
 				508525012E310C8A002B9E5C /* PushTransitionDelegate.swift in Sources */,
 				5002B5CE2E2A696500F36A80 /* PostTableViewCell.swift in Sources */,
-				5054FEC12E1B9051004395DF /* UIApplication+Extension.swift in Sources */,
+				500AB5F22E4376F0003AC0DC /* ColorShareView.swift in Sources */,
 				509977FA2E33974600F82E3E /* Chat.swift in Sources */,
 				50CC29CD2E3B677B007ED579 /* VideoContainerView.swift in Sources */,
 				50CC29CF2E3B727F007ED579 /* LikeManager.swift in Sources */,
@@ -697,17 +778,20 @@
 				50D2BFE82E45EE5C003B6D76 /* UserProfileEntity+CoreDataProperties.swift in Sources */,
 				50D2BF582E45B47B003B6D76 /* SocialNetworkingApp.xcdatamodeld in Sources */,
 				50FEA7602E1D251F0041C7BF /* UserProfileToUpload.swift in Sources */,
+				505318502E4CA67D001715D3 /* QRCodeScannerViewController.swift in Sources */,
 				50ABA2092E1FC78A00E44643 /* ProfileDetailEntryButton.swift in Sources */,
 				50324E832E26643A00B703C2 /* Like.swift in Sources */,
 				50CE41652E3777DB004AA246 /* MessageBarView.swift in Sources */,
 				509977F42E33885700F82E3E /* SlideTransitionDelegate.swift in Sources */,
 				508524F12E30AC6A002B9E5C /* ChatsListViewController.swift in Sources */,
+				500AB5F82E438402003AC0DC /* ImageShareView.swift in Sources */,
 				50BAB62E2E3090BE006F3AE5 /* NotificationsViewController.swift in Sources */,
-				E154F21C2AB1C841000BC44C /* UIColor+Extension.swift in Sources */,
 				507AE8062E3CB00300B86D52 /* ScaleTransitionDelegate.swift in Sources */,
 				5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */,
+				50EB06672E49C294001F5E61 /* SelfieRetakeViewController.swift in Sources */,
 				5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */,
 				50A0172D2E1BFD5E00594A7C /* ImageFileManager.swift in Sources */,
+				5053184E2E4C90DB001715D3 /* Extension+CGPoint.swift in Sources */,
 				508524EF2E30A813002B9E5C /* ChatsTableHeaderView.swift in Sources */,
 				50037B1F2E2507DD0027149E /* CreateAlertViewController.swift in Sources */,
 				508759F82E1D0E7E00ABAEC6 /* SplashViewController.swift in Sources */,
@@ -868,6 +952,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SocialNetworkingApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "SocialApp would like access to your camera in order to create posts";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SocialApp would like access to your photo library in order to create posts";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -903,6 +989,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SocialNetworkingApp/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.social-networking";
+				INFOPLIST_KEY_NSCameraUsageDescription = "SocialApp would like access to your camera in order to create posts";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "SocialApp would like access to your photo library in order to create posts";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

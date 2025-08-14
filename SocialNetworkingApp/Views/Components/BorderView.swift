@@ -8,29 +8,37 @@
 import Foundation
 import UIKit
 
-extension UIView{
+extension UIView {
     
-    func applyBorders(for sides: Set<side>, borderWidth: CGFloat, borderColor: UIColor = .black){
-        let boundsWidth: CGFloat = bounds.width
-        let boundsHeight: CGFloat = bounds.height
+    enum Side {
+        case top, bottom, left, right
+    }
+
+    func applyBorders(for sides: Set<Side>, borderWidth: CGFloat, borderColor: UIColor = .black) {
+        // Remove any existing border layers to prevent duplicates
+        layer.sublayers?.filter { $0.name?.starts(with: "borderLayer_") ?? false }.forEach { $0.removeFromSuperlayer() }
+
+        let boundsWidth = bounds.width
+        let boundsHeight = bounds.height
+
         for side in sides {
-            let view = CALayer()
-            view.backgroundColor = borderColor.cgColor
+            let borderLayer = CALayer()
+            borderLayer.backgroundColor = borderColor.cgColor
+            
             switch side {
             case .top:
-                view.frame = CGRect(x: 0, y: 0, width: boundsWidth, height: borderWidth)
+                borderLayer.frame = CGRect(x: 0, y: 0, width: boundsWidth, height: borderWidth)
             case .bottom:
-                view.frame = CGRect(x: 0, y: boundsHeight, width: boundsWidth, height: borderWidth)
+                borderLayer.frame = CGRect(x: 0, y: boundsHeight - borderWidth, width: boundsWidth, height: borderWidth)
             case .left:
-                view.frame = CGRect(x: 0, y: 0, width: borderWidth, height: boundsHeight)
+                borderLayer.frame = CGRect(x: 0, y: 0, width: borderWidth, height: boundsHeight)
             case .right:
-                view.frame = CGRect(x: boundsWidth, y: 0, width: borderWidth, height: boundsHeight)
+                borderLayer.frame = CGRect(x: boundsWidth - borderWidth, y: 0, width: borderWidth, height: boundsHeight)
             }
-            layer.addSublayer(view)
+            
+            // Set a name to easily identify and remove these layers later
+            borderLayer.name = "borderLayer_\(side)"
+            layer.addSublayer(borderLayer)
         }
-    }
-    
-    enum side{
-        case top, bottom, left, right
     }
 }

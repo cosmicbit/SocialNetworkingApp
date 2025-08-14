@@ -31,7 +31,6 @@ class SearchResultsViewController: UIViewController {
         setupChildViewControllers()
         setupCustomSegmentedControl()
         searchTextField.text = initialSearchQuery
-        
     }
     
     func setupCustomSegmentedControl() {
