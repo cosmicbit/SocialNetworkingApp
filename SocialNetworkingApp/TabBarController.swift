@@ -44,7 +44,6 @@ class TabBarController: UITabBarController {
         accountVC.tabBarItem.title = ""
         
         viewControllers = [homeNavigationController, exploreNavigationController, postVC, accountNavigationController]
-        
     }
 }
 

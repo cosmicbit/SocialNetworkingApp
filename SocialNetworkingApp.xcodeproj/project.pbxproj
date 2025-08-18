@@ -42,6 +42,9 @@
 		504028312E2E596900F5D4C9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028302E2E596900F5D4C9 /* RingView.swift */; };
 		504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */; };
 		5040C2082E52EC4B00ED7042 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040C2072E52EC4B00ED7042 /* UsernameViewController.swift */; };
+		5040C20A2E53267F00ED7042 /* PronounsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040C2092E53267F00ED7042 /* PronounsViewController.swift */; };
+		5040C20C2E532B3700ED7042 /* PronounsOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040C20B2E532B3700ED7042 /* PronounsOptionButton.swift */; };
+		5040C20E2E534A1800ED7042 /* pronouns.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5040C20D2E534A0700ED7042 /* pronouns.txt */; };
 		505318502E4CA67D001715D3 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */; };
 		5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */; };
 		5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC92E1BA817004395DF /* PostViewController.swift */; };
@@ -169,6 +172,9 @@
 		504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
 		5040C2062E4DF58700ED7042 /* SocialNetworkingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetworkingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5040C2072E52EC4B00ED7042 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
+		5040C2092E53267F00ED7042 /* PronounsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronounsViewController.swift; sourceTree = "<group>"; };
+		5040C20B2E532B3700ED7042 /* PronounsOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PronounsOptionButton.swift; sourceTree = "<group>"; };
+		5040C20D2E534A0700ED7042 /* pronouns.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = pronouns.txt; sourceTree = "<group>"; };
 		5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5054FEC92E1BA817004395DF /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -277,6 +283,7 @@
 				50E989AB2E1F8FD500C6016C /* EditProfileViewController.swift */,
 				5004A5E52E40CC5800C4C208 /* BioViewController.swift */,
 				5040C2072E52EC4B00ED7042 /* UsernameViewController.swift */,
+				5040C2092E53267F00ED7042 /* PronounsViewController.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -506,6 +513,7 @@
 				504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */,
 				50BAB6312E309165006F3AE5 /* BackButton.swift */,
 				50F069A82E41D7C700B6D716 /* BorderView.swift */,
+				5040C20B2E532B3700ED7042 /* PronounsOptionButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -530,6 +538,7 @@
 		E154F21D2AB1CCA0000BC44C /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5040C20D2E534A0700ED7042 /* pronouns.txt */,
 				500778A92E44544300BC5501 /* emoji.txt */,
 				50EB94842E3A3720005C1B20 /* sample_video.mp4 */,
 				E1FD31402A86E7BB00A4EDF5 /* Fonts */,
@@ -694,6 +703,7 @@
 				E19709B82A84D74200A76B19 /* Poppins-Black.ttf in Resources */,
 				508759FA2E1D0F2700ABAEC6 /* Splash.storyboard in Resources */,
 				E19709B42A84D71800A76B19 /* Poppins-SemiBold.ttf in Resources */,
+				5040C20E2E534A1800ED7042 /* pronouns.txt in Resources */,
 				50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */,
 				508524ED2E30A18E002B9E5C /* ChatsTableHeaderView.xib in Resources */,
 				50F406882E1B83D300A23A2C /* GoogleService-Info.plist in Resources */,
@@ -714,6 +724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50F4068A2E1B869000A23A2C /* LoginViewController.swift in Sources */,
+				5040C20A2E53267F00ED7042 /* PronounsViewController.swift in Sources */,
 				500AB5F62E4383EF003AC0DC /* SelfieShareView.swift in Sources */,
 				50A016E32E1BD17A00594A7C /* UploadImageAndPostViewController.swift in Sources */,
 				500778A82E4452D400BC5501 /* EmojiPickerViewController.swift in Sources */,
@@ -770,6 +781,7 @@
 				E1A3672029F9226100A1B03E /* SceneDelegate.swift in Sources */,
 				5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */,
 				50A016E52E1BD54500594A7C /* PostToUpload.swift in Sources */,
+				5040C20C2E532B3700ED7042 /* PronounsOptionButton.swift in Sources */,
 				503D556B2E4DFC39000876E7 /* Extension+CGPoint.swift in Sources */,
 				503D556C2E4DFC39000876E7 /* CALayer+Extension.swift in Sources */,
 				503D556D2E4DFC39000876E7 /* UIViewController+Extension.swift in Sources */,

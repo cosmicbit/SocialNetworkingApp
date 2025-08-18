@@ -87,6 +87,9 @@ class EditProfileViewController: UIViewController {
             if tappedTextView.tag == 1{
                 performSegue(withIdentifier: "UsernameSegue", sender: userProfile)
             }
+            else if tappedTextView.tag == 2{
+                performSegue(withIdentifier: "PronounsSegue", sender: userProfile)
+            }
             else if tappedTextView.tag == 3{
                 performSegue(withIdentifier: "BioSegue", sender: userProfile)
             }
@@ -96,6 +99,8 @@ class EditProfileViewController: UIViewController {
     func addTapRecognisers(){
         let usernameTap = UITapGestureRecognizer(target: self, action: #selector(textViewTapped(_:)))
         usernameTextView.addGestureRecognizer(usernameTap)
+        let pronounsTap = UITapGestureRecognizer(target: self, action: #selector(textViewTapped(_ :)))
+        pronounTextView.addGestureRecognizer(pronounsTap)
         let bioTap = UITapGestureRecognizer(target: self, action: #selector(textViewTapped(_:)))
         bioTextView.addGestureRecognizer(bioTap)
     }

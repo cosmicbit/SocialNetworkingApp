@@ -457,6 +457,7 @@
                         <outlet property="usernameTextView" destination="HyX-VD-S6G" id="87V-1E-TtJ"/>
                         <segue destination="1bS-jf-yza" kind="show" identifier="BioSegue" id="dpP-fC-AbD"/>
                         <segue destination="KxW-w6-ijy" kind="show" identifier="UsernameSegue" id="5jG-La-Mmo"/>
+                        <segue destination="4d6-r9-4zT" kind="show" identifier="PronounsSegue" id="gwZ-mc-9YT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZXu-WE-2HV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -673,6 +674,76 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qrn-up-5Qc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2484.7328244274809" y="695.77464788732402"/>
+        </scene>
+        <!--Pronouns View Controller-->
+        <scene sceneID="CLS-mr-AkT">
+            <objects>
+                <viewController id="4d6-r9-4zT" customClass="PronounsViewController" customModule="SocialNetworkingApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="sLa-xA-7GW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uQA-yJ-Ymk">
+                                <rect key="frame" x="10.000000000000004" y="127.99999999999999" width="46.333333333333343" height="34.333333333333329"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark" catalog="system" title=""/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="4d6-r9-4zT" eventType="touchUpInside" id="dR4-W5-hm7"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JSw-T4-8lb">
+                                <rect key="frame" x="335.33333333333331" y="127.99999999999999" width="47.666666666666686" height="34.333333333333329"/>
+                                <color key="tintColor" systemColor="labelColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="checkmark" catalog="system" title=""/>
+                                <connections>
+                                    <action selector="saveButtonTapped:" destination="4d6-r9-4zT" eventType="touchUpInside" id="BT8-ze-btG"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pronouns" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sIx-je-fKp">
+                                <rect key="frame" x="76.333333333333329" y="133.33333333333334" width="85.999999999999986" height="24"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Zoa-VC-Oz7">
+                                <rect key="frame" x="0.0" y="192.33333333333334" width="393" height="30"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" borderStyle="roundedRect" placeholder="Add your pronouns" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DUI-CV-JaP">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="wPU-p9-5AV"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="e2z-qO-CSf"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uQA-yJ-Ymk" firstAttribute="leading" secondItem="e2z-qO-CSf" secondAttribute="leading" constant="10" id="2UY-rg-WdZ"/>
+                            <constraint firstItem="sIx-je-fKp" firstAttribute="centerY" secondItem="uQA-yJ-Ymk" secondAttribute="centerY" id="7gx-Du-1bI"/>
+                            <constraint firstItem="uQA-yJ-Ymk" firstAttribute="top" secondItem="e2z-qO-CSf" secondAttribute="top" constant="10" id="7m9-pZ-Lvc"/>
+                            <constraint firstItem="JSw-T4-8lb" firstAttribute="top" secondItem="e2z-qO-CSf" secondAttribute="top" constant="10" id="Oh8-9a-BfF"/>
+                            <constraint firstItem="e2z-qO-CSf" firstAttribute="trailing" secondItem="Zoa-VC-Oz7" secondAttribute="trailing" id="bFu-Vr-fgW"/>
+                            <constraint firstItem="sIx-je-fKp" firstAttribute="leading" secondItem="uQA-yJ-Ymk" secondAttribute="trailing" constant="20" id="cVT-Qx-Icf"/>
+                            <constraint firstItem="Zoa-VC-Oz7" firstAttribute="leading" secondItem="e2z-qO-CSf" secondAttribute="leading" id="dFF-33-OQi"/>
+                            <constraint firstItem="Zoa-VC-Oz7" firstAttribute="top" secondItem="uQA-yJ-Ymk" secondAttribute="bottom" constant="30" id="i1z-eO-XYh"/>
+                            <constraint firstItem="e2z-qO-CSf" firstAttribute="trailing" secondItem="JSw-T4-8lb" secondAttribute="trailing" constant="10" id="lff-Vi-dj6"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="AqD-B5-rmv"/>
+                    <connections>
+                        <outlet property="stackView" destination="Zoa-VC-Oz7" id="dzN-pl-XHj"/>
+                        <outlet property="textField" destination="DUI-CV-JaP" id="6hr-MB-N6U"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AiA-cI-czG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3174.8091603053435" y="695.77464788732402"/>
         </scene>
     </scenes>
     <resources>
