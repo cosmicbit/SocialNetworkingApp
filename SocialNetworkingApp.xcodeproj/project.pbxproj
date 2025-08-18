@@ -41,6 +41,7 @@
 		5040282B2E2E2C4500F5D4C9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */; };
 		504028312E2E596900F5D4C9 /* RingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028302E2E596900F5D4C9 /* RingView.swift */; };
 		504028332E2E66C300F5D4C9 /* AvatarCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */; };
+		5040C2082E52EC4B00ED7042 /* UsernameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5040C2072E52EC4B00ED7042 /* UsernameViewController.swift */; };
 		505318502E4CA67D001715D3 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */; };
 		5054FEC82E1B9DD8004395DF /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */; };
 		5054FECA2E1BA817004395DF /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054FEC92E1BA817004395DF /* PostViewController.swift */; };
@@ -166,6 +167,8 @@
 		5040282A2E2E2C4500F5D4C9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		504028302E2E596900F5D4C9 /* RingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingView.swift; sourceTree = "<group>"; };
 		504028322E2E66C300F5D4C9 /* AvatarCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarCircleView.swift; sourceTree = "<group>"; };
+		5040C2062E4DF58700ED7042 /* SocialNetworkingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SocialNetworkingApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5040C2072E52EC4B00ED7042 /* UsernameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsernameViewController.swift; sourceTree = "<group>"; };
 		5053184F2E4CA67D001715D3 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		5054FEC72E1B9DD8004395DF /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		5054FEC92E1BA817004395DF /* PostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -237,7 +240,6 @@
 		E19709B32A84D71800A76B19 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		E19709B52A84D72100A76B19 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		E19709B72A84D74200A76B19 /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
-		E1A3671A29F9226100A1B03E /* SocialNetworkingApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = SocialNetworkingApp.app; path = "/Users/philips/Desktop/SocialNetworkingApp/build/Debug-iphoneos/SocialNetworkingApp.app"; sourceTree = "<absolute>"; };
 		E1A3671D29F9226100A1B03E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1A3671F29F9226100A1B03E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E1A3672129F9226100A1B03E /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 			children = (
 				50E989AB2E1F8FD500C6016C /* EditProfileViewController.swift */,
 				5004A5E52E40CC5800C4C208 /* BioViewController.swift */,
+				5040C2072E52EC4B00ED7042 /* UsernameViewController.swift */,
 			);
 			path = EditProfile;
 			sourceTree = "<group>";
@@ -559,6 +562,7 @@
 		E1A3671B29F9226100A1B03E /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				5040C2062E4DF58700ED7042 /* SocialNetworkingApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -625,7 +629,7 @@
 				50E989A92E1F85B400C6016C /* GoogleAPIClientForREST_Drive */,
 			);
 			productName = SocialNetworkingApp;
-			productReference = E1A3671A29F9226100A1B03E /* SocialNetworkingApp.app */;
+			productReference = 5040C2062E4DF58700ED7042 /* SocialNetworkingApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -739,6 +743,7 @@
 				5018042C2E28D84C00BF1AEF /* UserProfileManager.swift in Sources */,
 				50D2BF552E45B462003B6D76 /* CoreDataStack.swift in Sources */,
 				50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */,
+				5040C2082E52EC4B00ED7042 /* UsernameViewController.swift in Sources */,
 				E1A3671E29F9226100A1B03E /* AppDelegate.swift in Sources */,
 				5059EBA42E3347B400AFC960 /* ChatManager.swift in Sources */,
 				50EB06692E49DAC3001F5E61 /* OvalView.swift in Sources */,

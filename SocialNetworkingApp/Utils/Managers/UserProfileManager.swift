@@ -198,4 +198,22 @@ class UserProfileManager{
             return .failure(error) // This now correctly returns the caught error
         }
     }
+    
+    func getAllUsernames(completion: @escaping (Result<[String], Error>) -> Void){
+        var usernames: [String] = []
+        collectionRef.getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error getting documents: \(error)")
+                completion(.failure(error))
+            }else {
+                for document in querySnapshot!.documents{
+                    let data = document.data()
+                    if let username = data["username"] as? String{
+                        usernames.append(username)
+                    }
+                }
+                completion(.success(usernames))
+            }
+        }
+    }
 }

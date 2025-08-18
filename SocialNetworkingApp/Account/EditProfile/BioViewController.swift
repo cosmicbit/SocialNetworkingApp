@@ -44,11 +44,8 @@ class BioViewController: UIViewController {
         bioTextView.textContainerInset = .zero
         bioTextView.textContainer.lineFragmentPadding = .zero
         bioTextView.delegate = self
-        
-        
         saveButton.tintColor = .link
         saveButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
-        
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {

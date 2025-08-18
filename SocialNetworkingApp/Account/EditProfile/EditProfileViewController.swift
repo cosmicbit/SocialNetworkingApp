@@ -49,6 +49,9 @@ class EditProfileViewController: UIViewController {
         if segue.identifier == "BioSegue"{
             let destinationVC = segue.destination as! BioViewController
             destinationVC.userProfile = sender as? UserProfile
+        } else if segue.identifier == "UsernameSegue"{
+            let destinationVC = segue.destination as! UsernameViewController
+            destinationVC.userProfile = sender as? UserProfile
         }
     }
     
@@ -79,14 +82,22 @@ class EditProfileViewController: UIViewController {
         setupUserProfile()
     }
     
-    @objc func bioTextViewTapped(){
-        performSegue(withIdentifier: "BioSegue", sender: userProfile)
+    @objc func textViewTapped(_ sender: UITapGestureRecognizer){
+        if let tappedTextView = sender.view as? UITextView {
+            if tappedTextView.tag == 1{
+                performSegue(withIdentifier: "UsernameSegue", sender: userProfile)
+            }
+            else if tappedTextView.tag == 3{
+                performSegue(withIdentifier: "BioSegue", sender: userProfile)
+            }
+        }
     }
     
     func addTapRecognisers(){
-        let bioTap = UITapGestureRecognizer(target: self, action: #selector(bioTextViewTapped))
+        let usernameTap = UITapGestureRecognizer(target: self, action: #selector(textViewTapped(_:)))
+        usernameTextView.addGestureRecognizer(usernameTap)
+        let bioTap = UITapGestureRecognizer(target: self, action: #selector(textViewTapped(_:)))
         bioTextView.addGestureRecognizer(bioTap)
-        
     }
     
     func setupViews() {
@@ -215,7 +226,6 @@ class EditProfileViewController: UIViewController {
                 print("No camera available for this device")
                 self.presentError(title: "Camera not found", message: "This device has no camera. Please try again with a different device with camera")
             }
-            
         }
         let libraryAction = UIAlertAction(title: "Library", style: .default) { _ in
             var phPickerConfiguration = PHPickerConfiguration(photoLibrary: .shared())
@@ -223,10 +233,8 @@ class EditProfileViewController: UIViewController {
             let phPickerViewController = PHPickerViewController(configuration: phPickerConfiguration)
             phPickerViewController.delegate = self
             self.present(phPickerViewController, animated: true)
-            
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: nil)
-        
         alert.addAction(cameraAction)
         alert.addAction(libraryAction)
         alert.addAction(cancelAction)
@@ -234,9 +242,7 @@ class EditProfileViewController: UIViewController {
     }
 }
 
-
 extension EditProfileViewController  : PHPickerViewControllerDelegate {
-    
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         picker.dismiss(animated: true)
         if let result = results.first{
@@ -260,13 +266,9 @@ extension EditProfileViewController  : PHPickerViewControllerDelegate {
             }
         }
     }
-    
-    
-    
 }
 
 extension EditProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         
     }
