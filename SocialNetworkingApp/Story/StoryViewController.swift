@@ -9,6 +9,7 @@ import UIKit
 
 protocol StoryViewControllerDelegate: AnyObject{
     func storyVCWillDismiss()
+    func storyDidFinish()
 }
 
 class StoryViewController: UIViewController {
@@ -16,8 +17,22 @@ class StoryViewController: UIViewController {
     var originalCenterOfView: CGPoint = CGPoint()
     weak var delegate: StoryViewControllerDelegate?
     var story: StoryEntity!
+    var remainingStories: [StoryEntity]!
     var storyUserProfile: UserProfile?
     private let userProfileManager = UserProfileManager()
+    private let totalStoryDuration: TimeInterval = 3.0 // 10 seconds per story
+    private var progressTimer: Timer?
+    private var startTime: Date?
+    var isDismissedByTimer: Bool = false
+    
+    private let progressView: UIProgressView = {
+        let view = UIProgressView(progressViewStyle: .default)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.progressTintColor = .white
+        view.trackTintColor = .lightGray
+        return view
+    }()
+    
     private let avatar: AvatarCircleView = {
         let view = AvatarCircleView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -61,8 +76,10 @@ class StoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        if let _ = storyUserProfile{
+            setupStoryUserProfile()
+        }
         getStoryUserProfile()
-        setupStoryUserProfile()
         setupStory()
         addPanGesture()
     }
@@ -74,11 +91,12 @@ class StoryViewController: UIViewController {
     }
     
     func setupView(){
-        
+        view.backgroundColor = .black
         subtitleLabel.text = "Ayakiya laila"
         view.addSubview(mediaDisplayView)
         mediaDisplayView.addSubview(storyImageView)
         mediaDisplayView.addSubview(storyVideoView)
+        view.addSubview(progressView)
         view.addSubview(avatar)
         view.addSubview(usernameLabel)
         view.addSubview(subtitleLabel)
@@ -99,7 +117,10 @@ class StoryViewController: UIViewController {
             storyVideoView.leadingAnchor.constraint(equalTo: mediaDisplayView.leadingAnchor),
             storyVideoView.trailingAnchor.constraint(equalTo: mediaDisplayView.trailingAnchor),
             
-            avatar.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            progressView.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: 10),
+            progressView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor),
+            avatar.topAnchor.constraint(equalTo: progressView.topAnchor, constant: 10),
             avatar.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor, constant: 10),
             avatar.heightAnchor.constraint(equalToConstant: 40),
             avatar.widthAnchor.constraint(equalToConstant: 40),
@@ -142,6 +163,7 @@ class StoryViewController: UIViewController {
               let url = URL(string: story.contentURL)
         else {return}
         displayMedia(type: type, mediaURL: url)
+        startProgressTimer()
     }
     
     private func displayMedia(type: Post.ContentType, mediaURL: URL?) {
@@ -163,18 +185,39 @@ class StoryViewController: UIViewController {
         case .video:
             storyVideoView.isHidden = false
             storyVideoView.setupVideoPlayer(with: url)
+            view.setNeedsLayout()
+            view.layoutIfNeeded()
         case .image:
-            DispatchQueue.main.async {
-                self.storyImageView.sd_setImage(with: url)
-                self.storyImageView.contentMode = .scaleAspectFill
-                self.storyImageView.translatesAutoresizingMaskIntoConstraints = false
-            }
+            storyImageView.sd_setImage(with: url)
+            storyImageView.contentMode = .scaleAspectFit
             storyImageView.isHidden = false
         case .audio:
-            print("🔊 Audio content handling is TBD. Displaying audio placeholder.")
             storyImageView.isHidden = false
             storyImageView.image = UIImage(systemName: "waveform")
             storyImageView.contentMode = .scaleAspectFit
+        }
+    }
+    
+    private func startProgressTimer() {
+        progressTimer?.invalidate()
+        progressView.progress = 0.0
+        startTime = Date()
+        progressTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] timer in
+            guard let self = self, let startTime = self.startTime else {
+                timer.invalidate()
+                return
+            }
+            let elapsedTime = Date().timeIntervalSince(startTime)
+            let progress = Float(elapsedTime / self.totalStoryDuration)
+            self.progressView.progress = progress
+            if progress >= 1.0 {
+                timer.invalidate()
+                self.transitioningDelegate = self
+                self.modalPresentationStyle = .fullScreen
+                self.dismiss(animated: true){
+                    self.delegate?.storyDidFinish()
+                }
+            }
         }
     }
     
@@ -192,12 +235,10 @@ class StoryViewController: UIViewController {
         }
         sender.setTranslation(.zero, in: self.view)
         if sender.state == .ended{
-            dismiss(animated: true)
+            dismiss(animated: true){
+                self.delegate?.storyVCWillDismiss()
+            }
         }
-    }
-    
-    @objc func backButtonTapped(){
-        dismiss(animated: true)
     }
     
     deinit {
@@ -206,6 +247,17 @@ class StoryViewController: UIViewController {
         storyVideoView.playerLayer?.removeFromSuperlayer()
         storyVideoView.playerLayer = nil
         storyVideoView.removePlayerObservers()
+        progressTimer?.invalidate()
     }
+}
 
+extension StoryViewController: UIViewControllerTransitioningDelegate {
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
+        CubeTransitionAnimator(isPresenting: true)
+    }
+    
+    func animationController(forDismissed dismissed: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
+        CubeTransitionAnimator(isPresenting: false)
+    }
 }

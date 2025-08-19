@@ -16,6 +16,8 @@ class HomeViewController: UIViewController {
     
     private var posts: [Post] = []
     private var stories: [Story] = []
+    private var currentStoryIndex: Int = 0
+    private var currentStoryUserProfile: UserProfile?
     var pushTransitionDelegate: PushTransitionDelegate?
     var scaleTransitionDelegate: ScaleTransitionDelegate?
     private let postManager = PostManager()
@@ -143,6 +145,21 @@ class HomeViewController: UIViewController {
         }
     }
     
+    private func presentNextStory(){
+        guard currentStoryIndex < stories.count else { return}
+        let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+        let storyVC = StoryViewController()
+        //scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
+        //storyVC.transitioningDelegate = scaleTransitionDelegate
+        storyVC.modalTransitionStyle = .coverVertical
+        storyVC.modalPresentationStyle = .overFullScreen
+        storyVC.story = StoryEntity(from: stories[currentStoryIndex], in: managedContext)
+        //storyVC.storyUserProfile = cell.userProfile
+        storyVC.delegate = self
+        postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
+        present(storyVC, animated: true)
+    }
+    
     func goToMessagesViewController() {
         let chatSB = UIStoryboard(name: "Chat", bundle: nil)
         let chatsListVC = chatSB.instantiateViewController(withIdentifier: "ChatsListViewController")
@@ -211,7 +228,9 @@ extension HomeViewController: UICollectionViewDataSource{
         scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
         storyVC.transitioningDelegate = scaleTransitionDelegate
         storyVC.modalPresentationStyle = .custom
+        currentStoryIndex = indexPath.row
         storyVC.story = StoryEntity(from: stories[indexPath.row], in: managedContext)
+        storyVC.remainingStories = stories[(indexPath.row + 1)...].compactMap{StoryEntity(from: $0, in: managedContext)}
         storyVC.storyUserProfile = cell.userProfile
         storyVC.delegate = self
         postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
@@ -239,7 +258,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegate
 }
 
 extension HomeViewController: StoryViewControllerDelegate{
+    func storyDidFinish() {
+        currentStoryIndex += 1
+        presentNextStory()
+    }
+    
     func storyVCWillDismiss() {
         postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.play() }
     }
 }
+
+

@@ -29,6 +29,7 @@
 		502124262E543C4D00A2AD12 /* EditProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502124252E543C4D00A2AD12 /* EditProfile.storyboard */; };
 		5021242A2E546F3500A2AD12 /* StoryEntity+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502124282E546F3500A2AD12 /* StoryEntity+CoreDataClass.swift */; };
 		5021242B2E546F3500A2AD12 /* StoryEntity+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502124292E546F3500A2AD12 /* StoryEntity+CoreDataProperties.swift */; };
+		5021242D2E54A07200A2AD12 /* CubeTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5021242C2E54A07200A2AD12 /* CubeTransitionAnimator.swift */; };
 		50324E832E26643A00B703C2 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E822E26642700B703C2 /* Like.swift */; };
 		50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3A2E27A30B000E53B7 /* PostManager.swift */; };
 		50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3D2E27BC16000E53B7 /* SearchViewController.swift */; };
@@ -161,6 +162,7 @@
 		502124252E543C4D00A2AD12 /* EditProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditProfile.storyboard; sourceTree = "<group>"; };
 		502124282E546F3500A2AD12 /* StoryEntity+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoryEntity+CoreDataClass.swift"; sourceTree = "<group>"; };
 		502124292E546F3500A2AD12 /* StoryEntity+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StoryEntity+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		5021242C2E54A07200A2AD12 /* CubeTransitionAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CubeTransitionAnimator.swift; sourceTree = "<group>"; };
 		50324E822E26642700B703C2 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		50396D3A2E27A30B000E53B7 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		50396D3D2E27BC16000E53B7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 			children = (
 				5053184C2E4C3E5B001715D3 /* Enums */,
 				50396D3B2E27A30B000E53B7 /* Managers */,
+				5021242C2E54A07200A2AD12 /* CubeTransitionAnimator.swift */,
 				509977F32E33884D00F82E3E /* SlideTransitionDelegate.swift */,
 				508525002E310C7D002B9E5C /* PushTransitionDelegate.swift */,
 				507AE8052E3CB00300B86D52 /* ScaleTransitionDelegate.swift */,
@@ -788,6 +791,7 @@
 				5002B5CE2E2A696500F36A80 /* PostTableViewCell.swift in Sources */,
 				500AB5F22E4376F0003AC0DC /* ColorShareView.swift in Sources */,
 				509977FA2E33974600F82E3E /* Chat.swift in Sources */,
+				5021242D2E54A07200A2AD12 /* CubeTransitionAnimator.swift in Sources */,
 				50CC29CD2E3B677B007ED579 /* VideoContainerView.swift in Sources */,
 				50CC29CF2E3B727F007ED579 /* LikeManager.swift in Sources */,
 				E1A3672029F9226100A1B03E /* SceneDelegate.swift in Sources */,
