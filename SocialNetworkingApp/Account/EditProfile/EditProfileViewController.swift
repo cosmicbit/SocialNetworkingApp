@@ -52,6 +52,9 @@ class EditProfileViewController: UIViewController {
         } else if segue.identifier == "UsernameSegue"{
             let destinationVC = segue.destination as! UsernameViewController
             destinationVC.userProfile = sender as? UserProfile
+        } else if segue.identifier == "PronounsSegue"{
+            let destinationVC = segue.destination as! PronounsViewController
+            destinationVC.userProfile = sender as? UserProfile
         }
     }
     
@@ -130,7 +133,7 @@ class EditProfileViewController: UIViewController {
         }
         nameTextView.text = userProfile.name
         usernameTextView.text = userProfile.username
-        if let pronouns = userProfile.pronouns{
+        if let pronouns = userProfile.pronouns, !pronouns.isEmpty{
             pronounTextView.text = pronouns
             bioTextView.textColor = .label
         }else{
@@ -214,7 +217,8 @@ class EditProfileViewController: UIViewController {
     }
     
     @IBAction func backButtonTapped(_ sender: Any){
-        navigationController?.popViewController(animated: true)
+        //navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @IBAction func changeProfileButtonTapped(_ sender: Any) {

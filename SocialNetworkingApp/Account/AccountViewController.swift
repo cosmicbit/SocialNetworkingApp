@@ -116,7 +116,16 @@ class AccountViewController: UIViewController {
     }
     
     @IBAction func editProfileButtonTapped(_ sender: Any) {
-        performSegue(withIdentifier: "EditProfileSegue", sender: nil)
+        //performSegue(withIdentifier: "EditProfileSegue", sender: nil)
+        let storyboard = UIStoryboard(name: "EditProfile", bundle: .main)
+        let editProfileVC = storyboard.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
+        editProfileVC.userProfile = userProfile
+        let navC = UINavigationController(rootViewController: editProfileVC)
+        navC.navigationBar.isHidden = true
+        navC.modalPresentationStyle = .overFullScreen
+        navC.modalTransitionStyle = .coverVertical
+        present(navC, animated: true)
+        
     }
     @IBAction func shareProfileButtonTapped(_ sender: Any) {
         let shareSB = UIStoryboard(name: "Share", bundle: .main)

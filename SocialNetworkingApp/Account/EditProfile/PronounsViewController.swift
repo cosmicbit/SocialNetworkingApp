@@ -9,14 +9,18 @@ import UIKit
 
 class PronounsViewController: UIViewController {
 
+    @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var stackView: UIStackView!
     @IBOutlet weak var textField: UITextField!
     
+    var userProfile: UserProfile!
+    private let userProfileManager = UserProfileManager()
     private var numberOfPronouns = 0
     private let tableView: UITableView = UITableView()
     private let pronounsFileName = "pronouns"
     private let pronounsFileType = "txt"
     private let NO_PRONOUN_FOUND = "No matches found. You can add additional pronouns to your bio."
+    private let PRONOUNS_LIMIT = 4
     private var pronounsTotal: [String] = []
     private var pronounsAvailable: [String] = []
     private var pronounsMatched: [String] = []{
@@ -30,6 +34,9 @@ class PronounsViewController: UIViewController {
         super.viewDidLoad()
         getPronounsFromFile()
         view.addSubview(tableView)
+        setupUserProfile()
+        saveButton.setTitleColor(.lightGray, for: .disabled)
+        saveButton.setTitleColor(.black, for: .normal)
         textField.borderStyle = .none
         stackView.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         stackView.isLayoutMarginsRelativeArrangement = true
@@ -49,6 +56,25 @@ class PronounsViewController: UIViewController {
             x: 0, y: yPosTableView,
             width: view.frame.width,
             height: view.bounds.height - yPosTableView - view.safeAreaInsets.bottom)
+    }
+    
+    func setupUserProfile(){
+        saveButton.isEnabled = false
+        guard let pronounsAsString = userProfile.pronouns,
+              !pronounsAsString.isEmpty
+        else {
+            return
+        }
+        let pronouns = pronounsAsString.components(separatedBy: "/")
+        for pronoun in pronouns {
+            pronounsAvailable.removeAll { $0==pronoun }
+            let optionButton = PronounsOptionButton()
+            optionButton.setTitle(with: pronoun)
+            optionButton.addTarget(self, action: #selector(handleOptionTapped), for: .touchUpInside)
+            selectedPronouns.append(optionButton)
+            stackView.insertArrangedSubview(optionButton, at: numberOfPronouns)
+            numberOfPronouns += 1
+        }
     }
     
     func getPronounsFromFile(){
@@ -72,13 +98,32 @@ class PronounsViewController: UIViewController {
         if let option = sender.titleLabel?.text{
             pronounsAvailable.append(option)
         }
+        saveButton.isEnabled = true
     }
     
     @IBAction func backButtonTapped(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        userProfile.pronouns = ""
+        var pronouns: [String] = []
+        for pronounButton in selectedPronouns {
+            if let pronoun = pronounButton.titleLabel?.text{
+                pronouns.append(pronoun)
+            }
+        }
+        userProfile.pronouns = pronouns.joined(separator: "/")
+        userProfileManager.updateUserProfile(userProfile: userProfile) { result in
+            self.saveButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
+            if result, let userProfile = self.userProfile{
+                let userInfo: [String: Any] = ["userProfile": userProfile]
+                NotificationCenter.default.post(name: NSNotification.Name("UserProfileDidUpdate"), object: nil, userInfo: userInfo)
+                self.dismiss(animated: true)
+            }else{
+                self.showToast(message: "Something went wrong. Try again")
+            }
+        }
     }
 }
 
@@ -113,6 +158,7 @@ extension PronounsViewController: UITableViewDataSource, UITableViewDelegate {
         label.numberOfLines = 0
         label.font = .systemFont(ofSize: 14)
         cell.contentView.addSubview(label)
+        cell.selectionStyle = .none
         let padding: CGFloat = 10
         label.frame = CGRect(x: padding, y: padding,
                              width: cell.contentView.bounds.width - padding,
@@ -122,6 +168,10 @@ extension PronounsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let optionButton = PronounsOptionButton()
+        if selectedPronouns.count >= PRONOUNS_LIMIT{
+            showToast(message: "You can add upto 4 pronouns", bottomConstraintConstant: -400)
+            return
+        }
         pronounsAvailable.removeAll{$0 == pronounsMatched[indexPath.row]}
         optionButton.setTitle(with: pronounsMatched[indexPath.row])
         optionButton.addTarget(self, action: #selector(handleOptionTapped), for: .touchUpInside)
@@ -129,5 +179,6 @@ extension PronounsViewController: UITableViewDataSource, UITableViewDelegate {
         stackView.insertArrangedSubview(optionButton, at: numberOfPronouns)
         numberOfPronouns += 1
         textField.text = ""
+        saveButton.isEnabled = true
     }
 }

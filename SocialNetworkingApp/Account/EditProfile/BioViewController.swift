@@ -51,13 +51,14 @@ class BioViewController: UIViewController {
     @IBAction func closeButtonTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Unsaved changes", message: "You have unsaved changes. Are you sure you want to cancel?", preferredStyle: .alert)
         let yesAction = UIAlertAction(title: "Yes", style: .cancel) { _ in
-            self.navigationController?.popViewController(animated: true)
+            self.dismiss(animated: true)
         }
         let noAction = UIAlertAction(title: "No", style: .default)
         alert.addAction(noAction)
         alert.addAction(yesAction)
         present(alert, animated: true)
     }
+    
     @IBAction func saveButtonTapped(_ sender: Any) {
         userProfile.bio = bioTextView.text
         saveButton.setImage(UIImage(systemName: "circle"), for: .normal)
@@ -73,6 +74,7 @@ class BioViewController: UIViewController {
         }
     }
 }
+
 extension BioViewController: UITextViewDelegate{
     func textViewDidChange(_ textView: UITextView) {
         let count = textView.text.count

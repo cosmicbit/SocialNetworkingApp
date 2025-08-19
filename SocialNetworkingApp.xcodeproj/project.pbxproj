@@ -26,6 +26,7 @@
 		5018042E2E28FC0E00BF1AEF /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */; };
 		501804302E2904EE00BF1AEF /* PrimarySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */; };
 		50211A422E4B6B96000C2164 /* GradientPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50211A412E4B6B96000C2164 /* GradientPreset.swift */; };
+		502124262E543C4D00A2AD12 /* EditProfile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 502124252E543C4D00A2AD12 /* EditProfile.storyboard */; };
 		50324E832E26643A00B703C2 /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50324E822E26642700B703C2 /* Like.swift */; };
 		50396D3C2E27A30B000E53B7 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3A2E27A30B000E53B7 /* PostManager.swift */; };
 		50396D3E2E27BC16000E53B7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50396D3D2E27BC16000E53B7 /* SearchViewController.swift */; };
@@ -155,6 +156,7 @@
 		5018042D2E28FC0E00BF1AEF /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		5018042F2E2904EE00BF1AEF /* PrimarySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimarySegmentedControl.swift; sourceTree = "<group>"; };
 		50211A412E4B6B96000C2164 /* GradientPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientPreset.swift; sourceTree = "<group>"; };
+		502124252E543C4D00A2AD12 /* EditProfile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EditProfile.storyboard; sourceTree = "<group>"; };
 		50324E822E26642700B703C2 /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
 		50396D3A2E27A30B000E53B7 /* PostManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		50396D3D2E27BC16000E53B7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -496,6 +498,7 @@
 				508759F32E1CF3B100ABAEC6 /* Onboarding.storyboard */,
 				508759F92E1D0F2700ABAEC6 /* Splash.storyboard */,
 				500AB5EF2E433A12003AC0DC /* Share.storyboard */,
+				502124252E543C4D00A2AD12 /* EditProfile.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -703,6 +706,7 @@
 				E19709B82A84D74200A76B19 /* Poppins-Black.ttf in Resources */,
 				508759FA2E1D0F2700ABAEC6 /* Splash.storyboard in Resources */,
 				E19709B42A84D71800A76B19 /* Poppins-SemiBold.ttf in Resources */,
+				502124262E543C4D00A2AD12 /* EditProfile.storyboard in Resources */,
 				5040C20E2E534A1800ED7042 /* pronouns.txt in Resources */,
 				50EB94852E3A3720005C1B20 /* sample_video.mp4 in Resources */,
 				508524ED2E30A18E002B9E5C /* ChatsTableHeaderView.xib in Resources */,

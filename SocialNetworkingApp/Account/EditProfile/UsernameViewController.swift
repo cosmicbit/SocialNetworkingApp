@@ -106,7 +106,7 @@ class UsernameViewController: UIViewController {
     }
     
     @IBAction func closeButtonTapped(_ sender: Any){
-        self.navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
     }
 
     @IBAction func saveButtonTapped(_ sender: Any){
