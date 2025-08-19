@@ -17,12 +17,14 @@ class PronounsViewController: UIViewController {
     private let pronounsFileName = "pronouns"
     private let pronounsFileType = "txt"
     private let NO_PRONOUN_FOUND = "No matches found. You can add additional pronouns to your bio."
+    private var pronounsTotal: [String] = []
     private var pronounsAvailable: [String] = []
     private var pronounsMatched: [String] = []{
         didSet{
             tableView.reloadData()
         }
     }
+    private var selectedPronouns: [UIButton] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +38,8 @@ class PronounsViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         textField.delegate = self
-        
+        tableView.estimatedRowHeight = 30
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     override func viewDidLayoutSubviews() {
@@ -55,13 +58,23 @@ class PronounsViewController: UIViewController {
         }
         do {
             let fileContents = try String(contentsOfFile: filePath, encoding: .utf8)
+            pronounsTotal = fileContents.components(separatedBy: "\n")
             pronounsAvailable = fileContents.components(separatedBy: "\n")
         } catch {
             print("Error reading the file: \(error)")
         }
     }
     
-    @IBAction func cancelButtonTapped(_ sender: Any) {
+    @objc func handleOptionTapped(_ sender: UIButton){
+        sender.removeFromSuperview()
+        selectedPronouns.removeAll{$0 == sender}
+        numberOfPronouns -= 1
+        if let option = sender.titleLabel?.text{
+            pronounsAvailable.append(option)
+        }
+    }
+    
+    @IBAction func backButtonTapped(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
     
@@ -72,7 +85,6 @@ class PronounsViewController: UIViewController {
 extension PronounsViewController: UITextFieldDelegate{
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if let newText = textField.text {
-            print("Text field content changed to: \(newText)")
             pronounsMatched = []
             tableView.allowsSelection = true
             if newText.isEmpty{ return }
@@ -99,15 +111,22 @@ extension PronounsViewController: UITableViewDataSource, UITableViewDelegate {
         let label = UILabel()
         label.text = pronounsMatched[indexPath.row]
         label.numberOfLines = 0
+        label.font = .systemFont(ofSize: 14)
         cell.contentView.addSubview(label)
-        label.frame = cell.contentView.bounds
+        let padding: CGFloat = 10
+        label.frame = CGRect(x: padding, y: padding,
+                             width: cell.contentView.bounds.width - padding,
+                             height: cell.contentView.bounds.height - padding)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let optionButton1 = PronounsOptionButton()
-        optionButton1.setTitle(with: pronounsMatched[indexPath.row])
-        stackView.insertArrangedSubview(optionButton1, at: numberOfPronouns)
+        let optionButton = PronounsOptionButton()
+        pronounsAvailable.removeAll{$0 == pronounsMatched[indexPath.row]}
+        optionButton.setTitle(with: pronounsMatched[indexPath.row])
+        optionButton.addTarget(self, action: #selector(handleOptionTapped), for: .touchUpInside)
+        selectedPronouns.append(optionButton)
+        stackView.insertArrangedSubview(optionButton, at: numberOfPronouns)
         numberOfPronouns += 1
         textField.text = ""
     }
