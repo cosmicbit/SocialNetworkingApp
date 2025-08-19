@@ -10,18 +10,21 @@ import FirebaseFirestore
 struct Story: Codable {
     @DocumentID var id: String?
     let userId: String
-    let contentURL: URL
+    var contentURL: URL
+    var type: Post.ContentType
     
     enum CodingKeys: String, CodingKey{
         case id
         case userId
         case contentURL
+        case type
     }
     
-    init(id: String, userId: String, imageURL: URL) {
+    init(id: String, userId: String, imageURL: URL, type: Post.ContentType) {
         self.id = id
         self.userId = userId
         self.contentURL = imageURL
+        self.type = type
     }
     
     init?(snapshot: QueryDocumentSnapshot) {
@@ -33,8 +36,11 @@ struct Story: Codable {
         guard let contentURL = data["contentURL"] as? URL else {
             return nil
         }
+        guard let typeAsString = data["type"] as? String,
+              let type = Post.ContentType(rawValue: typeAsString) else {return nil}
         self.id = storyId
         self.userId = userId
         self.contentURL = contentURL
+        self.type = type
     }
 }

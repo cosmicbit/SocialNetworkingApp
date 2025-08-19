@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23788" systemVersion="24G84" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="StoryEntity" representedClassName="StoryEntity" syncable="YES">
+        <attribute name="contentURL" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="userId" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="UserProfileEntity" representedClassName="UserProfileEntity" syncable="YES">
         <attribute name="avatarImageURL" optional="YES" attributeType="String"/>
         <attribute name="bio" optional="YES" attributeType="String"/>

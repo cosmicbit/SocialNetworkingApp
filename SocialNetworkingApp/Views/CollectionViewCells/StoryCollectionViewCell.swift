@@ -93,8 +93,6 @@ class StoryCollectionViewCell: UICollectionViewCell {
     func configure(userId: String, hasNewStory: Bool) {
         ringView.hasNewStory = hasNewStory
         getUserProfile(userId: userId)
-        
-        
     }
     
     // MARK: - Private Methods

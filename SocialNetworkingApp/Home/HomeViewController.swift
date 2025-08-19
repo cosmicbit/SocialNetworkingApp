@@ -203,14 +203,17 @@ extension HomeViewController: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
+        guard let cell = collectionView.cellForItem(at: indexPath) as? StoryCollectionViewCell else { return }
         let cellRect = cell.frame
         let cellRectInMainView = collectionView.convert(cellRect, to: self.view)
-        
+        let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
         let storyVC = StoryViewController()
         scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
         storyVC.transitioningDelegate = scaleTransitionDelegate
         storyVC.modalPresentationStyle = .custom
+        storyVC.story = StoryEntity(from: stories[indexPath.row], in: managedContext)
+        storyVC.storyUserProfile = cell.userProfile
+        storyVC.delegate = self
         postTableView.visibleCells.forEach { ($0 as? PostTableViewCell)?.postVideoView.player?.pause() }
         present(storyVC, animated: true)
     }

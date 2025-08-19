@@ -39,10 +39,12 @@ class PostTableViewCell: UITableViewCell {
     
     var postImageView: UIImageView = {
         let view = UIImageView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     var postVideoView: VideoContainerView = {
         let view = VideoContainerView()
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     private var likeCountLocally: Int = 0{
@@ -95,8 +97,7 @@ class PostTableViewCell: UITableViewCell {
         mediaDisplayView.translatesAutoresizingMaskIntoConstraints = false
         mediaDisplayView.insertSubview(postImageView, at: 0)
         mediaDisplayView.insertSubview(postVideoView, at: 0)
-        postImageView.translatesAutoresizingMaskIntoConstraints = false
-        postVideoView.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             postImageView.topAnchor.constraint(equalTo: mediaDisplayView.topAnchor),
             postImageView.bottomAnchor.constraint(equalTo: mediaDisplayView.bottomAnchor),
