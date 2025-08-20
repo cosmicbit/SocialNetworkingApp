@@ -19,10 +19,14 @@ class StoryViewController: UIViewController {
     var remainingStories: [StoryEntity]!
     var storyUserProfile: UserProfile?
     private let userProfileManager = UserProfileManager()
-    private let totalStoryDuration: TimeInterval = 4.0 // 10 seconds per story
+    private let totalStoryDuration: TimeInterval = 10.0 // 10 seconds per story
     private var progressTimer: Timer?
     private var startTime: Date?
+    private var pausedTime: TimeInterval = 0.0
     var isDismissedByTimer: Bool = false
+    
+    private var panGesture: UIPanGestureRecognizer?
+    private var upSwipeGesture: UISwipeGestureRecognizer?
     
     private let progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .default)
@@ -208,19 +212,29 @@ class StoryViewController: UIViewController {
     }
     
     private func startProgressTimer() {
+        // Stop any existing timer to prevent duplicates
         progressTimer?.invalidate()
-        progressView.progress = 0.0
-        startTime = Date()
+
+        // Adjust the start time to account for any paused duration
+        startTime = Date().addingTimeInterval(-pausedTime)
+
         progressTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { [weak self] timer in
             guard let self = self, let startTime = self.startTime else {
                 timer.invalidate()
                 return
             }
+            
+            // Use the adjusted startTime for accurate progress calculation
             let elapsedTime = Date().timeIntervalSince(startTime)
             let progress = Float(elapsedTime / self.totalStoryDuration)
+            
             self.progressView.progress = progress
+            
             if progress >= 1.0 {
+                // Invalidate the timer once progress is complete
                 timer.invalidate()
+                self.pausedTime = 0.0 // Reset paused time for the next story
+                // ➡️ Your existing logic for next story or dismissal goes here...
                 if remainingStories.count >= 1 {
                     let newVC = StoryViewController()
                     newVC.story = remainingStories[0]
@@ -231,11 +245,11 @@ class StoryViewController: UIViewController {
                         viewControllers.append(newVC)
                         navigationController?.setViewControllers(viewControllers, animated: true)
                     }
-                }else{
+                } else {
                     self.navigationController?.transitioningDelegate = nil
                     self.navigationController?.modalTransitionStyle = .coverVertical
                     self.navigationController?.modalPresentationStyle = .overFullScreen
-                    self.dismiss(animated: true){
+                    self.dismiss(animated: true) {
                         self.delegate?.storyVCWillDismiss()
                     }
                 }
@@ -243,24 +257,60 @@ class StoryViewController: UIViewController {
         }
     }
     
+    private func pauseProgressTimer() {
+        // 1. Invalidate the current timer to stop it
+        progressTimer?.invalidate()
+        
+        // 2. Calculate and store the elapsed time
+        if let startTime = self.startTime {
+            self.pausedTime += Date().timeIntervalSince(startTime)
+        }
+        
+        // 3. Reset startTime to nil to prevent unwanted updates
+        self.startTime = nil
+    }
+    
     func addPanGesture(){
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureOfView(_:)))
-        view.addGestureRecognizer(panGestureRecognizer)
+        panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureOfView(_:)))
+        if let pan = panGesture{
+            pan.delegate = self
+            view.addGestureRecognizer(pan)
+        }
+        upSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleUpSwipe(_: )))
+        if let upSwipe = upSwipeGesture{
+            upSwipe.direction = .up
+            upSwipe.delegate = self
+            view.addGestureRecognizer(upSwipe)
+        }
     }
     
     @objc func handlePanGestureOfView(_ sender: UIPanGestureRecognizer){
+        if sender.state == .began{
+            pauseProgressTimer()
+        }
         guard let draggedView = sender.view else { return }
         let translation = sender.translation(in: self.view)
         let newCenter = CGPoint(x: draggedView.center.x, y: draggedView.center.y + translation.y * 0.5)
-        if newCenter.y > originalCenterOfView.y {
-            draggedView.center = newCenter
-        }
+        
+        draggedView.center = newCenter
         sender.setTranslation(.zero, in: self.view)
-        if sender.state == .ended{
-            dismiss(animated: true){
-                self.delegate?.storyVCWillDismiss()
+        print("og center - ", originalCenterOfView)
+        print("new center - ", draggedView.center)
+        
+        if sender.state == .ended {
+            startProgressTimer()
+            if draggedView.center.y < originalCenterOfView.y{
+                draggedView.center = originalCenterOfView
+            }else{
+                dismiss(animated: true){
+                    self.delegate?.storyVCWillDismiss()
+                }
             }
         }
+    }
+    
+    @objc func handleUpSwipe(_ sender: UISwipeGestureRecognizer){
+        print("Swiped in up direction")
     }
     
     deinit {
@@ -283,5 +333,17 @@ extension StoryViewController: UINavigationControllerDelegate {
             return CubeTransitionAnimator(isPresenting: false, withDuration: 0.5)
         }
         return nil
+    }
+}
+
+extension StoryViewController: UIGestureRecognizerDelegate{
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        false
+    }
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == panGesture && otherGestureRecognizer == upSwipeGesture{
+            return true
+        }
+        return false
     }
 }
