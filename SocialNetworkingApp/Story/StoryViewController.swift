@@ -9,7 +9,6 @@ import UIKit
 
 protocol StoryViewControllerDelegate: AnyObject{
     func storyVCWillDismiss()
-    func storyDidFinish()
 }
 
 class StoryViewController: UIViewController {
@@ -20,7 +19,7 @@ class StoryViewController: UIViewController {
     var remainingStories: [StoryEntity]!
     var storyUserProfile: UserProfile?
     private let userProfileManager = UserProfileManager()
-    private let totalStoryDuration: TimeInterval = 3.0 // 10 seconds per story
+    private let totalStoryDuration: TimeInterval = 4.0 // 10 seconds per story
     private var progressTimer: Timer?
     private var startTime: Date?
     var isDismissedByTimer: Bool = false
@@ -82,6 +81,16 @@ class StoryViewController: UIViewController {
         getStoryUserProfile()
         setupStory()
         addPanGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.delegate = self
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        startProgressTimer()
     }
     
     override func viewDidLayoutSubviews() {
@@ -163,7 +172,7 @@ class StoryViewController: UIViewController {
               let url = URL(string: story.contentURL)
         else {return}
         displayMedia(type: type, mediaURL: url)
-        startProgressTimer()
+        
     }
     
     private func displayMedia(type: Post.ContentType, mediaURL: URL?) {
@@ -212,10 +221,23 @@ class StoryViewController: UIViewController {
             self.progressView.progress = progress
             if progress >= 1.0 {
                 timer.invalidate()
-                self.transitioningDelegate = self
-                self.modalPresentationStyle = .fullScreen
-                self.dismiss(animated: true){
-                    self.delegate?.storyDidFinish()
+                if remainingStories.count >= 1 {
+                    let newVC = StoryViewController()
+                    newVC.story = remainingStories[0]
+                    remainingStories.removeFirst()
+                    newVC.remainingStories = remainingStories
+                    if var viewControllers = navigationController?.viewControllers {
+                        viewControllers.removeLast()
+                        viewControllers.append(newVC)
+                        navigationController?.setViewControllers(viewControllers, animated: true)
+                    }
+                }else{
+                    self.navigationController?.transitioningDelegate = nil
+                    self.navigationController?.modalTransitionStyle = .coverVertical
+                    self.navigationController?.modalPresentationStyle = .overFullScreen
+                    self.dismiss(animated: true){
+                        self.delegate?.storyVCWillDismiss()
+                    }
                 }
             }
         }
@@ -251,13 +273,15 @@ class StoryViewController: UIViewController {
     }
 }
 
-extension StoryViewController: UIViewControllerTransitioningDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
-        CubeTransitionAnimator(isPresenting: true)
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> (any UIViewControllerAnimatedTransitioning)? {
-        CubeTransitionAnimator(isPresenting: false)
+extension StoryViewController: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+
+        // Return your custom animator based on the operation (push or pop)
+        if operation == .push {
+            return CubeTransitionAnimator(isPresenting: true, withDuration: 0.5)
+        } else if operation == .pop {
+            return CubeTransitionAnimator(isPresenting: false, withDuration: 0.5)
+        }
+        return nil
     }
 }

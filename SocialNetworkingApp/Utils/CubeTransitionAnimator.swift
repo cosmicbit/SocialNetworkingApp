@@ -11,54 +11,51 @@ import UIKit
 class CubeTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
     private let isPresenting: Bool
+    private let duration: TimeInterval
 
-    init(isPresenting: Bool) {
+    init(isPresenting: Bool, withDuration: TimeInterval) {
         self.isPresenting = isPresenting
+        self.duration = withDuration
         super.init()
     }
 
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.5 // Duration of the animation
+        return duration // Duration of the animation
     }
-
+    
+    
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
-        let fromVC = transitionContext.viewController(forKey: .from)!
-        let toVC = transitionContext.viewController(forKey: .to)!
+        guard let fromVC = transitionContext.viewController(forKey: .from),
+              let toVC = transitionContext.viewController(forKey: .to) else { return }
         let containerView = transitionContext.containerView
-
-        // Add the 'to' view to the container first
         containerView.addSubview(toVC.view)
-
-        // Set up a base transform with perspective
         var perspectiveTransform = CATransform3DIdentity
         perspectiveTransform.m34 = 1.0 / -500.0
-
-        let initialToViewTransform: CATransform3D
-        let finalFromViewTransform: CATransform3D
-
-        // Define the transforms based on whether it's a presentation or dismissal
-        if isPresenting {
-            // For presentation (moving from right to center)
-            initialToViewTransform = CATransform3DRotate(perspectiveTransform, .pi / 2, 0, 1, 0)
-            finalFromViewTransform = CATransform3DRotate(perspectiveTransform, -(.pi / 2), 0, 1, 0)
-            
-            // Position the 'to' view for the start of the animation
-            toVC.view.layer.transform = initialToViewTransform
-        } else {
-            // For dismissal (moving from center to left)
-            initialToViewTransform = CATransform3DRotate(perspectiveTransform, -(.pi / 2), 0, 1, 0)
-            finalFromViewTransform = CATransform3DRotate(perspectiveTransform, .pi / 2, 0, 1, 0)
-        }
-
-        // Animate the rotation of both views
+        
+        var initialTransformToVC: CATransform3D
+        initialTransformToVC = perspectiveTransform
+        initialTransformToVC = CATransform3DRotate(initialTransformToVC, .pi / 2, 0, 1, 0)
+        toVC.view.layer.anchorPoint = CGPoint(x: 0, y: 0.5)
+        toVC.view.layer.position = CGPoint(x: toVC.view.frame.width, y: toVC.view.frame.height / 2)
+        toVC.view.layer.transform = initialTransformToVC
+        
+        var FinalTransformFromVC = perspectiveTransform
+        FinalTransformFromVC = CATransform3DRotate(FinalTransformFromVC, -.pi / 2, 0, 1, 0)
+        
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
-            fromVC.view.layer.transform = finalFromViewTransform
-            toVC.view.layer.transform = perspectiveTransform
+            toVC.view.layer.transform = CATransform3DIdentity
+            toVC.view.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            toVC.view.layer.position = CGPoint(x: toVC.view.frame.width / 2, y: toVC.view.frame.height / 2)
+            fromVC.view.layer.anchorPoint = CGPoint(x: 1, y: 0.5)
+            fromVC.view.layer.position = CGPoint(x: 0, y: fromVC.view.frame.height / 2)
+            fromVC.view.layer.transform = FinalTransformFromVC
         }) { _ in
-            // Reset the transform on the 'from' view to its original state
             fromVC.view.layer.transform = CATransform3DIdentity
-            
-            // Complete the transition
+            fromVC.view.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            fromVC.view.layer.position = CGPoint(x: fromVC.view.frame.width / 2, y: fromVC.view.frame.height / 2)
+            toVC.view.layer.transform = CATransform3DIdentity
+            toVC.view.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            toVC.view.layer.position = CGPoint(x: toVC.view.frame.width / 2, y: toVC.view.frame.height / 2)
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
         }
     }
