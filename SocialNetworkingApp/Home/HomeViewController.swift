@@ -214,7 +214,9 @@ extension HomeViewController: UICollectionViewDataSource{
         scaleTransitionDelegate = ScaleTransitionDelegate(withDirection: .up, position: cellRectInMainView)
         storyNavC.transitioningDelegate = scaleTransitionDelegate
         storyNavC.modalPresentationStyle = .fullScreen
+        storyNavC.isNavigationBarHidden = true
         currentStoryIndex = indexPath.row
+        storyVC.identitifier = 0
         storyVC.story = StoryEntity(from: stories[indexPath.row], in: managedContext)
         storyVC.remainingStories = stories[(indexPath.row + 1)...].compactMap{StoryEntity(from: $0, in: managedContext)}
         storyVC.storyUserProfile = cell.userProfile

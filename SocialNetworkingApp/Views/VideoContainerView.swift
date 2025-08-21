@@ -41,11 +41,13 @@ class VideoContainerView: UIView {
         playerItemStatusObservation = player.currentItem?.observe(\.status, options: [.new, .old], changeHandler: { (playerItem, change) in
             switch playerItem.status {
             case .readyToPlay:
-                print("✅ PlayerItem is ready to play.")
+                break
+                //print("✅ PlayerItem is ready to play.")
             case .failed:
-                print("❌ PlayerItem failed to load: \(playerItem.error?.localizedDescription ?? "Unknown error")")
+                //print("❌ PlayerItem failed to load: \(playerItem.error?.localizedDescription ?? "Unknown error")")
+                break
             case .unknown:
-                print("❔ PlayerItem status is unknown.")
+                //print("❔ PlayerItem status is unknown.")
                 break
             @unknown default:
                 fatalError("Unknown AVPlayerItem status")

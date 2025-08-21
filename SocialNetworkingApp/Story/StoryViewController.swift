@@ -12,7 +12,7 @@ protocol StoryViewControllerDelegate: AnyObject{
 }
 
 class StoryViewController: UIViewController {
-    
+    var identitifier : Int!
     var originalCenterOfView: CGPoint = CGPoint()
     weak var delegate: StoryViewControllerDelegate?
     var story: StoryEntity!
@@ -27,6 +27,8 @@ class StoryViewController: UIViewController {
     
     private var panGesture: UIPanGestureRecognizer?
     private var upSwipeGesture: UISwipeGestureRecognizer?
+    var interactiveAnimator: UIPercentDrivenInteractiveTransition?
+    var translatedByPan: CGFloat = 0
     
     private let progressView: UIProgressView = {
         let view = UIProgressView(progressViewStyle: .default)
@@ -238,6 +240,7 @@ class StoryViewController: UIViewController {
                 if remainingStories.count >= 1 {
                     let newVC = StoryViewController()
                     newVC.story = remainingStories[0]
+                    newVC.identitifier = self.identitifier + 1
                     remainingStories.removeFirst()
                     newVC.remainingStories = remainingStories
                     if var viewControllers = navigationController?.viewControllers {
@@ -274,7 +277,7 @@ class StoryViewController: UIViewController {
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestureOfView(_:)))
         if let pan = panGesture{
             pan.delegate = self
-            view.addGestureRecognizer(pan)
+            navigationController?.view.addGestureRecognizer(pan)
         }
         upSwipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleUpSwipe(_: )))
         if let upSwipe = upSwipeGesture{
@@ -283,7 +286,7 @@ class StoryViewController: UIViewController {
             view.addGestureRecognizer(upSwipe)
         }
     }
-    
+    /*
     @objc func handlePanGestureOfView(_ sender: UIPanGestureRecognizer){
         if sender.state == .began{
             pauseProgressTimer()
@@ -308,6 +311,70 @@ class StoryViewController: UIViewController {
             }
         }
     }
+     */
+    
+    @objc func handlePanGestureOfView(_ sender: UIPanGestureRecognizer){
+        //print(sender.state)
+        guard let navigationView = sender.view else { return }
+        let translation = sender.translation(in: navigationView)
+        //print("translation: ", translation.x)
+        let loc = sender.location(in: navigationView)
+        //print("location : ", loc)
+        let percentage = abs(translation.x) / navigationView.bounds.width
+        //print("percentage : ",percentage)
+        let progress = min(1.0, max(0, percentage))
+        //print("progress : ", progress)
+        
+        switch sender.state{
+        case .began:
+            pauseProgressTimer()
+            interactiveAnimator = UIPercentDrivenInteractiveTransition()
+            //print("number of remaining stories : ", remainingStories.count)
+            if remainingStories.count > 0 {
+                let newVC = StoryViewController()
+                newVC.story = remainingStories[0]
+                newVC.identitifier = self.identitifier + 1
+                let newstories = Array(remainingStories[1...])
+                print(newstories.count)
+                newVC.remainingStories = newstories
+                print("VC id during beginning: ", self.identitifier)
+                navigationController?.setViewControllers([newVC, self], animated: false)
+                navigationController?.popViewController(animated: true)
+//
+//                
+//                if var viewControllers = navigationController?.viewControllers {
+//                    viewControllers.removeLast()
+//                    viewControllers.append(newVC)
+//                    navigationController?.setViewControllers(viewControllers, animated: true)
+//                }
+                
+                
+            }else{
+                self.navigationController?.transitioningDelegate = nil
+                self.navigationController?.modalTransitionStyle = .coverVertical
+                self.navigationController?.modalPresentationStyle = .overFullScreen
+                self.dismiss(animated: true) {
+                    self.delegate?.storyVCWillDismiss()
+                }
+            }
+        case .changed:
+            interactiveAnimator?.update(progress)
+        case .ended, .cancelled:
+            //print("final progress : ", progress)
+            if progress > 0.3{
+                //print("finished")
+                interactiveAnimator?.finish()
+            }else{
+                print("VC id during cancelletion: ", self.identitifier)
+                interactiveAnimator?.cancel()
+                navigationController?.setViewControllers([self], animated: true)
+            }
+            interactiveAnimator = nil
+        default:
+            break
+        }
+        //sender.setTranslation(.zero, in: self.view)
+    }
     
     @objc func handleUpSwipe(_ sender: UISwipeGestureRecognizer){
         print("Swiped in up direction")
@@ -325,14 +392,14 @@ class StoryViewController: UIViewController {
 
 extension StoryViewController: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
-        // Return your custom animator based on the operation (push or pop)
-        if operation == .push {
+        //if operation == .push {
             return CubeTransitionAnimator(isPresenting: true, withDuration: 0.5)
-        } else if operation == .pop {
-            return CubeTransitionAnimator(isPresenting: false, withDuration: 0.5)
-        }
-        return nil
+        //}
+        //return nil
+    }
+    
+    func navigationController(_ navigationController: UINavigationController, interactionControllerFor animationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactiveAnimator
     }
 }
 
@@ -340,10 +407,15 @@ extension StoryViewController: UIGestureRecognizerDelegate{
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         false
     }
+    
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         if gestureRecognizer == panGesture && otherGestureRecognizer == upSwipeGesture{
             return true
         }
         return false
     }
+}
+
+extension StoryViewController: UIViewControllerTransitioningDelegate{
+    
 }

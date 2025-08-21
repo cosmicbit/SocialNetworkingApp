@@ -60,3 +60,21 @@ class CubeTransitionAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         }
     }
 }
+
+
+import UIKit
+
+class InteractivePageTurnAnimator: UIPercentDrivenInteractiveTransition {
+
+    var hasStarted = false
+    weak var navigationController: UINavigationController?
+
+    func beginTransition(to newVC: UIViewController) {
+        print("begin transition")
+        hasStarted = true
+        if var viewControllers = navigationController?.viewControllers {
+            viewControllers.removeLast()
+            navigationController?.pushViewController(newVC, animated: true)
+        }
+    }
+}
